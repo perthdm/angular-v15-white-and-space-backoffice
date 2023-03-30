@@ -29,6 +29,7 @@ registerLocaleData(th);
     NzLayoutModule,
     NzMenuModule,
     SharedModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: th_TH }],
   bootstrap: [AppComponent],

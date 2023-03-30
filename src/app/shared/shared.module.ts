@@ -5,24 +5,25 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 @NgModule({
-  imports: [
+  imports: [],
+  exports: [
     CommonModule,
     FormsModule,
-    NzInputModule,
-    NzFormModule,
-    ReactiveFormsModule,
-    NzGridModule,
-    NzButtonModule,
-  ],
-  exports: [
-    FormsModule,
     NzFormModule,
     NzInputModule,
     ReactiveFormsModule,
     NzGridModule,
     NzButtonModule,
+    NzMenuModule,
+    NzTableModule,
+    NzDividerModule,
+    NzModalModule
   ],
   declarations: [],
 })
