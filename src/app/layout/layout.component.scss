@@ -6,7 +6,7 @@
 }
 
 .app-layout {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .menu-sidebar {
@@ -74,7 +74,11 @@ nz-content {
 }
 
 .inner-content {
-  padding: 24px;
-  background: #fff;
+  padding: 1.5rem 3rem;
+  background: #f8fafc;
   height: 100%;
+}
+
+.ant-layout {
+  background-color: #f8fafc !important;
 }

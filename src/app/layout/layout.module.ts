@@ -10,9 +10,15 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.component';
 import { SharedModule } from '../shared/shared.module';
+import { StaffComponent } from '../pages/staff/staff.component';
 
 @NgModule({
-  declarations: [LayoutComponent, DashboardComponent, SidebarWrapperComponent],
+  declarations: [
+    LayoutComponent,
+    SidebarWrapperComponent,
+    DashboardComponent,
+    StaffComponent,
+  ],
   imports: [
     LayoutRoutingModule,
     IconsProviderModule,

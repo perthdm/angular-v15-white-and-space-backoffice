@@ -1,56 +1,118 @@
 <div>
     <h3 style="margin-bottom:24px">Dashboard</h3>
     <div nz-row [nzGutter]="[16,16]">
-        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
-            <div class="inner-box card-dashboard">
-                <span style="color:#0b072f;font-weight: bold; font-size: 18px;">PROFIT</span>
+        <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="18">
+            <div nz-row [nzGutter]="[16,16]">
+                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+                    <div class="inner-box card-dashboard">
+                        <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Profit</span>
+                        <div>48,232 บาท</div>
+                    </div>
+                </div>
+
+                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+                    <div class="inner-box card-dashboard">
+                        <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Profit Average</span>
+                        <div>48,232 บาท</div>
+                    </div>
+                </div>
+                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+                    <div class="inner-box card-dashboard">
+                        <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Profit Daily</span>
+                        <div>48,232 บาท</div>
+                    </div>
+                </div>
+
+                <div nz-col class="gutter-row" [nzXs]="24">
+                    <div class="inner-box card-dashboard" style="min-height: 220px;">
+                        <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Balance</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="6">
+            <div class="inner-box card-dashboard" style="min-height: 385px;">
+                <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Statistics</span>
             </div>
         </div>
-        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
-            <div class="inner-box card-dashboard"> <span
-                    style="color:#0b072f;font-weight: bold; font-size: 18px;">PROFIT AVERAGE</span></div>
-        </div>
-        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
-            <div class="inner-box card-dashboard"> </div>
-        </div>
-        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
-            <div class="inner-box card-dashboard"> </div>
-        </div>
+
+
+
+
     </div>
 
 
-    <h3 style="margin:20px 0px">สินค้าใกล้หมด</h3>
-    <nz-table #basicTable [nzData]="dataList">
-        <thead>
-            <tr>
-                <th>รหัสวัตถุดิบ</th>
-                <th>ชื่อ</th>
-                <th>ราคา</th>
-                <th>จำนวนที่เหลือ</th>
-                <th>ประเภท</th>
-                <th>เครื่องมือ</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of basicTable.data">
-                <td>{{data.key}}</td>
-                <td>{{data.name}}</td>
-                <td>{{data.prize}}</td>
-                <td>{{data.amount}}</td>
-                <td>{{data.type}}</td>
-                <td>
-                    <button nz-button nzType="primary">
-                        <span nz-icon nzType="eye" nzTheme="outline"></span>
-                    </button>
-                    <button nz-button nzType="primary"
-                        style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54)"><span nz-icon
-                            nzType="edit" nzTheme="outline"></span>
-                    </button>
-                    <button nz-button nzType="primary" nzDanger>
-                        <span nz-icon nzType="delete" nzTheme="outline"></span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </nz-table>
+    <div
+        style="padding:1.5rem; background-color:#fff; border-radius: 15px; margin-top:20px ; border: 1px solid #f2f4f6">
+        <h3 style="margin-bottom: 20px;">สินค้าใกล้หมด</h3>
+
+        <div nz-row [nzGutter]="[0,24]" *ngFor="let data of dataList">
+            <div nz-col class="gutter-row" [nzXs]="24">
+                <div class="ws-card-plain">
+                    <div class="item" style="width:150px; color:#e91e63; font-size: 24px;"> <span nz-icon
+                            nzType="exclamation-circle" nzTheme="outline"></span></div>
+                    <div class="item">{{data.key}}</div>
+                    <div class="item">{{data.name}}</div>
+                    <div class="item">{{data.prize}} บาท</div>
+                    <div class="item">{{data.amount}} หน่วย</div>
+                    <div class="item">{{data.type}}</div>
+                    <div class="item">
+                        <button nz-button nzType="default" style="color:#29f; border-color:#f2f4f6; height: 35px;">
+                            แก้ไข
+                        </button>
+                        <button nz-button nzType="primary" style="height: 35px;">
+                            ยืนยัน
+                        </button>
+                        <!-- <button nz-button nzType="primary"
+                            style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54)">
+                            <span nz-icon nzType="edit" nzTheme="outline"></span>
+                        </button>
+                        <button nz-button nzType="primary" nzDanger>
+                            <span nz-icon nzType="delete" nzTheme="outline"></span>
+                        </button> -->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <nz-table #basicTable [nzData]="dataList">
+            <thead>
+                <tr>
+                    <th>รหัสวัตถุดิบ</th>
+                    <th>ชื่อ</th>
+                    <th>ราคา</th>
+                    <th>จำนวนที่เหลือ</th>
+                    <th>ประเภท</th>
+                    <th>เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data">
+                    <td>{{data.key}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.prize}}</td>
+                    <td>{{data.amount}}</td>
+                    <td>{{data.type}}</td>
+                    <td>
+                        <button nz-button nzType="primary">
+                            <span nz-icon nzType="eye" nzTheme="outline"></span>
+                        </button>
+                        <button nz-button nzType="primary"
+                            style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54)"><span nz-icon
+                                nzType="edit" nzTheme="outline"></span>
+                        </button>
+                        <button nz-button nzType="primary" nzDanger>
+                            <span nz-icon nzType="delete" nzTheme="outline"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table> -->
+    </div>
 </div>
