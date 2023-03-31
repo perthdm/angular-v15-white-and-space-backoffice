@@ -11,6 +11,7 @@ import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.component';
 import { SharedModule } from '../shared/shared.module';
 import { StaffComponent } from '../pages/staff/staff.component';
+import { ShopComponent } from '../pages/shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { StaffComponent } from '../pages/staff/staff.component';
     SidebarWrapperComponent,
     DashboardComponent,
     StaffComponent,
+    ShopComponent
   ],
   imports: [
     LayoutRoutingModule,

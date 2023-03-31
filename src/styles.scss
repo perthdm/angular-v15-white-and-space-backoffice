@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+button:focus-visible{
+    outline: none;
+}
+.text-muted{
+    color: #6c757d!important;
+}
+.text-start{
+    text-align: start !important;
+}
+.text-end{
+    text-align: end !important;
+}
+.text-bold{
+    font-weight: bold;
+}
+.baseline{
+    align-self: baseline;
+}
+.inner-content {
+    padding: 1.5rem 3rem;
+    background: #f8fafc;
+    height: 100%;
+  }

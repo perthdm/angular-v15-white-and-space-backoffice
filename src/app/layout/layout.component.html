@@ -9,15 +9,28 @@
         </div>
 
         <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/dashboard">Dashboard</a>
+            <li nz-menu-item nzMatchRouter nzIcon="user">
+                <a routerLink="/shop"><span nz-icon nzType="shop" nzTheme="fill"></span>
+                    <span>หน้าขาย</span></a>
             </li>
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/preview">Menu Preview</a>
+                <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
+                    <span>แดชบอร์ด</span></a>
+            </li>
+            <li nz-menu-item nzMatchRouter>
+                <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span>รายงาน</span>
+                </a>
+            </li>
+            <li nz-menu-item nzMatchRouter>
+                <a routerLink="/history"><span nz-icon nzType="file-text" nzTheme="fill"></span>
+                    <span>ประวัติขาย</span></a>
+            </li>
+            <li nz-menu-item nzMatchRouter>
+                <a routerLink="/stock"> <span nz-icon nzType="golden" nzTheme="fill"></span><span>สต็อก</span>
+                </a>
             </li>
 
-
-            <li nz-submenu nzOpen nzTitle="SHOP" nzIcon="shop">
+            <!-- <li nz-submenu nzOpen nzTitle="SHOP" nzIcon="shop">
                 <ul>
 
                     <li nz-menu-item nzMatchRouter>
@@ -30,42 +43,40 @@
                         <a routerLink="/receipt-history">Receipt History</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <!-- <li nz-menu-group nzTitle="ADMIN" style="font-weight: bold; color:#29f"></li> -->
 
             <li nz-submenu nzOpen nzTitle="ADMIN" nzIcon="user">
                 <ul>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/staff">Staff Management</a>
+                        <a routerLink="/staff">พนักงาน</a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/permission">Permission</a>
+                        <a routerLink="/permission">สิทธิ์การเข้าถึง</a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/setting">Setting</a>
+                        <a routerLink="/setting">ตั้งค่าร้าน</a>
                     </li>
                 </ul>
             </li>
 
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/login">Logout</a>
+                <a routerLink="/login">ออกจากระบบ</a>
             </li>
         </ul>
     </nz-sider>
 
     <nz-layout>
-        <nz-header>
+        <!-- <nz-header>
             <div class="app-header">
                 <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
                     <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
                 </span>
             </div>
-        </nz-header>
+        </nz-header> -->
         <nz-content>
-            <div class="inner-content">
-                <router-outlet></router-outlet>
-            </div>
+            <router-outlet></router-outlet>
         </nz-content>
     </nz-layout>
 </nz-layout>

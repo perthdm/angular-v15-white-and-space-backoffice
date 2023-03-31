@@ -1,0 +1,58 @@
+.menu-right-wrapper{
+    height: 100vh;
+    background: white;
+    box-shadow: 1px 0px 3px 2px #fafafa;
+}
+.order-detail{
+    height: 450px;
+    overflow-y: scroll;
+}
+.button-group-wrapper{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    padding: 13px;
+    .group-content{
+        width: 100%;
+        height: 100%;
+        border: 0;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        background-color: transparent;
+    }
+    .group-del{
+        width: 60px;
+        height: 100%;
+        border: 0;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        background-color: transparent;
+        cursor: pointer;
+        font-size: 18px;
+    }
+    img{
+        max-height: 70px;
+        object-fit: cover;
+        border-radius: 12px;
+        width: 100%;
+    }
+    .price-tag{
+        align-self: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #484848;
+        text-align: right;
+        margin-right: 10px;
+        span{font-size: 16px;}
+    }
+    .product-name{
+        font-size: 24px;
+    }
+}
+.payment-button{
+    width: 100%;
+    height: 60px;
+    border: 0px;
+    border-radius: 15px;
+    cursor: pointer;
+}

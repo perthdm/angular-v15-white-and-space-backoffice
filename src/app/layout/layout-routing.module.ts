@@ -6,6 +6,7 @@ import { ReceiptHistoryComponent } from '../pages/receipt-history/receipt-histor
 import { SettingComponent } from '../pages/setting/setting.component';
 import { StaffComponent } from '../pages/staff/staff.component';
 import { StockComponent } from '../pages/stock/stock.component';
+import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
+      {
+        path: 'shop',
+        component: ShopComponent,
+      },
       {
         path: 'dashboard',
         component: DashboardComponent,
