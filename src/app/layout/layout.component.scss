@@ -77,3 +77,35 @@ nz-header {
 .ant-layout {
   background-color: #F9F9FB !important;
 }
+@media(max-width:1200px){
+  .menu-sidebar{
+    flex: 0 0 110px !important;
+    max-width: 110px !important;
+    min-width: 110px !important;
+    width: 110px !important;
+    .sidebar-logo{
+      padding: 0px;
+      text-align: center;
+    }
+  }
+  .ant-menu-root{
+    padding: 1rem;
+  }
+  .ant-menu-item{
+    padding: 0px !important;
+    height: 70px;
+    border-radius: 15px;
+    place-content: center;
+    a{
+      text-align: center;
+      .menu-text{
+        display: block;
+        margin-left: 0px;
+        line-height: 1;
+      }
+    }
+  }
+  .ant-menu-submenu{
+    display: none;
+  }
+}

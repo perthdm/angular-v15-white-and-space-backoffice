@@ -1,6 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: "KanitBold";
+    src: local("KanitBold"),
+      url(assets/font/Kanit-Bold.ttf) format("truetype");
+}
+@font-face {
+    font-family: "Kanit";
+    src: local("Kanit"),
+      url(assets/font/Kanit-SemiBold.ttf) format("truetype");
+}
+body{
+    font-family: "Kanit";
+}
 button:focus-visible{
     outline: none;
+}
+.kanit{
+    font-family: "Kanit";
+}
+.kanit-bold{
+    font-family: "KanitBold";
 }
 .text-muted{
     color: #6c757d!important;

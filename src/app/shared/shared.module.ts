@@ -9,6 +9,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
   imports: [],
@@ -23,7 +24,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzMenuModule,
     NzTableModule,
     NzDividerModule,
-    NzModalModule
+    NzModalModule,
+    NzRadioModule
   ],
   declarations: [],
 })

@@ -1,6 +1,73 @@
 <div>
     <div nz-row>
-        <div nz-col nzFlex="auto">header</div>
+        <div nz-col nzFlex="auto" style="padding:40px 30px;">
+            <div nz-row>
+                <div nz-col [nzSpan]="24">
+                    <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
+                        <input type="text" nz-input placeholder=" ค้นหา name/serial/barcode" />
+                    </nz-input-group>
+                    <ng-template #suffixIconSearch>
+                        <span nz-icon nzType="search"></span>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="radio-style" style="margin-top: 30px;">
+                <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid" nzSize="large">
+                    <label nz-radio-button nzValue="A"><img src="../assets/img/coffee-shop.png"
+                            style="margin-right: 5px; margin-bottom: 7px;" />ทั้งหมด</label>
+                    <label nz-radio-button nzValue="B"><img src="../assets/img/cake.png"
+                            style="margin-right: 5px; " />ของหวาน</label>
+                    <label nz-radio-button nzValue="C"><img src="../assets/img/coffee.png"
+                            style="margin-right: 5px; margin-bottom: 9px;" />กาแฟ</label>
+                    <label nz-radio-button nzValue="D"><img src="../assets/img/milkshake.png"
+                            style="margin-right: 5px; margin-bottom: 5px;" />น้ำหวาน</label>
+                    <label nz-radio-button nzValue="F"><img src="../assets/img/product.png"
+                            style="margin-right: 10px;margin-bottom: 3px;" />สินค้า</label>
+                </nz-radio-group>
+            </div>
+            <div nz-row>
+                <div nz-col [nzSpan]="6">
+                    <div class="card-product"><img
+                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+                            width="100%" />
+                        <div class="product-name">Coffee cold brew 150ml.</div>
+                        <div class="price-tag">฿ 231</div>
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <div class="card-product"><img
+                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+                            width="100%" />
+                        <div class="product-name">Coffee cold brew 150ml.</div>
+                        <div class="price-tag">฿ 231</div>
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <div class="card-product"><img
+                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+                            width="100%" />
+                        <div class="product-name">Coffee cold brew 150ml.</div>
+                        <div class="price-tag">฿ 231</div>
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <div class="card-product"><img
+                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+                            width="100%" />
+                        <div class="product-name">Coffee cold brew 150ml.</div>
+                        <div class="price-tag">฿ 231</div>
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="6">
+                    <div class="card-product"><img
+                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+                            width="100%" />
+                        <div class="product-name">Coffee cold brew 150ml.</div>
+                        <div class="price-tag">฿ 231</div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div nz-col nzFlex="450px" class="menu-right-wrapper">
             <div style="height: 80px;padding: 10px 20px;">
                 <div nz-row [nzGutter]="20" style="height: 100%;">
@@ -13,15 +80,15 @@
                             border-radius: 82px;" />
                     </div>
                     <div nz-col nzFlex="auto" style="align-self: center;">
-                        <span class="text-bold">Admin istrator</span>
-                        <br/>
-                        <span class="text-muted">Admin</span>
+                        <span class="text-bold kanit" style="font-size: 1.15rem;">โพส นักขาย</span>
+                        <br />
+                        <span class="text-muted">Cashier</span>
                     </div>
                 </div>
 
             </div>
             <div style="padding:15px;">
-                <h2 class="text-bold">รายการอาหาร</h2>
+                <h2 class="text-bold kanit">รายการอาหาร</h2>
                 <div class="order-detail">
                     <div class="button-group-wrapper">
                         <div class="group-content">
@@ -121,10 +188,11 @@
                 </div>
                 <div style="margin-top: 30px; padding: 20px;">
                     <div nz-row [nzGutter]="10">
-                        <div nz-col [nzSpan]="12" class="text-start text-bold">Total</div>
-                        <div nz-col [nzSpan]="12" class="text-end text-bold">2000 THB</div>
+                        <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size:24px;">Total</div>
+                        <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size:32px;">2000 <span
+                                style="font-size:16px;">THB</span></div>
                     </div>
-                    <h2 class="text-bold" style="margin-top: 30px;">ช่องทางการจ่ายเงิน</h2>
+                    <h2 class="text-bold kanit" style="margin-top: 30px;">ช่องทางการจ่ายเงิน</h2>
                     <div nz-row [nzGutter]="30" style="margin-top: 10px;">
                         <div nz-col [nzSpan]="12"><button class="payment-button">เงินสด</button></div>
                         <div nz-col [nzSpan]="12"><button class="payment-button">โอน</button></div>
