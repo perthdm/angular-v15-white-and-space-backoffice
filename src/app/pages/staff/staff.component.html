@@ -1,1 +1,45 @@
-<p>staff works!</p>
+<div class="inner-content">
+    <h3 style="margin-bottom:24px">พนักงานร้าน</h3>
+    <div
+        style="padding:1.5rem; background-color:#fff; border-radius: 15px; margin-top:20px ; border: 1px solid #f2f4f6">
+        <!-- <h3 style="margin-bottom: 20px;">สินค้าใกล้หมด</h3> -->
+        <nz-table #basicTable [nzData]="dataList">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ชื่อ</th>
+                    <th>เพศ</th>
+                    <th>อีเมล</th>
+                    <th>ที่อยู่</th>
+                    <th>โทรศัพท์</th>
+                    <th>สร้างเมื่อ</th>
+                    <th>เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                    <td>{{index+1}}</td>
+                    <td>{{data.name.first}} {{data.name.last}}</td>
+                    <td>{{data.gender}}</td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.location.city}}, {{data.location.postcode}}, {{data.location.state}},
+                        {{data.location.country}}</td>
+                    <td>{{data.phone}}</td>
+                    <td>{{data.registered.date | date: 'short'}}</td>
+                    <td>
+                        <button nz-button nzType="primary">
+                            <span nz-icon nzType="eye" nzTheme="outline"></span>
+                        </button>
+                        <button nz-button nzType="primary"
+                            style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
+                                nz-icon nzType="edit" nzTheme="outline"></span>
+                        </button>
+                        <button nz-button nzType="primary" nzDanger>
+                            <span nz-icon nzType="delete" nzTheme="outline"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

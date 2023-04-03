@@ -18,7 +18,8 @@
                     <span class="menu-text">แดชบอร์ด</span></a>
             </li>
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span class="menu-text">รายงาน</span>
+                <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
+                        class="menu-text">รายงาน</span>
                 </a>
             </li>
             <li nz-menu-item nzMatchRouter>
@@ -26,24 +27,12 @@
                     <span class="menu-text">ประวัติขาย</span></a>
             </li>
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/stock"> <span nz-icon nzType="golden" nzTheme="fill"></span><span class="menu-text">สต็อก</span>
+                <a routerLink="/stock"> <span nz-icon nzType="golden" nzTheme="fill"></span><span
+                        class="menu-text">สต็อก</span>
                 </a>
             </li>
 
-            <!-- <li nz-submenu nzOpen nzTitle="SHOP" nzIcon="shop">
-                <ul>
 
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/overview">Overview</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/stock">Stock</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/receipt-history">Receipt History</a>
-                    </li>
-                </ul>
-            </li> -->
 
             <!-- <li nz-menu-group nzTitle="ADMIN" style="font-weight: bold; color:#29f"></li> -->
 
@@ -62,19 +51,20 @@
             </li>
 
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/login"><span nz-icon nzType="key" nzTheme="outline"></span><span class="menu-text">ออกจากระบบ</span></a>
+                <a routerLink="/login"><span nz-icon nzType="key" nzTheme="outline"></span><span
+                        class="menu-text">ออกจากระบบ</span></a>
             </li>
         </ul>
     </nz-sider>
 
     <nz-layout>
-        <!-- <nz-header>
+        <nz-header>
             <div class="app-header">
                 <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
                     <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
                 </span>
             </div>
-        </nz-header> -->
+        </nz-header>
         <nz-content>
             <router-outlet></router-outlet>
         </nz-content>

@@ -12,6 +12,7 @@ import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.compo
 import { SharedModule } from '../shared/shared.module';
 import { StaffComponent } from '../pages/staff/staff.component';
 import { ShopComponent } from '../pages/shop/shop.component';
+import { StaffService } from '../services/staff.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { ShopComponent } from '../pages/shop/shop.component';
     SidebarWrapperComponent,
     DashboardComponent,
     StaffComponent,
-    ShopComponent
+    ShopComponent,
   ],
   imports: [
     LayoutRoutingModule,
@@ -27,6 +28,7 @@ import { ShopComponent } from '../pages/shop/shop.component';
     NzLayoutModule,
     SharedModule,
   ],
+  providers: [StaffService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

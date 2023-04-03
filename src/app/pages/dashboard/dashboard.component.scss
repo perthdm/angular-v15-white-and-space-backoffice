@@ -1,10 +1,47 @@
 .card-dashboard {
   height: 150px;
-  border: 1px solid #f2f4f6;
-  border-radius: 20px;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
   // border-bottom: 5px solid #e9ecef;
   padding: 1.25rem;
   background-color: #fff;
+}
+
+.card-dashboard .card-title {
+  color: #9c9fa9;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.card-dashboard .card-sub-title {
+  color: #0b072f;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.card-dashboard .card-info {
+  color: #0b072f;
+  font-size: 16px;
+  position: absolute;
+  bottom: 20px;
+}
+
+.card-dashboard .card-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #eef7ff;
+  position: absolute;
+  right: 30px;
+  top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-dashboard .card-icon > span {
+  color: #52b1ff;
+  font-size: 24px;
 }
 
 [nz-button] {
@@ -16,7 +53,7 @@
 .ws-card-plain {
   padding: 1.25rem;
   background-color: #f7f7f7;
-  border-radius: 10px;
+  border-radius: 8px;
   height: 75px;
   display: flex;
   flex-wrap: nowrap;

@@ -25,7 +25,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzTableModule,
     NzDividerModule,
     NzModalModule,
-    NzRadioModule
+    NzRadioModule,
   ],
   declarations: [],
 })

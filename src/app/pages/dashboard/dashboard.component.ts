@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-
+import { Component, ElementRef, ViewChild } from '@angular/core';
 interface Person {
   key: string;
   name: string;
