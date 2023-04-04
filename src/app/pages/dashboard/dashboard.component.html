@@ -71,36 +71,42 @@
         style="padding:1.5rem; background-color:#fff; border-radius: 10px; margin-top:20px ; border: 1px solid #f2f4f6">
         <h3 style="margin-bottom: 20px;">สินค้าใกล้หมด</h3>
 
-        <div nz-row [nzGutter]="[0,24]" *ngFor="let data of dataList">
-            <div nz-col class="gutter-row" [nzXs]="24">
-                <div class="ws-card-plain">
-                    <div class="item" style="width:150px; color:#e91e63; font-size: 24px;"> <span nz-icon
-                            nzType="exclamation-circle" nzTheme="outline"></span></div>
-                    <div class="item">{{data.key}}</div>
-                    <div class="item">{{data.name}}</div>
-                    <div class="item">{{data.prize}} บาท</div>
-                    <div class="item">{{data.amount}} หน่วย</div>
-                    <div class="item">{{data.type}}</div>
-                    <div class="item">
-                        <button nz-button nzType="default" style="color:#29f; border-color:#f2f4f6; height: 35px;">
-                            แก้ไข
-                        </button>
-                        <button nz-button nzType="primary" style="height: 35px;">
-                            ยืนยัน
-                        </button>
-                        <!-- <button nz-button nzType="primary"
+        <div *ngIf="dataList.length ; else emptyComponent">
+            <div nz-row [nzGutter]="[0,24]" *ngFor="let data of dataList">
+                <div nz-col class="gutter-row" [nzXs]="24">
+                    <div class="ws-card-plain">
+                        <div class="item" style="width:150px; color:#e91e63; font-size: 24px;"> <span nz-icon
+                                nzType="exclamation-circle" nzTheme="outline"></span></div>
+                        <div class="item">{{data.key}}</div>
+                        <div class="item">{{data.name}}</div>
+                        <div class="item">{{data.prize}} บาท</div>
+                        <div class="item">{{data.amount}} หน่วย</div>
+                        <div class="item">{{data.type}}</div>
+                        <div class="item">
+                            <button nz-button nzType="default" style="color:#29f; border-color:#f2f4f6; height: 35px;">
+                                แก้ไข
+                            </button>
+                            <button nz-button nzType="primary" style="height: 35px;">
+                                ยืนยัน
+                            </button>
+                            <!-- <button nz-button nzType="primary"
                             style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54)">
                             <span nz-icon nzType="edit" nzTheme="outline"></span>
                         </button>
                         <button nz-button nzType="primary" nzDanger>
                             <span nz-icon nzType="delete" nzTheme="outline"></span>
                         </button> -->
+                        </div>
+
+
                     </div>
-
-
                 </div>
             </div>
         </div>
+
+        <ng-template #emptyComponent>
+            <nz-empty></nz-empty>
+        </ng-template>
 
 
 

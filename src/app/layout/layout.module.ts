@@ -9,25 +9,31 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 // === BINDING FOR USE ANOTHER MODULE === //
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.component';
-import { SharedModule } from '../shared/shared.module';
 import { StaffComponent } from '../pages/staff/staff.component';
 import { ShopComponent } from '../pages/shop/shop.component';
+import { PermissionComponent } from '../pages/permission/permission.component';
+import { SharedModule } from '../shared/shared.module';
+
 import { StaffService } from '../services/staff.service';
+import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.component';
 
 @NgModule({
+  imports: [
+    LayoutRoutingModule,
+    NzLayoutModule,
+    IconsProviderModule,
+    SharedModule,
+  ],
   declarations: [
     LayoutComponent,
     SidebarWrapperComponent,
     DashboardComponent,
     StaffComponent,
     ShopComponent,
+    PermissionComponent,
+    AntdSearchBox,
   ],
-  imports: [
-    LayoutRoutingModule,
-    IconsProviderModule,
-    NzLayoutModule,
-    SharedModule,
-  ],
+
   providers: [StaffService],
   bootstrap: [LayoutComponent],
 })

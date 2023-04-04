@@ -10,6 +10,9 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 @NgModule({
   imports: [],
@@ -26,6 +29,9 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzDividerModule,
     NzModalModule,
     NzRadioModule,
+    NzEmptyModule,
+    NzPaginationModule,
+    NzSpaceModule,
   ],
   declarations: [],
 })

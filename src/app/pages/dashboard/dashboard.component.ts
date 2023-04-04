@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { NgIfContext } from '@angular/common';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 interface Person {
   key: string;
   name: string;
@@ -14,6 +15,8 @@ interface Person {
 })
 export class DashboardComponent {
   dataList: Person[] = [];
+
+  emptyRef?: ElementRef<HTMLElement>;
 
   ngOnInit() {
     this.dataList = [

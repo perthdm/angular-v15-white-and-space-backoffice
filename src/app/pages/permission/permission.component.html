@@ -1,1 +1,70 @@
-<p>permission works!</p>
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สิทธิ์การเข้าถึง</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <!-- <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
+                <input type="text" nz-input placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+            </ng-template> -->
+            <antd-searchbox placeholder="ค้นหาชื่อตำแหน่ง"></antd-searchbox>
+        </div>
+    </div>
+
+    <div
+        style="padding-top:1.5rem; background-color:#fff; border-radius: 15px; margin-top:20px ; border: 1px solid #f2f4f6">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3>รายชื่อตำแหน่งงาน</h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มตำแหน่ง
+                </button>
+            </div>
+        </div>
+
+        <nz-table style="margin:20px 0px; " #basicTable [nzData]="permissionList" [nzShowPagination]="false">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ชื่อภาษาไทย</th>
+                    <th>ชื่อภาษาอังกฤษ</th>
+                    <th>สร้างเมื่อ</th>
+                    <th>แก้ไขล่าสุดเมื่อ</th>
+                    <th [nzAlign]="'center'">เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                    <td>{{index+1}}</td>
+                    <td>{{data.nameTh}}</td>
+                    <td>{{data.nameEn}}</td>
+                    <td>{{data.createdAt}}</td>
+                    <td>{{data.updatedAt}}</td>
+                    <td [nzAlign]="'center'" [nzBreakWord]="true">
+                        <nz-space>
+                            <button nz-button nzType="primary"
+                                style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
+                                    nz-icon nzType="edit" nzTheme="outline"></span>
+                            </button>
+                            <button nz-button nzType="primary" nzDanger>
+                                <span nz-icon nzType="delete" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <div style="padding:0px 20px 20px 20px; text-align: right;">
+            <nz-pagination [nzPageIndex]="1" [nzTotal]="20" [nzSimple]="false" [nzPageSize]="10"
+                [nzShowSizeChanger]="true">
+            </nz-pagination>
+        </div>
+    </div>
+</div>

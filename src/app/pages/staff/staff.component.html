@@ -1,9 +1,33 @@
 <div class="inner-content">
-    <h3 style="margin-bottom:24px">พนักงานร้าน</h3>
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ข้อมูลพนักงาน</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
+                <input type="text" nz-input placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน" />
+            </nz-input-group>
+            <ng-template #suffixIconSearch>
+                <span nz-icon nzType="search"></span>
+            </ng-template>
+        </div>
+    </div>
+
     <div
-        style="padding:1.5rem; background-color:#fff; border-radius: 15px; margin-top:20px ; border: 1px solid #f2f4f6">
-        <!-- <h3 style="margin-bottom: 20px;">สินค้าใกล้หมด</h3> -->
-        <nz-table #basicTable [nzData]="dataList">
+        style="paddingTop:1.5rem; background-color:#fff; border-radius: 15px; margin-top:20px ; border: 1px solid #f2f4f6">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3>รายชื่อพนักงาน</h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มพนักงาน
+                </button>
+            </div>
+        </div>
+
+        <nz-table style="margin:20px 0px; " #basicTable [nzData]="dataList" [nzShowPagination]="false">
             <thead>
                 <tr>
                     <th>#</th>
@@ -13,7 +37,7 @@
                     <th>ที่อยู่</th>
                     <th>โทรศัพท์</th>
                     <th>สร้างเมื่อ</th>
-                    <th>เครื่องมือ</th>
+                    <th [nzAlign]="'center'">เครื่องมือ</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,20 +50,28 @@
                         {{data.location.country}}</td>
                     <td>{{data.phone}}</td>
                     <td>{{data.registered.date | date: 'short'}}</td>
-                    <td>
-                        <button nz-button nzType="primary">
+                    <td [nzAlign]="'center'" [nzBreakWord]="true">
+                        <nz-space>
+                            <!-- <button nz-button nzType="primary">
                             <span nz-icon nzType="eye" nzTheme="outline"></span>
-                        </button>
-                        <button nz-button nzType="primary"
-                            style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
-                                nz-icon nzType="edit" nzTheme="outline"></span>
-                        </button>
-                        <button nz-button nzType="primary" nzDanger>
-                            <span nz-icon nzType="delete" nzTheme="outline"></span>
-                        </button>
+                        </button> -->
+                            <button nz-button nzType="primary"
+                                style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
+                                    nz-icon nzType="edit" nzTheme="outline"></span>
+                            </button>
+                            <button nz-button nzType="primary" nzDanger>
+                                <span nz-icon nzType="delete" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
                     </td>
                 </tr>
             </tbody>
         </nz-table>
+
+        <div style="padding:0px 20px 20px 20px; text-align: right;">
+            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="dataList.length" [nzSimple]="false"
+                [(nzPageSize)]="pageLimit" [nzShowSizeChanger]="true">
+            </nz-pagination>
+        </div>
     </div>
 </div>
