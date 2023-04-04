@@ -1,6 +1,6 @@
 <div>
     <div nz-row>
-        <div nz-col nzFlex="auto" style="padding:40px 30px;">
+        <div nz-col style="padding:40px 30px;width:calc(100% - 450px);">
             <div nz-row>
                 <div nz-col [nzSpan]="24">
                     <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
@@ -29,7 +29,7 @@
                 </nz-radio-group>
             </div>
             <div nz-row>
-                <div nz-col [nzSpan]="6" *ngFor="let item of list">
+                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" *ngFor="let item of list">
                     <div class="card-product"><img
                             src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
                             width="100%" alt="item" />
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div nz-col nzFlex="450px" class="menu-right-wrapper">
+        <div nz-col style="width:450px" class="menu-right-wrapper">
             <div style="height: 80px;padding: 10px 20px;">
                 <div nz-row [nzGutter]="20" style="height: 100%;">
                     <div nz-col nzFlex="60px" style="align-self: center;">
@@ -80,7 +80,7 @@
                                 </div>
                                 <div nz-col nzFlex="125px" class="price-tag">59 <span>THB</span></div>
                             </div>
-                        </div><button class="group-del"><span nz-icon nzType="delete" nzTheme="fill"></span></button>
+                        </div><button class="group-del"><span nz-icon nzType="delete" nzTheme="fill" style="color:#ff5a5a;"></span></button>
                     </div>
                 </div>
                 <div style="margin-top: 30px; padding: 20px;">
@@ -98,4 +98,7 @@
             </div>
         </div>
     </div>
+    <div class="menu-footer"><button nz-button style="background-color: #ee4646;color: white;border-color:#ee4646"><span nz-icon
+                nzType="clear" nzTheme="outline"></span>เคลียร์</button><button nz-button
+            nzType="primary"><span nz-icon nzType="pause" nzTheme="outline"></span>พัก</button><button nz-button nzType="primary"><span nz-icon nzType="ordered-list" nzTheme="outline"></span>ดึงออเดอร์</button></div>
 </div>
