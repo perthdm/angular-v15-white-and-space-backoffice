@@ -11,7 +11,7 @@ const ENDPOINT = {
 
 @Injectable()
 export class StaffService {
-  constructor(private http: HttpClient) {}
+  constructor(private readonly http: HttpClient) {}
 
   getStaff(): Observable<Staff> {
     return this.http.get<Staff>(ENDPOINT.GET_USER);

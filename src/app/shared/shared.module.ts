@@ -13,6 +13,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 
 @NgModule({
   imports: [],
@@ -32,6 +33,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzEmptyModule,
     NzPaginationModule,
     NzSpaceModule,
+    NzProgressModule,
   ],
   declarations: [],
 })
