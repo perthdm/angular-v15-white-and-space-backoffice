@@ -1,0 +1,63 @@
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">รายงาน</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <!-- <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox> -->
+            <nz-range-picker style="height: 50px; float: right; border-radius: 10px;" [(ngModel)]="date"
+                (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+    </div>
+
+    <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3>สรุปยอดระบบ</h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <!-- <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มพนักงาน
+                </button> -->
+
+            </div>
+        </div>
+
+        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="dataList" [nzShowPagination]="false"
+            [nzFrontPagination]="false" [nzLoading]="isLoading">
+            <thead>
+                <tr>
+                    <th [nzAlign]="'center'">วัน/เดือน/ปี</th>
+                    <th [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th>
+                    <th [nzAlign]="'right'" nzWidth="70%">จำนวนบิล</th>
+                    <th [nzAlign]="'right'">ยอดขาย (บาท)</th>
+                    <th [nzAlign]="'center'">รายการ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                    <td [nzAlign]="'center'">{{data.date}}</td>
+                    <td [nzAlign]="'center'">{{data.assignee}}</td>
+                    <td [nzAlign]="'right'">{{data.bill}}</td>
+                    <td [nzAlign]="'right'">{{data.profit.toLocaleString()}}</td>
+                    <td [nzAlign]="'center'">
+                        <button nz-button nzType="primary" nzShape="circle">
+                            <span nz-icon nzType="search" nzTheme="outline"></span>
+                        </button>
+                    </td>
+
+                </tr>
+                <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
+                    <td [nzAlign]="'center'">รวม</td>
+                    <td [nzAlign]="'center'"></td>
+                    <td [nzAlign]="'right'">{{ totalBill.toLocaleString() }}</td>
+                    <td [nzAlign]="'right'">{{ totalProfit.toLocaleString() }}</td>
+                    <td [nzAlign]="'center'"></td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+
+    </div>
+</div>

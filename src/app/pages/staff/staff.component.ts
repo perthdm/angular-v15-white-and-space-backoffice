@@ -12,6 +12,7 @@ export class StaffComponent {
   dataList: Staff[] | any;
   currentPage: number = 1;
   pageLimit: number = 10;
+  isLoading: boolean = true;
 
   constructor(private staffService: StaffService) {}
 
@@ -25,6 +26,7 @@ export class StaffComponent {
         }
         this.dataList = next;
         this.currentPage = 1;
+        this.isLoading = false;
       },
       (err) => {
         console.log(err);

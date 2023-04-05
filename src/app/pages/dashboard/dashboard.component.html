@@ -122,7 +122,10 @@
                         <div class="item">{{data.name}}</div>
                         <div class="item">{{data.prize}} บาท</div>
                         <div class="item">{{data.amount}} หน่วย</div>
-                        <div class="item">{{data.type}}</div>
+                        <div class="item">
+                            <nz-tag *ngIf="data.type == 'ของใช้งาน'" [nzColor]="'volcano'">{{data.type}}</nz-tag>
+                            <nz-tag *ngIf="data.type == 'วัตถุดิบ'" [nzColor]="'geekblue'">{{data.type}}</nz-tag>
+                        </div>
                         <div class="item">
                             <nz-space>
                                 <button nz-button nzType="default"

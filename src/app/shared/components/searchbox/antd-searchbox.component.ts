@@ -11,8 +11,8 @@ import { Component, Input } from '@angular/core';
     <ng-template #suffixIconSearch>
       <span nz-icon nzType="search"></span>
     </ng-template>`,
-  styleUrls: ['./antd-search.scss'],
+  styleUrls: ['./antd-searchbox.component.scss'],
 })
 export class AntdSearchBox {
-  @Input() placeholder?: string;
+  @Input() placeholder: string = 'ค้นหารายการ';
 }

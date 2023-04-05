@@ -14,6 +14,8 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 
 @NgModule({
   imports: [],
@@ -34,6 +36,8 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
     NzPaginationModule,
     NzSpaceModule,
     NzProgressModule,
+    NzTagModule,
+    NzDatePickerModule,
   ],
   declarations: [],
 })

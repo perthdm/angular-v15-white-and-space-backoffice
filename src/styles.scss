@@ -1,43 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 @font-face {
-    font-family: "KanitBold";
-    src: local("KanitBold"),
-      url(assets/font/Kanit-Bold.ttf) format("truetype");
+  font-family: "KanitBold";
+  src: local("KanitBold"), url(assets/font/Kanit-Bold.ttf) format("truetype");
 }
 @font-face {
-    font-family: "Kanit";
-    src: local("Kanit"),
-      url(assets/font/Kanit-SemiBold.ttf) format("truetype");
+  font-family: "Kanit";
+  src: local("Kanit"), url(assets/font/Kanit-SemiBold.ttf) format("truetype");
 }
-body{
-    font-family: "Kanit";
+body {
+  font-family: "Kanit";
 }
-button:focus-visible{
-    outline: none;
+button:focus-visible {
+  outline: none;
 }
-.kanit{
-    font-family: "Kanit";
+.kanit {
+  font-family: "Kanit";
 }
-.kanit-bold{
-    font-family: "KanitBold";
+.kanit-bold {
+  font-family: "KanitBold";
 }
-.text-muted{
-    color: #6c757d!important;
+.text-muted {
+  color: #6c757d !important;
 }
-.text-start{
-    text-align: start !important;
+.text-start {
+  text-align: start !important;
 }
-.text-end{
-    text-align: end !important;
+.text-end {
+  text-align: end !important;
 }
-.text-bold{
-    font-weight: bold;
+.text-bold {
+  font-weight: bold;
 }
-.baseline{
-    align-self: baseline;
+.baseline {
+  align-self: baseline;
 }
 .inner-content {
-    padding: 1.5rem 3rem;
-    background: #f8fafc;
-    height: 100%;
-  }
+  padding: 1.5rem 3rem;
+  background: #f8fafc;
+  height: 100%;
+}
+
+.app-content {
+  padding-top: 1.5rem;
+  background-color: #fff;
+  border-radius: 15px;
+  margin-top: 20px;
+  border: 1px solid #f2f4f6;
+  min-height: 400px;
+}

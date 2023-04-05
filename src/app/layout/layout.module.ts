@@ -16,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
 
 import { StaffService } from '../services/staff.service';
 import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.component';
+import { ReportComponent } from '../pages/report/report.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.com
     StaffComponent,
     ShopComponent,
     PermissionComponent,
+    ReportComponent,
     AntdSearchBox,
   ],
 

@@ -8,6 +8,7 @@ import { StaffComponent } from '../pages/staff/staff.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
+import { ReportComponent } from '../pages/report/report.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'setting',
         component: SettingComponent,
+      },
+      {
+        path: 'report',
+        component: ReportComponent,
       },
     ],
   },

@@ -21,32 +21,32 @@ export class DashboardComponent {
   ngOnInit() {
     this.dataList = [
       {
-        key: '0001',
+        key: 'PD0001',
         name: 'กระเทียมพริกไทย',
         prize: 200,
         amount: 14,
-        type: 'New York No. 1 Lake Park',
+        type: 'วัตถุดิบ',
       },
       {
-        key: '0002',
+        key: 'PD0002',
         name: 'ใบกระเพรา',
         prize: 40,
         amount: 2,
-        type: 'London No. 1 Lake Park',
+        type: 'วัตถุดิบ',
       },
       {
-        key: '0003',
+        key: 'PD0003',
         name: 'น้ำเชื่อม',
         prize: 80,
         amount: 12,
-        type: 'Sidney No. 1 Lake Park',
+        type: 'วัตถุดิบ',
       },
       {
-        key: '0004',
+        key: 'PD0004',
         name: 'หลอด',
         prize: 50,
         amount: 36,
-        type: 'Sidney No. 1 Lake Park',
+        type: 'ของใช้งาน',
       },
     ];
   }
