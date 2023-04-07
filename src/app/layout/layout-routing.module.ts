@@ -9,7 +9,7 @@ import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
 import { ReportComponent } from '../pages/report/report.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
-import { TimeStampComponent } from '../pages/time-stamp/time-stamp.component';
+import { AttendanceComponent } from '../pages/attendance/attendance.component';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path: 'time-stamp',
-        component: TimeStampComponent,
+        component: AttendanceComponent,
       },
       {
         path: 'staff',

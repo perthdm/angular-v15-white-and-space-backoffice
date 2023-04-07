@@ -17,7 +17,7 @@ import { SharedModule } from '../shared/shared.module';
 import { StaffService } from '../services/staff.service';
 import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.component';
 import { ReportComponent } from '../pages/report/report.component';
-import { TimeStampComponent } from '../pages/time-stamp/time-stamp.component';
+import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
 
 @NgModule({
@@ -35,7 +35,7 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
     StaffComponent,
     PermissionComponent,
     ReportComponent,
-    TimeStampComponent,
+    AttendanceComponent,
     BillingHistoryComponent,
     AntdSearchBox,
   ],

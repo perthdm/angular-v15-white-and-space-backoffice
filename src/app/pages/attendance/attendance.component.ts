@@ -13,11 +13,11 @@ interface StaffAttendance {
 }
 
 @Component({
-  selector: 'app-time-stamp',
-  templateUrl: './time-stamp.component.html',
-  styleUrls: ['./time-stamp.component.scss'],
+  selector: 'app-attendance',
+  templateUrl: './attendance.component.html',
+  styleUrls: ['./attendance.component.scss'],
 })
-export class TimeStampComponent {
+export class AttendanceComponent {
   timeStampList: Attendance[] = [];
   employeeList: string[] = [];
   isLoading: boolean = true;
