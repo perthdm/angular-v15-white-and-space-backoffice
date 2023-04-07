@@ -1,0 +1,51 @@
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ประวัติการเข้างาน</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+        </div>
+    </div>
+
+    <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3>รายละเอียดการเข้า-ออก</h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue">
+                    <nz-option *ngFor="let item of employeeList" [nzLabel]="item" [nzValue]="item"></nz-option>
+                </nz-select>
+            </div>
+        </div>
+
+        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="timeStampList" [nzShowPagination]="false"
+            [nzFrontPagination]="false" [nzLoading]="isLoading">
+            <thead>
+                <tr>
+                    <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
+                    <th id="name" [nzAlign]="'center'">ชื่อพนักงาน</th>
+                    <th id="empty" nzWidth="60%"></th>
+                    <th id="checkIn" [nzAlign]="'center'">เวลาเข้างาน</th>
+                    <th id="checkOut" [nzAlign]="'center'">เวลาออกงาน</th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let data of basicTable.data ;let index = index">
+                <tr style="background-color: #46a8fa;">
+                    <td [nzAlign]="'center'" style="color:white ; padding:4px ; font-weight: bold;">{{data.date}}</td>
+                    <td [nzAlign]="'center'" [colSpan]="24"></td>
+                </tr>
+                <tr *ngFor="let em of data.employee;">
+                    <td></td>
+                    <td [nzAlign]="'center'">{{em.name}}</td>
+                    <td></td>
+                    <td [nzAlign]="'center'">{{em.checkIn}}</td>
+                    <td [nzAlign]="'center'">{{em.checkOut}}</td>
+
+
+                </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

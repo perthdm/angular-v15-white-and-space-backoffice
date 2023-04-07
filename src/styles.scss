@@ -48,3 +48,10 @@ button:focus-visible {
   border: 1px solid #f2f4f6;
   min-height: 400px;
 }
+
+.ant-picker-range,
+.ant-picker {
+  height: 50px;
+  float: right;
+  border-radius: 10px !important;
+}

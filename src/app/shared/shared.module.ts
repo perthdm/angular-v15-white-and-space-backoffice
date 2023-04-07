@@ -16,6 +16,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 @NgModule({
   imports: [],
@@ -38,6 +39,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
     NzProgressModule,
     NzTagModule,
     NzDatePickerModule,
+    NzSelectModule,
   ],
   declarations: [],
 })
