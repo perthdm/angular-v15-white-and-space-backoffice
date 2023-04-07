@@ -73,43 +73,38 @@ nz-header {
 //   margin: 24px;
 // }
 
-
 .ant-layout {
-  background-color: #F9F9FB !important;
+  background-color: #f9f9fb !important;
 }
-@media(max-width:1200px){
-  .menu-sidebar{
+@media (max-width: 1200px) {
+  .menu-sidebar {
     flex: 0 0 110px !important;
     max-width: 110px !important;
     min-width: 110px !important;
     width: 110px !important;
-    .sidebar-logo{
+    .sidebar-logo {
       padding: 0px;
       text-align: center;
     }
   }
-  .ant-menu-root{
+  .ant-menu-root {
     padding: 1rem;
   }
-  .ant-menu-item{
+  .ant-menu-item {
     padding: 0px !important;
     height: 70px;
     border-radius: 15px;
     place-content: center;
-    a{
+    a {
       text-align: center;
-      .menu-text{
+      .menu-text {
         display: block;
         margin-left: 0px;
         line-height: 1;
       }
     }
   }
-  .ant-menu-submenu{
+  .ant-menu-submenu {
     display: none;
   }
-}
-
-.test{
-  min-height: 10000px;
 }

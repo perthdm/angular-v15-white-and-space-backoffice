@@ -13,6 +13,7 @@ export class StaffComponent {
   currentPage: number = 1;
   pageLimit: number = 10;
   isLoading: boolean = true;
+  isVisible: boolean = false;
 
   constructor(private staffService: StaffService) {}
 
@@ -32,5 +33,19 @@ export class StaffComponent {
         console.log(err);
       }
     );
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
   }
 }

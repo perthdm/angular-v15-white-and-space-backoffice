@@ -14,7 +14,7 @@
                 <h3>รายชื่อพนักงาน</h3>
             </div>
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;">
+                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;" (click)="showModal()">
                     <span nz-icon nzType="plus" nzTheme="outline"></span>
                     เพิ่มพนักงาน
                 </button>
@@ -68,5 +68,15 @@
                 [(nzPageSize)]="pageLimit" [nzShowSizeChanger]="true">
             </nz-pagination>
         </div>
+
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
+                <p>Content one</p>
+                <p>Content two</p>
+                <p>Content three</p>
+            </ng-container>
+        </nz-modal>
     </div>
 </div>

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ReceiptHistoryComponent } from './receipt-history.component';
+import { TimeStampComponent } from './attendance.component';
 
-describe('ReceiptHistoryComponent', () => {
-  let component: ReceiptHistoryComponent;
-  let fixture: ComponentFixture<ReceiptHistoryComponent>;
+describe('TimeStampComponent', () => {
+  let component: TimeStampComponent;
+  let fixture: ComponentFixture<TimeStampComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReceiptHistoryComponent ]
+      declarations: [ TimeStampComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ReceiptHistoryComponent);
+    fixture = TestBed.createComponent(TimeStampComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
