@@ -32,7 +32,7 @@
                 </tr>
             </thead>
             <tbody *ngFor="let data of basicTable.data ;let index = index">
-                <tr style="background-color: #46a8fa;">
+                <tr style="background-color: #4479a4;">
                     <td [nzAlign]="'center'" style="color:white ; padding:4px ; font-weight: bold;">{{data.date}}</td>
                     <td [nzAlign]="'center'" [colSpan]="24"></td>
                 </tr>
@@ -42,8 +42,6 @@
                     <td></td>
                     <td [nzAlign]="'center'">{{em.checkIn}}</td>
                     <td [nzAlign]="'center'">{{em.checkOut}}</td>
-
-
                 </tr>
             </tbody>
         </nz-table>
