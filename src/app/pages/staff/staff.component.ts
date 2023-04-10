@@ -18,6 +18,10 @@ export class StaffComponent {
   constructor(private staffService: StaffService) {}
 
   ngOnInit() {
+    this.fetchStaff();
+  }
+
+  fetchStaff() {
     this.staffService.getStaff().subscribe(
       (res) => {
         let { info, results } = res;
