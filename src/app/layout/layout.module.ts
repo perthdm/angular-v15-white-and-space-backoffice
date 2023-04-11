@@ -12,6 +12,7 @@ import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.compo
 import { StaffComponent } from '../pages/staff/staff.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { PermissionComponent } from '../pages/permission/permission.component';
+import { StockComponent } from '../pages/stock/stock.component';
 import { SharedModule } from '../shared/shared.module';
 
 import { StaffService } from '../services/staff.service';
@@ -39,6 +40,7 @@ import { AuthGuardService } from '../services/auth.service';
     AttendanceComponent,
     BillingHistoryComponent,
     AntdSearchBox,
+    StockComponent
   ],
 
   providers: [StaffService, AuthGuardService],

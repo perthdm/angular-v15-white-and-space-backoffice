@@ -1,1 +1,73 @@
-<p>stock works!</p>
+<div class="inner-content">
+    <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สต็อกสินค้า</h3>
+    <div class="radio-style">
+        <nz-select ngModel="all" style="width: 150px;" class="select-style">
+            <nz-option nzValue="all" nzLabel="ทั้งหมด"></nz-option>
+            <nz-option nzValue="product" nzLabel="สินค้า"></nz-option>
+            <nz-option nzValue="coffee" nzLabel="กาแฟ"></nz-option>
+        </nz-select>
+        <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid" nzSize="large">
+            <label nz-radio-button nzValue="A">
+                ทั้งหมด <span>(99)</span>
+            </label>
+            <label nz-radio-button nzValue="B">
+                ของหวาน <span>(9)</span></label>
+            <label nz-radio-button nzValue="C">กาแฟ <span>(9)</span></label>
+            <label nz-radio-button nzValue="D">น้ำหวาน <span>(9)</span></label>
+            <label nz-radio-button nzValue="F">สินค้า <span>(9)</span></label>
+        </nz-radio-group>
+        <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;">
+            <span nz-icon nzType="plus" nzTheme="outline"></span>
+            เพิ่มสินค้า
+        </button>
+        <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
+            <input type="text" nz-input placeholder=" ค้นหา Name / Serial / Barcode" />
+        </nz-input-group>
+        <ng-template #suffixIconSearch>
+            <span nz-icon nzType="search"></span>
+        </ng-template>
+    </div>
+    <div class="app-content">
+
+        <nz-table style="margin:20px 0px; " #basicTable [nzData]="stockList" [nzShowPagination]="false"
+            style="min-height: 300px;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ชื่อสินค้า</th>
+                    <th>รหัส</th>
+                    <th>ราคา</th>
+                    <th>จำนวน</th>
+                    <th>หมวดหมู่</th>
+                    <th [nzAlign]="'center'">เครื่องมือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                    <td>{{index+1}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.sku}}</td>
+                    <td>{{data.price}}</td>
+                    <td>{{data.amount}}</td>
+                    <td>{{data.category}}</td>
+                    <td [nzAlign]="'center'">
+                        <nz-space>
+                            <button nz-button nzType="primary"
+                                style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
+                                    nz-icon nzType="edit" nzTheme="outline"></span>
+                            </button>
+                            <button nz-button nzType="primary" nzDanger>
+                                <span nz-icon nzType="delete" nzTheme="outline"></span>
+                            </button>
+                        </nz-space>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <div style="padding:0px 20px 20px 20px; text-align: right;">
+            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="dataCount" [nzSimple]="false"
+                [(nzPageSize)]="pageLimit" [nzShowSizeChanger]="true">
+            </nz-pagination>
+        </div>
+    </div>
+</div>

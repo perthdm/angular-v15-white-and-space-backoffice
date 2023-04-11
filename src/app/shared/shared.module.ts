@@ -18,7 +18,8 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzMessageModule } from 'ng-zorro-antd/message';
-
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
+  
 @NgModule({
   imports: [],
   exports: [
@@ -42,6 +43,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
     NzDatePickerModule,
     NzSelectModule,
     NzMessageModule,
+    NzBadgeModule
   ],
   declarations: [],
 })
