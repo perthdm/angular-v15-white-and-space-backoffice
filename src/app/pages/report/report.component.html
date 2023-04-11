@@ -4,35 +4,25 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">รายงาน</h3>
         </div>
         <div nz-col [nzSpan]="16">
-            <!-- <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox> -->
             <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
         </div>
     </div>
 
     <div class="app-content">
         <div nz-row style="padding:0px 20px">
-            <div nz-col [nzSpan]="8">
-                <h3>สรุปยอดระบบ</h3>
-            </div>
-            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <!-- <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;">
-                    <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    เพิ่มพนักงาน
-                </button> -->
-
-            </div>
+            <h3>สรุปยอดระบบ</h3>
         </div>
 
         <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="dataList" [nzShowPagination]="false"
             [nzFrontPagination]="false" [nzLoading]="isLoading">
             <thead>
                 <tr>
-                    <th [nzAlign]="'center'">วัน/เดือน/ปี</th>
-                    <th [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th>
-                    <th nzWidth="60%"></th>
-                    <th [nzAlign]="'center'">จำนวนบิล</th>
-                    <th [nzAlign]="'right'">ยอดขาย (บาท)</th>
-                    <th [nzAlign]="'center'"></th>
+                    <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
+                    <th id="assignee" [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th>
+                    <th id="empty" nzWidth="60%"></th>
+                    <th id="bill" [nzAlign]="'center'">จำนวนบิล</th>
+                    <th id="profit" [nzAlign]="'right'">ยอดขาย (บาท)</th>
+                    <th id="empty2"></th>
                 </tr>
             </thead>
             <tbody>

@@ -19,6 +19,7 @@ import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.com
 import { ReportComponent } from '../pages/report/report.component';
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
+import { AuthGuardService } from '../services/auth.service';
 
 @NgModule({
   imports: [
@@ -40,7 +41,7 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
     AntdSearchBox,
   ],
 
-  providers: [StaffService],
+  providers: [StaffService, AuthGuardService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

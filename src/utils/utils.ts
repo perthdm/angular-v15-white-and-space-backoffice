@@ -1,3 +1,5 @@
+export const API_DOMAIN = 'http://localhost:3000';
+
 export const formatDateTime = (time?: any, type?: string) => {
   let d = time ? new Date(time) : new Date();
   let h = timeTwoDigit(d.getHours());

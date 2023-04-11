@@ -10,11 +10,13 @@ import { LayoutComponent } from './layout.component';
 import { ReportComponent } from '../pages/report/report.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
+import { AuthGuardService } from '../services/auth.service';
 
 const routes: Routes = [
   {
     path: '',
     component: LayoutComponent,
+    canActivate: [AuthGuardService],
     children: [
       {
         path: 'shop',
