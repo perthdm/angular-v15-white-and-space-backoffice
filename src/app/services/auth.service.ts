@@ -36,17 +36,20 @@ export class AuthGuardService implements CanActivate {
 
   permissionCheck(url: string): boolean {
     const token = localStorage.getItem('token');
-    // if (url === '/login' || url === '/') {
-    //   if (token) {
-    //     this.router.navigate([url]);
-    //   }
-    // }
 
     if (!token) {
       this.router.navigate(['']);
       return false;
     }
 
+    // if (url === '/login' || url === '/') {
+    //   console.log('OK');
+
+    //   if (token) {
+    //     this.router.navigate(['/dashboard']);
+    //   }
+    // }
+    // this.router.navigate(['/dashboard']);
     return true;
   }
 }

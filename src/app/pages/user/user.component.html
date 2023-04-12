@@ -1,0 +1,66 @@
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ผู้ใช้งานระบบ</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox>
+        </div>
+    </div>
+
+    <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3></h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;" (click)="showModal()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มผู้ใช้งาน
+                </button>
+            </div>
+        </div>
+
+        <nz-table style="margin:20px 0px; " #basicTable [nzData]="dataList" [nzShowPagination]="false"
+            [nzLoading]="isLoading">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>ชื่อผู้ใช้งาน</th>
+                    <th>ตำแหน่ง</th>
+                    <th>สร้างเมื่อ</th>
+                    <th>แก้ไขล่าสุดเมื่อ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor:pointer">
+                    <td>{{index+1}}</td>
+                    <td>{{ data.username}}</td>
+                    <td>{{ data.role}}</td>
+                    <td>{{ data.createdAt }}</td>
+                    <td>{{ data.updatedAt }}</td>
+                </tr>
+            </tbody>
+        </nz-table>
+
+        <div style="padding:0px 20px 20px 20px; text-align: right;">
+            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true">
+            </nz-pagination>
+        </div>
+
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มผู้ใช้งานระบบ" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleSubmitData()" nzMaskClosable="false">
+            <ng-container *nzModalContent>
+
+                <h4>Username</h4>
+                <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" [(ngModel)]="username" />
+
+                <h4 style="margin-top: 8px;">Password</h4>
+                <input nz-input placeholder="กรุณากรอกรหัสผ่าน" type="password" [(ngModel)]="password" />
+
+            </ng-container>
+        </nz-modal>
+    </div>
+</div>

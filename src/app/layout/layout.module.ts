@@ -21,6 +21,8 @@ import { ReportComponent } from '../pages/report/report.component';
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
 import { AuthGuardService } from '../services/auth.service';
+import { UserComponent } from '../pages/user/user.component';
+import { UserService } from '../services/user.service';
 
 @NgModule({
   imports: [
@@ -40,10 +42,11 @@ import { AuthGuardService } from '../services/auth.service';
     AttendanceComponent,
     BillingHistoryComponent,
     AntdSearchBox,
-    StockComponent
+    StockComponent,
+    UserComponent,
   ],
 
-  providers: [StaffService, AuthGuardService],
+  providers: [StaffService, AuthGuardService, UserService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

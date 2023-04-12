@@ -11,6 +11,7 @@ import { ReportComponent } from '../pages/report/report.component';
 import { BillingHistoryComponent } from '../pages/billing-history/billing-history.component';
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { AuthGuardService } from '../services/auth.service';
+import { UserComponent } from '../pages/user/user.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
       {
         path: 'time-stamp',
         component: AttendanceComponent,
+      },
+      {
+        path: 'user',
+        component: UserComponent,
       },
       {
         path: 'staff',
