@@ -14,8 +14,7 @@ import { formatDateTime } from 'src/utils/utils';
 })
 export class UserComponent {
   dataList: User[] | any;
-  currentPage: number = 1;
-  pageLimit: number = 10;
+
   total: number = 0;
   isLoading: boolean = true;
   isVisible: boolean = false;
@@ -23,6 +22,11 @@ export class UserComponent {
   loginForm!: FormGroup;
   username?: string;
   password?: string;
+
+  page: number = 1;
+  pageLimit: number = 10;
+  query: string = '';
+  // expandedRowKeys: number[] = [];
 
   constructor(
     private userService: UserService,
@@ -34,16 +38,23 @@ export class UserComponent {
   }
 
   fetchUser() {
-    this.userService.getAllUser(this.currentPage, this.pageLimit).subscribe(
+    let pageConfig = {
+      page: this.page,
+      limit: this.pageLimit,
+      query: this.query,
+    };
+    console.log(pageConfig);
+
+    this.userService.getAllUser(pageConfig).subscribe(
       (res) => {
-        console.log(res);
         let { total, page, last_page, items } = res;
         items.map((us: User) => {
           us.createdAt = formatDateTime(us.createdAt);
           us.updatedAt = formatDateTime(us.updatedAt);
         });
+        console.log(items);
+
         this.dataList = items;
-        this.currentPage = 1;
         this.total = total;
         this.isLoading = false;
       },
@@ -70,7 +81,7 @@ export class UserComponent {
       let reqData = { username: this.username, password: this.password };
       this.userService.addUser(reqData).subscribe(
         (res) => {
-          console.log(res);
+          // console.log(res);
           this.resetData();
           this.fetchUser();
           this.message.create('success', `เพิ่มผู้ใช้งานสำเร็จ`);
@@ -90,4 +101,25 @@ export class UserComponent {
     console.log('Button cancel clicked!');
     this.isVisible = false;
   }
+
+  onChangePageLimit(nextLimit: number) {
+    this.pageLimit = nextLimit;
+    this.fetchUser();
+  }
+
+  // onExpandChange(expanded: boolean, index: number): void {
+  //   if (expanded) {
+  //     this.expandedRowKeys.push(index);
+  //   } else {
+  //     this.expandedRowKeys = this.expandedRowKeys.filter(
+  //       (key) => key !== index
+  //     );
+  //   }
+  // }
+
+  // isRowExpanded(index: number): boolean {
+  //   console.log(index);
+
+  //   return this.expandedRowKeys.includes(index);
+  // }
 }

@@ -21,8 +21,8 @@
             </div>
         </div>
 
-        <nz-table style="margin:20px 0px; " #basicTable [nzData]="dataList" [nzShowPagination]="false"
-            [nzLoading]="isLoading">
+        <nz-table style="margin:20px 0px;" #userTable [nzData]="dataList" [nzShowPagination]="false"
+            [nzLoading]="isLoading" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th>#</th>
@@ -33,8 +33,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor:pointer">
-                    <td>{{index+1}}</td>
+                <tr *ngFor="let data of userTable.data ;let index = index" style="cursor:pointer">
+                    <td>{{ pageLimit*(page-1)+(index+1) }}</td>
                     <td>{{ data.username}}</td>
                     <td>{{ data.role}}</td>
                     <td>{{ data.createdAt }}</td>
@@ -44,9 +44,14 @@
         </nz-table>
 
         <div style="padding:0px 20px 20px 20px; text-align: right;">
-            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
-                [nzShowSizeChanger]="true">
+            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchUser()"
+                (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
             </nz-pagination>
+
+            <ng-template #rangeTemplate let-range="range" let-total>
+                {{ range[0] }}-{{ range[1] }} of {{ total }} items
+            </ng-template>
         </div>
 
 

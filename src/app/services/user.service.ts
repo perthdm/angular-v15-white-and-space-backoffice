@@ -5,9 +5,15 @@ import { UserPagination } from 'src/app/model/user.model';
 import { API_DOMAIN } from 'src/utils/utils';
 // import { map } from 'rxjs/operators';
 
+interface Pagination {
+  page: number;
+  limit: number;
+  query?: string;
+}
+
 const ENDPOINT = {
-  GET_USER: (page: number, limit: number) =>
-    `${API_DOMAIN}/user?page=${page}&limit=${limit}`,
+  GET_USER: ({ page, limit, query }: Pagination) =>
+    `${API_DOMAIN}/user?page=${page}&limit=${limit}&query=${query}`,
   ADD_USER: `${API_DOMAIN}/user`,
 };
 
@@ -15,8 +21,8 @@ const ENDPOINT = {
 export class UserService {
   constructor(private readonly http: HttpClient) {}
 
-  getAllUser(page: number, limit: number): Observable<any> {
-    return this.http.get<UserPagination>(ENDPOINT.GET_USER(page, limit), {
+  getAllUser(pageConfig: any): Observable<any> {
+    return this.http.get<UserPagination>(ENDPOINT.GET_USER(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
