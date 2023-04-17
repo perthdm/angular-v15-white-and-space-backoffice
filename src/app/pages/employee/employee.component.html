@@ -16,13 +16,13 @@
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
                 <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;" (click)="showModal()">
                     <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    เพิ่มพนักงาน
+                    เพิ่มข้อมูลพนักงาน
                 </button>
             </div>
         </div>
 
         <nz-table style="margin:20px 0px; " #basicTable [nzData]="dataList" [nzShowPagination]="false"
-            [nzLoading]="isLoading">
+            [nzLoading]="isLoading" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th>#</th>
@@ -32,19 +32,20 @@
                     <th>ที่อยู่</th>
                     <th>โทรศัพท์</th>
                     <th>สร้างเมื่อ</th>
+                    <th>เงินเดือน</th>
                     <th [nzAlign]="'center'">เครื่องมือ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
                     <td>{{index+1}}</td>
-                    <td>{{data.name.first}} {{data.name.last}}</td>
-                    <td>{{data.gender}}</td>
-                    <td>{{data.email}}</td>
-                    <td>{{data.location.city}}, {{data.location.postcode}}, {{data.location.state}},
-                        {{data.location.country}}</td>
-                    <td>{{data.phone}}</td>
-                    <td>{{data.registered.date | date: 'short'}}</td>
+                    <td>{{data.name}} </td>
+                    <td> ชาย | หญิง</td>
+                    <td>{{data.name}}@whiteNspace.com</td>
+                    <td>-</td>
+                    <td>{{data.telephone}}</td>
+                    <td>{{data.createdAt}}</td>
+                    <td>{{data.salary.toLocaleString()}}</td>
                     <td [nzAlign]="'center'" [nzBreakWord]="true">
                         <nz-space>
                             <!-- <button nz-button nzType="primary">
@@ -64,18 +65,30 @@
         </nz-table>
 
         <div style="padding:0px 20px 20px 20px; text-align: right;">
-            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="dataList.length" [nzSimple]="false"
-                [(nzPageSize)]="pageLimit" [nzShowSizeChanger]="true">
+            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchEmployee()"
+                (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
             </nz-pagination>
+
+            <ng-template #rangeTemplate let-range="range" let-total>
+                {{ range[0] }}-{{ range[1] }} of {{ total }} items
+            </ng-template>
         </div>
 
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="The first Modal" (nzOnCancel)="handleCancel()"
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มข้อมูลพนักงาน" (nzOnCancel)="handleCancel()"
             (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
-                <p>Content one</p>
-                <p>Content two</p>
-                <p>Content three</p>
+                <h4>Fullname</h4>
+                <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" (change)="onChangeData($event)" name="name" />
+
+                <h4 style="margin-top: 8px;">Telephone</h4>
+                <input nz-input placeholder=" กรุณากรอกชื่อผู้ใช้งาน" (change)="onChangeData($event)"
+                    name="telephone" />
+
+                <h4 style="margin-top: 8px;">Salary</h4>
+                <input nz-input placeholder="กรุณากรอกรหัสผ่าน" (change)="onChangeData($event)" name="salary" />
             </ng-container>
         </nz-modal>
     </div>

@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PermissionComponent } from '../pages/permission/permission.component';
 import { SettingComponent } from '../pages/setting/setting.component';
-import { StaffComponent } from '../pages/staff/staff.component';
+import { EmployeeComponent } from '../pages/employee/employee.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
@@ -44,8 +44,8 @@ const routes: Routes = [
         component: UserComponent,
       },
       {
-        path: 'staff',
-        component: StaffComponent,
+        path: 'employee',
+        component: EmployeeComponent,
       },
       {
         path: 'permission',
