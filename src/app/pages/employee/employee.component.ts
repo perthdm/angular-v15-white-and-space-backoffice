@@ -63,6 +63,11 @@ export class EmployeeComponent {
     };
   }
 
+  editEmployee(current: any) {
+    this.employeeData = current;
+    this.isVisible = true;
+  }
+
   onChangePageLimit(nextLimit: number) {
     this.pageLimit = nextLimit;
     this.fetchEmployee();

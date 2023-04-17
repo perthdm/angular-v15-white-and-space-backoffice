@@ -37,7 +37,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                <tr *ngFor="let data of basicTable.data ;let index = index" (click)="editEmployee(data)"
+                    style="cursor: pointer;">
                     <td>{{index+1}}</td>
                     <td>{{data.name}} </td>
                     <td> ชาย | หญิง</td>
@@ -48,13 +49,6 @@
                     <td>{{data.salary.toLocaleString()}}</td>
                     <td [nzAlign]="'center'" [nzBreakWord]="true">
                         <nz-space>
-                            <!-- <button nz-button nzType="primary">
-                            <span nz-icon nzType="eye" nzTheme="outline"></span>
-                        </button> -->
-                            <button nz-button nzType="primary"
-                                style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
-                                    nz-icon nzType="edit" nzTheme="outline"></span>
-                            </button>
                             <button nz-button nzType="primary" nzDanger>
                                 <span nz-icon nzType="delete" nzTheme="outline"></span>
                             </button>
@@ -81,14 +75,16 @@
             (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>Fullname</h4>
-                <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" (change)="onChangeData($event)" name="name" />
+                <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" [ngModel]="employeeData.name"
+                    (change)="onChangeData($event)" name="name" />
 
                 <h4 style="margin-top: 8px;">Telephone</h4>
-                <input nz-input placeholder=" กรุณากรอกชื่อผู้ใช้งาน" (change)="onChangeData($event)"
-                    name="telephone" />
+                <input nz-input placeholder=" กรุณากรอกชื่อผู้ใช้งาน" [ngModel]="employeeData.telephone"
+                    (change)="onChangeData($event)" name="telephone" />
 
                 <h4 style="margin-top: 8px;">Salary</h4>
-                <input nz-input placeholder="กรุณากรอกรหัสผ่าน" (change)="onChangeData($event)" name="salary" />
+                <input nz-input placeholder="กรุณากรอกรหัสผ่าน" [ngModel]="employeeData.salary"
+                    (change)="onChangeData($event)" name="salary" />
             </ng-container>
         </nz-modal>
     </div>
