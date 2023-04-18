@@ -4,14 +4,6 @@
     border-radius: 12px;
     position: absolute; 
   }
-.select-style{
-    margin-right: 10px;
-    ::ng-deep .ant-select-selector{
-        border-radius: 12px !important;
-        height: 40px !important;
-        align-items: center !important;
-    }
-}
 .radio-style {
     .ant-radio-group-large .ant-radio-button-wrapper {
       box-shadow: 2px 2px 2px 1px #f1f1f1;

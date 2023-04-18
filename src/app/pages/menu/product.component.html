@@ -1,11 +1,13 @@
 <div class="inner-content">
-    <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">เมนูอาหาร</h3>
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">เมนูอาหาร</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
+        </div>
+    </div>
     <div class="radio-style">
-        <!-- <nz-select ngModel="all" style="width: 150px;" class="select-style">
-            <nz-option nzValue="all" nzLabel="ทั้งหมด"></nz-option>
-            <nz-option nzValue="product" nzLabel="สินค้า"></nz-option>
-            <nz-option nzValue="coffee" nzLabel="กาแฟ"></nz-option>
-        </nz-select> -->
         <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large">
             <label nz-radio-button nzValue="all">
                 ทั้งหมด <span>(99)</span>
@@ -20,12 +22,6 @@
             <span nz-icon nzType="plus" nzTheme="outline"></span>
             เพิ่มเมนูอาหาร
         </button>
-        <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
-            <input type="text" nz-input placeholder=" ค้นหา Name / Serial / Barcode" />
-        </nz-input-group>
-        <ng-template #suffixIconSearch>
-            <span nz-icon nzType="search"></span>
-        </ng-template>
     </div>
     <div class="app-content">
 
@@ -68,8 +64,8 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()" nzMaskClosable="false">
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+            nzMaskClosable="false">
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
                 <input nz-input placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.code"
