@@ -3,6 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { Employee } from 'src/app/model/employee.model';
 import { EmployeeService } from 'src/app/services/employee.service';
 import { formatDateTime } from 'src/utils/utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-employee',
@@ -60,7 +61,12 @@ export class EmployeeComponent {
 
   onChangeData(e: any) {
     let { name, value } = e.target;
+    if (name === 'telephone') {
+      value = value.replace(/\D|\+|-/g, '');
+    }
+
     if (name === 'salary') value = +value;
+
     this.employeeData = {
       ...this.employeeData,
       [name]: value,
@@ -94,15 +100,27 @@ export class EmployeeComponent {
         (err) =>
           this.message.create(
             'error',
-            `Please try again ${err.error.message}::${err.error.statusCode}`
+            `เกิดข้อผิดพลาด ${err.error.message}::${err.error.statusCode}`
           )
       );
     } else {
-      this.message.create(
-        'success',
-        `แก้ไขข้อมูลผู้ใช้งาน "${this.employeeData.name}" สำเร็จ`
+      let { _id, name, salary, telephone } = this.employeeData;
+      let reqData = { id: _id, name, salary, telephone };
+      this.employeeService.updeteEmployee(reqData).subscribe(
+        () => {
+          this.message.create(
+            'success',
+            `แก้ไขข้อมูลผู้ใช้งาน "${this.employeeData.name}" สำเร็จ`
+          );
+          this.fetchEmployee();
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `เกิดข้อผิดพลาด ${err.error.message}::${err.error.statusCode}`
+          );
+        }
       );
-      console.log('EDIT ==> ', this.employeeData);
     }
     this.isVisible = false;
   }
@@ -110,5 +128,37 @@ export class EmployeeComponent {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+  }
+
+  handleDeleteEmployee(event: any, employeeData: Employee) {
+    event.stopPropagation();
+    Swal.fire({
+      title: 'คำเตือน !',
+      text: `คุณต้องการที่จะลบข้อมูลของ "${employeeData?.name}" ใช่หรือไม่ ?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ตกลง',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.employeeService.deleteEmployee(employeeData._id).subscribe(
+          () => {
+            this.message.create(
+              'success',
+              `ลบข้อมูลพนักงาน "${employeeData.name}" สำเร็จ`
+            );
+            this.fetchEmployee();
+          },
+          (err) => {
+            this.message.create(
+              'error',
+              `เกิดข้อผิดพลาด ${err.error.message}::${err.error.statusCode}`
+            );
+          }
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        // Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
   }
 }

@@ -23,6 +23,8 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
 import { AuthGuardService } from '../services/auth.service';
 import { UserComponent } from '../pages/user/user.component';
 import { UserService } from '../services/user.service';
+import { ProductComponent } from '../pages/menu/product.component';
+import { ProductService } from '../services/product.service';
 
 @NgModule({
   imports: [
@@ -44,9 +46,10 @@ import { UserService } from '../services/user.service';
     AntdSearchBox,
     StockComponent,
     UserComponent,
+    ProductComponent,
   ],
 
-  providers: [AuthGuardService, EmployeeService, UserService],
+  providers: [AuthGuardService, EmployeeService, UserService, ProductService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

@@ -7,18 +7,13 @@ interface Stock {
   price: string;
   amount: string;
   category: string;
-  
 }
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.scss']
+  styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
-  radioValue = 'A';
-  currentPage: number = 1;
-  pageLimit: number = 10;
-  dataCount: number = 10;
   stockList: Stock[] = [
     {
       id: '001',
@@ -27,6 +22,25 @@ export class StockComponent {
       sku: '-',
       price: '25',
       amount: '99',
-    }
+    },
   ];
+
+  page: number = 1;
+  pageLimit: number = 10;
+  dataCount: number = 10;
+  radioValue = 'all';
+
+  ngOnInit() {
+    this.fetchProduct();
+  }
+
+  fetchProduct() {
+    let reqData = {
+      page: this.page,
+      limit: this.pageLimit,
+      type: this.radioValue,
+    };
+
+    console.log(reqData);
+  }
 }

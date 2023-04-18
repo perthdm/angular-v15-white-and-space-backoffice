@@ -12,6 +12,7 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { AuthGuardService } from '../services/auth.service';
 import { UserComponent } from '../pages/user/user.component';
+import { ProductComponent } from '../pages/menu/product.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
       {
         path: 'permission',
         component: PermissionComponent,
+      },
+      {
+        path: 'menu',
+        component: ProductComponent,
       },
       {
         path: 'stock',
