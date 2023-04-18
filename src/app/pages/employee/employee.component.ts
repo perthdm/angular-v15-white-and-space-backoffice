@@ -22,7 +22,7 @@ export class EmployeeComponent {
   query: string = '';
   total: number = 0;
 
-  employeeData = {} as Employee;
+  employeeData = {} as any;
 
   constructor(
     private employeeService: EmployeeService,
@@ -127,6 +127,7 @@ export class EmployeeComponent {
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
+    this.employeeData = {  };
     this.isVisible = false;
   }
 

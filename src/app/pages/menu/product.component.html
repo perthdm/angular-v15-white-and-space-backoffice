@@ -64,8 +64,8 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
-            nzMaskClosable="false">
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()" >
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
                 <input nz-input placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.code"

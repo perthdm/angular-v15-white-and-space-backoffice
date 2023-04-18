@@ -68,7 +68,7 @@
         </div>
 
         <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มข้อมูลพนักงาน" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()" nzMaskClosable="false">
+            (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>ชื่อ-นามสกุล</h4>
                 <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" [ngModel]="employeeData.name"
