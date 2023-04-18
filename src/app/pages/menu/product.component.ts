@@ -13,12 +13,16 @@ export class ProductComponent {
   munuList: any = [];
 
   isLoading: boolean = true;
+  isEdit: boolean = false;
+  isVisible: boolean = false;
 
   page: number = 1;
   pageLimit: number = 10;
   total: number = 10;
   productType = 'all';
   query: string = '';
+
+  productData: any = {};
 
   constructor(
     private productService: ProductService,
@@ -57,5 +61,36 @@ export class ProductComponent {
   onChangePageLimit(nextLimit: number) {
     this.pageLimit = nextLimit;
     this.fetchProduct();
+  }
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    if (!this.isEdit) {
+    } else {
+    }
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
+  onChangeData(e: any) {
+    let { name, value } = e.target;
+    if (name === 'price') value = +value;
+    this.productData = {
+      ...this.productData,
+      [name]: value,
+    };
+  }
+
+  editProduct(current: any) {
+    this.productData = current;
+    this.isVisible = true;
+    this.isEdit = true;
   }
 }
