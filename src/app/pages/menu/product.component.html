@@ -1,0 +1,84 @@
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">เมนูอาหาร</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
+        </div>
+    </div>
+    <div class="radio-style">
+        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large">
+            <label nz-radio-button nzValue="all">
+                ทั้งหมด <span>(99)</span>
+            </label>
+            <label nz-radio-button nzValue="menu">อาหาร <span>(9)</span></label>
+            <label nz-radio-button nzValue="desert"> ของหวาน <span>(9)</span></label>
+            <label nz-radio-button nzValue="beverage">เครื่องดื่ม<span>(9)</span></label>
+            <label nz-radio-button nzValue="etc">อื่นๆ <span>(12)</span></label>
+        </nz-radio-group>
+        <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
+            (click)="showModal()">
+            <span nz-icon nzType="plus" nzTheme="outline"></span>
+            เพิ่มเมนูอาหาร
+        </button>
+    </div>
+    <div class="app-content">
+
+        <nz-table style="margin:20px 0px; " #basicTable [nzData]="munuList" [nzShowPagination]="false"
+            style="min-height: 300px;" [nzPageSize]="pageLimit">
+            <thead>
+                <tr>
+                    <th>รหัสสินค้า</th>
+                    <th>ชื่อสินค้า</th>
+                    <th>ราคา</th>
+                    <th>หมวดหมู่</th>
+                    <th>สร้างเมื่อ</th>
+                    <th>ผู้สร้าง</th>
+                    <th [nzAlign]="'center'">สถานะ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
+                    (click)="editProduct(data)">
+                    <td>{{data.code }} P000{{index+1}}</td>
+                    <td>{{data.name}}</td>
+                    <td>{{data.price.toLocaleString()}}</td>
+                    <td><nz-tag [nzColor]="'geekblue'">{{data.category.name}}</nz-tag></td>
+                    <td>{{data.createdAt}}</td>
+                    <td>{{data.user_created.username}}</td>
+                    <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
+                    </td>
+                </tr>
+            </tbody>
+        </nz-table>
+        <div style=" padding:0px 20px 20px 20px; text-align: right;">
+            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchProduct()"
+                (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
+            </nz-pagination>
+
+            <ng-template #rangeTemplate let-range="range" let-total>
+                {{ range[0] }}-{{ range[1] }} of {{ total }} items
+            </ng-template>
+        </div>
+
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()" >
+            <ng-container *nzModalContent>
+                <h4>รหัสสินค้า</h4>
+                <input nz-input placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.code"
+                    (change)="onChangeData($event)" name="code" maxlength="10" minlength="10" />
+
+                <h4 style="margin-top: 8px;">ชื่อสินค้า</h4>
+                <input nz-input placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
+                    (change)="onChangeData($event)" name="name" />
+
+                <h4 style="margin-top: 8px;">ราคาสินค้า</h4>
+                <input #salaryInputElement nz-input placeholder="กรุณากรอกราคาสินค้า" [ngModel]="productData.price"
+                    (change)="onChangeData($event)" name="price" type="number" />
+            </ng-container>
+        </nz-modal>
+    </div>
+</div>

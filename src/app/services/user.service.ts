@@ -21,7 +21,7 @@ const ENDPOINT = {
 export class UserService {
   constructor(private readonly http: HttpClient) {}
 
-  getAllUser(pageConfig: any): Observable<any> {
+  getAllUser(pageConfig: any): Observable<UserPagination> {
     return this.http.get<UserPagination>(ENDPOINT.GET_USER(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

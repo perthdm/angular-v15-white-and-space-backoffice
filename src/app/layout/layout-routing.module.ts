@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { PermissionComponent } from '../pages/permission/permission.component';
 import { SettingComponent } from '../pages/setting/setting.component';
-import { StaffComponent } from '../pages/staff/staff.component';
+import { EmployeeComponent } from '../pages/employee/employee.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
@@ -12,6 +12,7 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { AuthGuardService } from '../services/auth.service';
 import { UserComponent } from '../pages/user/user.component';
+import { ProductComponent } from '../pages/menu/product.component';
 
 const routes: Routes = [
   {
@@ -44,12 +45,16 @@ const routes: Routes = [
         component: UserComponent,
       },
       {
-        path: 'staff',
-        component: StaffComponent,
+        path: 'employee',
+        component: EmployeeComponent,
       },
       {
         path: 'permission',
         component: PermissionComponent,
+      },
+      {
+        path: 'menu',
+        component: ProductComponent,
       },
       {
         path: 'stock',

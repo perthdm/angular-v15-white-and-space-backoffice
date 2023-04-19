@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Staff } from 'src/app/model/staff.model';
 import { User, UserPagination } from 'src/app/model/user.model';
-import { StaffService } from 'src/app/services/staff.service';
 import { UserService } from 'src/app/services/user.service';
 import { formatDateTime } from 'src/utils/utils';
 
@@ -15,7 +13,6 @@ import { formatDateTime } from 'src/utils/utils';
 export class UserComponent {
   dataList: User[] | any;
 
-  total: number = 0;
   isLoading: boolean = true;
   isVisible: boolean = false;
 
@@ -26,6 +23,8 @@ export class UserComponent {
   page: number = 1;
   pageLimit: number = 10;
   query: string = '';
+  total: number = 0;
+
   // expandedRowKeys: number[] = [];
 
   constructor(

@@ -1,28 +1,28 @@
 <div class="inner-content">
-    <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สต็อกสินค้า</h3>
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สต็อกสินค้า</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
+        </div>
+    </div>
     <div class="radio-style">
-        <nz-select ngModel="all" style="width: 150px;" class="select-style">
-            <nz-option nzValue="all" nzLabel="ทั้งหมด"></nz-option>
-            <nz-option nzValue="product" nzLabel="สินค้า"></nz-option>
-            <nz-option nzValue="coffee" nzLabel="กาแฟ"></nz-option>
-        </nz-select>
         <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid" nzSize="large">
-            <label nz-radio-button nzValue="A">
+            <label nz-radio-button nzValue="all">
                 ทั้งหมด <span>(99)</span>
             </label>
             <label nz-radio-button nzValue="B">
                 ของหวาน <span>(9)</span></label>
-            <label nz-radio-button nzValue="C">กาแฟ <span>(9)</span></label>
-            <label nz-radio-button nzValue="D">น้ำหวาน <span>(9)</span></label>
-            <label nz-radio-button nzValue="F">สินค้า <span>(9)</span></label>
+            <label nz-radio-button nzValue="coffee">กาแฟ <span>(9)</span></label>
+            <label nz-radio-button nzValue="tea">ชา <span>(9)</span></label>
+            <label nz-radio-button nzValue="desert">ขนมหวาน <span>(9)</span></label>
+            <label nz-radio-button nzValue="etc">อื่นๆ <span>(12)</span></label>
         </nz-radio-group>
         <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;">
             <span nz-icon nzType="plus" nzTheme="outline"></span>
             เพิ่มสินค้า
         </button>
-        <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
-            <input type="text" nz-input placeholder=" ค้นหา Name / Serial / Barcode" />
-        </nz-input-group>
         <ng-template #suffixIconSearch>
             <span nz-icon nzType="search"></span>
         </ng-template>
@@ -30,7 +30,7 @@
     <div class="app-content">
 
         <nz-table style="margin:20px 0px; " #basicTable [nzData]="stockList" [nzShowPagination]="false"
-            style="min-height: 300px;">
+            style="min-height: 300px;" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th>#</th>
@@ -65,8 +65,8 @@
             </tbody>
         </nz-table>
         <div style="padding:0px 20px 20px 20px; text-align: right;">
-            <nz-pagination [(nzPageIndex)]="currentPage" [nzTotal]="dataCount" [nzSimple]="false"
-                [(nzPageSize)]="pageLimit" [nzShowSizeChanger]="true">
+            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="dataCount" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true">
             </nz-pagination>
         </div>
     </div>

@@ -9,13 +9,13 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 // === BINDING FOR USE ANOTHER MODULE === //
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.component';
-import { StaffComponent } from '../pages/staff/staff.component';
+import { EmployeeComponent } from '../pages/employee/employee.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { PermissionComponent } from '../pages/permission/permission.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { SharedModule } from '../shared/shared.module';
 
-import { StaffService } from '../services/staff.service';
+import { EmployeeService } from '../services/employee.service';
 import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.component';
 import { ReportComponent } from '../pages/report/report.component';
 import { AttendanceComponent } from '../pages/attendance/attendance.component';
@@ -23,6 +23,8 @@ import { BillingHistoryComponent } from '../pages/billing-history/billing-histor
 import { AuthGuardService } from '../services/auth.service';
 import { UserComponent } from '../pages/user/user.component';
 import { UserService } from '../services/user.service';
+import { ProductComponent } from '../pages/menu/product.component';
+import { ProductService } from '../services/product.service';
 
 @NgModule({
   imports: [
@@ -36,7 +38,7 @@ import { UserService } from '../services/user.service';
     SidebarWrapperComponent,
     ShopComponent,
     DashboardComponent,
-    StaffComponent,
+    EmployeeComponent,
     PermissionComponent,
     ReportComponent,
     AttendanceComponent,
@@ -44,9 +46,10 @@ import { UserService } from '../services/user.service';
     AntdSearchBox,
     StockComponent,
     UserComponent,
+    ProductComponent,
   ],
 
-  providers: [StaffService, AuthGuardService, UserService],
+  providers: [AuthGuardService, EmployeeService, UserService, ProductService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

@@ -19,9 +19,9 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
-  
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 @NgModule({
-  imports: [],
+  imports: [SweetAlert2Module.forRoot()],
   exports: [
     CommonModule,
     FormsModule,
@@ -43,7 +43,8 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     NzDatePickerModule,
     NzSelectModule,
     NzMessageModule,
-    NzBadgeModule
+    NzBadgeModule,
+    SweetAlert2Module,
   ],
   declarations: [],
 })
