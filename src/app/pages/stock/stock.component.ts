@@ -3,10 +3,9 @@ import { Component } from '@angular/core';
 interface Stock {
   id: string;
   name: string;
-  sku: string;
-  price: string;
   amount: string;
-  category: string;
+  unit: string;
+  updateat: string;
 }
 @Component({
   selector: 'app-stock',
@@ -14,14 +13,15 @@ interface Stock {
   styleUrls: ['./stock.component.scss'],
 })
 export class StockComponent {
+  stockData = {} as any;
+  isVisible: boolean = false;
   stockList: Stock[] = [
     {
       id: '001',
-      name: 'ชานมไข่มุก',
-      category: 'น้ำหวาน',
-      sku: '-',
-      price: '25',
-      amount: '99',
+      name: 'น้ำตาล',
+      amount: '10',
+      unit: 'กิโลกรัม',
+      updateat: '22/04/2023',
     },
   ];
 
@@ -32,6 +32,10 @@ export class StockComponent {
 
   ngOnInit() {
     this.fetchProduct();
+  }
+
+  showModal(): void {
+    this.isVisible = true;
   }
 
   fetchProduct() {
