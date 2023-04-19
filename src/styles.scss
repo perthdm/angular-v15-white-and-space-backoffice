@@ -58,3 +58,27 @@ button:focus-visible {
 .ant-table-content{
   overflow: auto;
 }
+.input-group-style {
+  .ant-input-wrapper{
+      height: 45px;
+      .ant-input-group-addon{
+          width: 45px;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+      }
+      input{
+          height: 45px;
+          border-top-right-radius: 5px;
+          border-bottom-right-radius: 5px;
+          width: 100%;
+          max-width: 400px;
+      }
+  }
+}
+.upload-style button{
+  height: 45px;
+  border-radius: 5px;
+}
+.ant-menu-item{
+  text-align: center;
+}

@@ -14,6 +14,7 @@ import { ShopComponent } from '../pages/shop/shop.component';
 import { PermissionComponent } from '../pages/permission/permission.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { SharedModule } from '../shared/shared.module';
+import { SettingComponent } from '../pages/setting/setting.component';
 
 import { EmployeeService } from '../services/employee.service';
 import { AntdSearchBox } from '../shared/components/searchbox/antd-searchbox.component';
@@ -47,6 +48,7 @@ import { ProductService } from '../services/product.service';
     StockComponent,
     UserComponent,
     ProductComponent,
+    SettingComponent
   ],
 
   providers: [AuthGuardService, EmployeeService, UserService, ProductService],

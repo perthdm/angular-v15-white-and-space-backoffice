@@ -1,1 +1,34 @@
-<p>setting works!</p>
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ตั้งค่าร้าน</h3>
+        </div>
+        <div nz-col [nzSpan]="16">
+            <!-- <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox> -->
+        </div>
+    </div>
+    <div class="app-content" style="padding-left: 1.5rem; padding-right:1.5rem;">
+        <nz-input-group nzAddOnBeforeIcon="home" class="input-group-style" style="margin-bottom:1rem;">
+            <input type="text" nz-input placeholder="ชื่อร้าน..." />
+        </nz-input-group>
+        <nz-input-group nzAddOnBeforeIcon="info" class="input-group-style" style="margin-bottom:1rem;">
+            <input type="text" nz-input placeholder="คำอธิบายร้าน..." />
+        </nz-input-group>
+        <nz-upload class="upload-style" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)">
+            <button nz-button nzType="primary" style="margin-bottom:1rem;">
+                <span nz-icon nzType="upload"></span>
+                อัพโหลด
+            </button>
+        </nz-upload>
+        <nz-input-group nzAddOnBeforeIcon="phone" class="input-group-style" style="margin-bottom:1rem;">
+            <input type="text" nz-input placeholder="เบอร์โทร..." />
+        </nz-input-group>
+        <nz-input-group nzAddOnBeforeIcon="google" class="input-group-style" style="margin-bottom:1rem;">
+            <input type="text" nz-input placeholder="google map..." />
+        </nz-input-group>
+        <button nz-button nzType="primary" style="border-radius: 5px;height: 45px;">
+            บันทึก
+        </button>
+    </div>
+</div>
