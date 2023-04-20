@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { User, UserPagination } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -12,20 +11,21 @@ import { formatDateTime } from 'src/utils/utils';
 })
 export class UserComponent {
   dataList: User[] | any;
+  userData: any = {};
+  gender: string = '';
+  dob: Date | any = null;
 
   isLoading: boolean = true;
   isVisible: boolean = false;
+  isEdit: boolean = false;
 
-  loginForm!: FormGroup;
-  username?: string;
-  password?: string;
-
+  // === PAGINATION === //
   page: number = 1;
   pageLimit: number = 10;
   query: string = '';
   total: number = 0;
 
-  // expandedRowKeys: number[] = [];
+  dateFormat = 'dd-MM-YYYY';
 
   constructor(
     private userService: UserService,
@@ -68,16 +68,19 @@ export class UserComponent {
   }
 
   resetData = () => {
-    this.username = '';
-    this.password = '';
+    this.userData = {};
+    this.gender = '';
+    this.dob = null;
   };
 
   handleSubmitData(): void {
-    console.log('username ==> ', this.username);
-    console.log('password ==> ', this.password);
+    if (!this.isEdit) {
+      let reqData = {
+        ...this.userData,
+        dob: this.dob,
+        gender: this.gender,
+      };
 
-    if (this.username && this.password) {
-      let reqData = { username: this.username, password: this.password };
       this.userService.addUser(reqData).subscribe(
         (res) => {
           // console.log(res);
@@ -91,6 +94,23 @@ export class UserComponent {
             `Please try again ${err.error.message}::${err.error.statusCode}`
           )
       );
+    } else {
+      let reqUpdateData = {
+        id: this.userData._id,
+        name: this.userData.name,
+        telephone: this.userData.telephone,
+        salary: this.userData.salary,
+        dob: this.dob,
+        gender: this.gender,
+      };
+
+      this.userService.updateUser(reqUpdateData).subscribe(
+        (res) => {
+          this.resetData();
+          this.fetchUser();
+        },
+        (err) => {}
+      );
     }
 
     this.isVisible = false;
@@ -98,7 +118,9 @@ export class UserComponent {
 
   handleCancel(): void {
     console.log('Button cancel clicked!');
+    this.resetData();
     this.isVisible = false;
+    this.isEdit = false;
   }
 
   onChangePageLimit(nextLimit: number) {
@@ -106,19 +128,23 @@ export class UserComponent {
     this.fetchUser();
   }
 
-  // onExpandChange(expanded: boolean, index: number): void {
-  //   if (expanded) {
-  //     this.expandedRowKeys.push(index);
-  //   } else {
-  //     this.expandedRowKeys = this.expandedRowKeys.filter(
-  //       (key) => key !== index
-  //     );
-  //   }
-  // }
+  handleEditUser(usData: User) {
+    this.userData = usData;
+    this.dob = usData.dob;
+    this.gender = usData.gender;
+    this.isEdit = true;
+    this.isVisible = true;
+  }
 
-  // isRowExpanded(index: number): boolean {
-  //   console.log(index);
+  onChangeData(e: any) {
+    let { name, value } = e.target;
+    if (name === 'telephone') value = value.replace(/\D|\+|-/g, '');
+    if (name === 'salary') value = +value;
+    console.log(name, value);
 
-  //   return this.expandedRowKeys.includes(index);
-  // }
+    this.userData = {
+      ...this.userData,
+      [name]: value,
+    };
+  }
 }

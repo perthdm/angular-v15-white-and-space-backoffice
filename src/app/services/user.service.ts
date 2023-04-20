@@ -12,9 +12,10 @@ interface Pagination {
 }
 
 const ENDPOINT = {
-  GET_USER: ({ page, limit, query }: Pagination) =>
+  GET_ALL: ({ page, limit, query }: Pagination) =>
     `${API_DOMAIN}/user?page=${page}&limit=${limit}&query=${query}`,
-  ADD_USER: `${API_DOMAIN}/user`,
+  ADD: `${API_DOMAIN}/user`,
+  UPDATE: `${API_DOMAIN}/user`,
 };
 
 @Injectable()
@@ -22,7 +23,7 @@ export class UserService {
   constructor(private readonly http: HttpClient) {}
 
   getAllUser(pageConfig: any): Observable<UserPagination> {
-    return this.http.get<UserPagination>(ENDPOINT.GET_USER(pageConfig), {
+    return this.http.get<UserPagination>(ENDPOINT.GET_ALL(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -31,7 +32,16 @@ export class UserService {
   }
 
   addUser(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.ADD_USER, data, {
+    return this.http.post<any>(ENDPOINT.ADD, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  updateUser(data: any): Observable<any> {
+    return this.http.patch<any>(ENDPOINT.UPDATE, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

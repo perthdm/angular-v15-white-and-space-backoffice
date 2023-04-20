@@ -1,1 +1,13 @@
+.select-style {
+  ::ng-deep .ant-select-selector {
+    border-radius: 12px !important;
+    height: 40px !important;
+    align-items: center !important;
+  }
+}
 
+.searchbar-style {
+  //   width: 30%;
+  height: 40px;
+  border-radius: 10px;
+}

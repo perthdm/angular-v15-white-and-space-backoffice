@@ -1,7 +1,7 @@
 <div class="inner-content">
     <div nz-row>
         <div nz-col [nzSpan]="8">
-            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ผู้ใช้งานระบบ</h3>
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">พนักงานร้าน</h3>
         </div>
         <div nz-col [nzSpan]="16">
             <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox>
@@ -16,7 +16,7 @@
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
                 <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;" (click)="showModal()">
                     <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    เพิ่มผู้ใช้งาน
+                    เพิ่มพนักงาน
                 </button>
             </div>
         </div>
@@ -27,18 +27,36 @@
                 <tr>
                     <th>#</th>
                     <th>ชื่อผู้ใช้งาน</th>
-                    <th>ตำแหน่ง</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <th [nzAlign]="'center'">เพศ</th>
+                    <th [nzAlign]="'center'">ตำแหน่ง</th>
+                    <th [nzAlign]="'right'">เงินเดือน</th>
                     <th>สร้างเมื่อ</th>
-                    <th>แก้ไขล่าสุดเมื่อ</th>
+                    <th [nzAlign]="'center'">สถานะ</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of userTable.data ;let index = index" style="cursor:pointer">
+                <tr *ngFor="let data of userTable.data ;let index = index" style="cursor:pointer"
+                    (click)="handleEditUser(data)">
                     <td>{{ pageLimit*(page-1)+(index+1) }}</td>
                     <td>{{ data.username}}</td>
-                    <td>{{ data.role}}</td>
+                    <td>{{ data.name}}</td>
+                    <td [nzAlign]="'center'">
+                        <img *ngIf="data.gender === 'male'" src="../../../assets/img/male.png" alt="item"
+                            width="30px" />
+                        <img *ngIf="data.gender === 'female'" src="../../../assets/img/female.png" alt="item"
+                            width="30px" />
+                        <img *ngIf="data.gender === 'etc'" src="../../../assets/img/equality.png" alt="item"
+                            width="30px" />
+
+                    </td>
+                    <td [nzAlign]="'center'">{{ data.role}}</td>
+
+                    <td [nzAlign]="'right'">{{ data.salary.toLocaleString() }}</td>
                     <td>{{ data.createdAt }}</td>
-                    <td>{{ data.updatedAt }}</td>
+                    <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
+                    </td>
                 </tr>
             </tbody>
         </nz-table>
@@ -55,15 +73,49 @@
         </div>
 
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มผู้ใช้งานระบบ" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleSubmitData()" >
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มพนักงาน" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleSubmitData()">
             <ng-container *nzModalContent>
 
                 <h4>Username</h4>
-                <input nz-input placeholder="กรุณากรอกชื่อผู้ใช้งาน" [(ngModel)]="username" />
+                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อผู้ใช้งาน" name="username"
+                    (change)="onChangeData($event)" [ngModel]="userData.username" [disabled]="isEdit" />
 
                 <h4 style="margin-top: 8px;">Password</h4>
-                <input nz-input placeholder="กรุณากรอกรหัสผ่าน" type="password" [(ngModel)]="password" />
+                <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสผ่าน" type="password" name="password"
+                    (change)="onChangeData($event)" [ngModel]="userData.password" />
+
+                <nz-divider nzText="ข้อมูลส่วนตัว" nzOrientation="center"></nz-divider>
+                <h4>ชื่อ-นามสกุล</h4>
+                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อผู้ใช้งาน" name="name"
+                    (change)="onChangeData($event)" [ngModel]="userData.name" />
+
+                <h4 style="margin-top: 8px;">เบอร์โทรศัพท์</h4>
+                <input nz-input class="wns-input" placeholder="กรุณากรอกเบอร์โทรศัพท์" name="telephone"
+                    (change)="onChangeData($event)" [ngModel]="userData.telephone" maxlength="10" />
+
+                <h4 style="margin-top: 8px;">เงินเดือน</h4>
+                <input nz-input class="wns-input" #salaryInputElement placeholder="กรุณากรอกเงินเดือน" name="salary"
+                    (change)="onChangeData($event)" [ngModel]="userData.salary" type="number" />
+
+
+
+                <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                        <h4 style="margin-top: 8px;">เพศ</h4>
+                        <nz-select [(ngModel)]="gender" nzPlaceHolder="เลือกเพศ" style="width: 120px"
+                            class="select-style">
+                            <nz-option nzValue="male" nzLabel="ชาย"></nz-option>
+                            <nz-option nzValue="female" nzLabel="หญิง"></nz-option>
+                            <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <h4 style="margin-top: 8px;">วัน/เดือน/ปีเกิด</h4>
+                        <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]="dob" style="width: 150px;"
+                            class="searchbar-style"></nz-date-picker>
+                    </div>
+                </div>
 
             </ng-container>
         </nz-modal>

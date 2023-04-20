@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
-import { PermissionComponent } from '../pages/permission/permission.component';
 import { SettingComponent } from '../pages/setting/setting.component';
-import { EmployeeComponent } from '../pages/employee/employee.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
@@ -43,14 +41,6 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserComponent,
-      },
-      {
-        path: 'employee',
-        component: EmployeeComponent,
-      },
-      {
-        path: 'permission',
-        component: PermissionComponent,
       },
       {
         path: 'menu',

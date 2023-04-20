@@ -9,9 +9,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 // === BINDING FOR USE ANOTHER MODULE === //
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SidebarWrapperComponent } from './sidebar-wrapper/sidebar-wrapper.component';
-import { EmployeeComponent } from '../pages/employee/employee.component';
 import { ShopComponent } from '../pages/shop/shop.component';
-import { PermissionComponent } from '../pages/permission/permission.component';
 import { StockComponent } from '../pages/stock/stock.component';
 import { SharedModule } from '../shared/shared.module';
 import { SettingComponent } from '../pages/setting/setting.component';
@@ -39,8 +37,6 @@ import { ProductService } from '../services/product.service';
     SidebarWrapperComponent,
     ShopComponent,
     DashboardComponent,
-    EmployeeComponent,
-    PermissionComponent,
     ReportComponent,
     AttendanceComponent,
     BillingHistoryComponent,

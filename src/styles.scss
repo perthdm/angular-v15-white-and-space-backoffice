@@ -50,35 +50,40 @@ button:focus-visible {
 }
 
 .ant-picker-range,
-.ant-picker {
+.custom-right-picker {
   height: 50px;
   float: right;
   border-radius: 10px !important;
 }
-.ant-table-content{
+.ant-table-content {
   overflow: auto;
 }
 .input-group-style {
-  .ant-input-wrapper{
+  .ant-input-wrapper {
+    height: 45px;
+    .ant-input-group-addon {
+      width: 45px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    input {
       height: 45px;
-      .ant-input-group-addon{
-          width: 45px;
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
-      }
-      input{
-          height: 45px;
-          border-top-right-radius: 5px;
-          border-bottom-right-radius: 5px;
-          width: 100%;
-          max-width: 400px;
-      }
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      width: 100%;
+      max-width: 400px;
+    }
   }
 }
-.upload-style button{
+.upload-style button {
   height: 45px;
   border-radius: 5px;
 }
-.ant-menu-item{
+.ant-menu-item {
   text-align: center;
+}
+
+.wns-input {
+  border-radius: 10px !important;
+  height: 40px !important;
 }
