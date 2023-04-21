@@ -7,15 +7,24 @@
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
         </div>
     </div>
-    <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
-        (click)="showModal()">
-        <span nz-icon nzType="plus" nzTheme="outline"></span>
-        เพิ่มสินค้า
-    </button>
+
     <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3></h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
+                    (click)="showModal()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มสินค้า
+                </button>
+            </div>
+        </div>
+
 
         <nz-table style="margin:20px 0px; " #basicTable [nzData]="stockList" [nzShowPagination]="false"
-            style="min-height: 300px;" [nzPageSize]="pageLimit">
+            [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th>วันที่</th>
@@ -53,8 +62,8 @@
         <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า">
             <ng-container *nzModalContent>
                 <nz-input-group nzCompact>
-                    <input type="text" nz-input [ngModel]="stockData.name" style="width: 40%;" placeholder="ชื่อ"  />
-                    <input type="text" nz-input [ngModel]="stockData.amount" style="width:20%;" placeholder="จำนวน"  />
+                    <input type="text" nz-input [ngModel]="stockData.name" style="width: 40%;" placeholder="ชื่อ" />
+                    <input type="text" nz-input [ngModel]="stockData.amount" style="width:20%;" placeholder="จำนวน" />
                     <nz-select nzPlaceHolder="เลือกหน่วย" [ngModel]="stockData.unit">
                         <nz-option [nzLabel]="'kg'" [nzValue]="'kg'"></nz-option>
                         <nz-option [nzLabel]="'pack'" [nzValue]="'pack'"></nz-option>
