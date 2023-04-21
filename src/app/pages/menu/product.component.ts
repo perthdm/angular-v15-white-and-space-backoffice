@@ -19,10 +19,11 @@ export class ProductComponent {
   page: number = 1;
   pageLimit: number = 10;
   total: number = 10;
-  productType = 'all';
+  productType = '';
   query: string = '';
 
   productData: any = {};
+  productDataType: string = '';
 
   constructor(
     private productService: ProductService,
@@ -45,11 +46,6 @@ export class ProductComponent {
     this.productService.getAllProduct(reqData).subscribe(
       (res) => {
         let { total, page, last_page, items } = res;
-        items.map((us: IProduct) => {
-          us.createdAt = formatDateTime(us.createdAt);
-          us.updatedAt = formatDateTime(us.updatedAt);
-        });
-
         this.munuList = items;
         this.total = total;
         this.isLoading = false;
@@ -67,15 +63,62 @@ export class ProductComponent {
     this.isVisible = true;
   }
 
+  resetData = () => {
+    this.productData = {};
+    this.productDataType = '';
+  };
+
   handleOk(): void {
     if (!this.isEdit) {
+      let reqData = {
+        product_id: this.productData.product_id,
+        name: this.productData.name,
+        product_type: this.productDataType,
+        description: '',
+        price: this.productData.price,
+        add_on_id: [],
+      };
+
+      this.productService.addProduct(reqData).subscribe(
+        (res) => {
+          this.fetchProduct();
+          this.resetData();
+          this.message.create('success', `เพิ่มสินค้าใหม่สำเร็จ`);
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
     } else {
+      let reqData = {
+        id: this.productData._id,
+        name: this.productData.name,
+        product_type: this.productDataType,
+        price: this.productData.price,
+        product_id: this.productData.product_id,
+      };
+      this.productService.updateProduct(reqData).subscribe(
+        (res) => {
+          this.fetchProduct();
+          this.resetData();
+          this.message.create('success', `แก้ไขสินค้าสำเร็จ`);
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
     }
     this.isVisible = false;
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
+    this.resetData();
     this.isVisible = false;
   }
 
@@ -90,7 +133,25 @@ export class ProductComponent {
 
   editProduct(current: any) {
     this.productData = current;
+    this.productDataType = current.product_type;
     this.isVisible = true;
     this.isEdit = true;
+  }
+
+  getTagDetail(type: string) {
+    switch (type) {
+      case 'food':
+        return { title: 'อาหาร', color: 'blue' };
+      case 'desert':
+        return { title: 'ของหวาน', color: 'magenta' };
+      case 'beverage':
+        return { title: 'เครื่องดื่ม', color: 'volcano' };
+      default:
+        return { title: 'สินค้า', color: 'purple' };
+    }
+  }
+
+  mapDate(date: string) {
+    return formatDateTime(date);
   }
 }

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  isCollapsed = false;
+  isCollapsed = true;
 
   constructor(private router: Router) {}
 

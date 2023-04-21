@@ -8,11 +8,11 @@
         </div>
     </div>
     <div class="radio-style">
-        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large">
-            <label nz-radio-button nzValue="all">
+        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large" (ngModelChange)="fetchProduct()">
+            <label nz-radio-button nzValue="">
                 ทั้งหมด <span>(99)</span>
             </label>
-            <label nz-radio-button nzValue="menu">อาหาร <span>(9)</span></label>
+            <label nz-radio-button nzValue="food">อาหาร <span>(9)</span></label>
             <label nz-radio-button nzValue="desert"> ของหวาน <span>(9)</span></label>
             <label nz-radio-button nzValue="beverage">เครื่องดื่ม<span>(9)</span></label>
             <label nz-radio-button nzValue="etc">อื่นๆ <span>(12)</span></label>
@@ -32,21 +32,22 @@
                     <th>รหัสสินค้า</th>
                     <th>ชื่อสินค้า</th>
                     <th>ราคา</th>
-                    <th>หมวดหมู่</th>
                     <th>สร้างเมื่อ</th>
-                    <th>ผู้สร้าง</th>
+                    <th [nzAlign]="'center'">หมวดหมู่</th>
                     <th [nzAlign]="'center'">สถานะ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
                     (click)="editProduct(data)">
-                    <td>{{data.code }} P000{{index+1}}</td>
-                    <td>{{data.name}}</td>
-                    <td>{{data.price.toLocaleString()}}</td>
-                    <td><nz-tag [nzColor]="'geekblue'">{{data.category.name}}</nz-tag></td>
-                    <td>{{data.createdAt}}</td>
-                    <td>{{data.user_created.username}}</td>
+                    <td>{{ data.product_id }}</td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.price.toLocaleString() }}</td>
+                    <td>{{ mapDate(data.createdAt) }}</td>
+                    <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="getTagDetail(data.product_type).color">{{
+                            getTagDetail(data.product_type).title }}</nz-tag>
+                    </td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
                     </td>
@@ -64,20 +65,28 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()" >
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
-                <input nz-input placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.code"
-                    (change)="onChangeData($event)" name="code" maxlength="10" minlength="10" />
+                <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.product_id"
+                    (change)="onChangeData($event)" name="product_id" maxlength="10" minlength="10" />
 
                 <h4 style="margin-top: 8px;">ชื่อสินค้า</h4>
-                <input nz-input placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
+                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
                     (change)="onChangeData($event)" name="name" />
 
                 <h4 style="margin-top: 8px;">ราคาสินค้า</h4>
-                <input #salaryInputElement nz-input placeholder="กรุณากรอกราคาสินค้า" [ngModel]="productData.price"
+                <input nz-input class="wns-input" placeholder="กรุณากรอกราคาสินค้า" [ngModel]="productData.price"
                     (change)="onChangeData($event)" name="price" type="number" />
+
+                <h4 style="margin-top: 8px;">ประเภท</h4>
+                <nz-select [(ngModel)]="productDataType" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
+                    class="select-style">
+                    <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
+                    <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
+                    <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
+                    <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
+                </nz-select>
             </ng-container>
         </nz-modal>
     </div>

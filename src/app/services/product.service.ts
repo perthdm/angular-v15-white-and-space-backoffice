@@ -9,12 +9,15 @@ import { IProductPagination } from '../model/product.model';
 interface Pagination {
   page: number;
   limit: number;
+  type: string;
   query?: string;
 }
 
 const ENDPOINT = {
-  GET_ALL: ({ page, limit, query }: Pagination) =>
-    `${API_DOMAIN}/product?page=${page}&limit=${limit}&query=${query}`,
+  GET_ALL: ({ page, limit, type, query }: Pagination) =>
+    `${API_DOMAIN}/product?page=${page}&limit=${limit}&type=${type}&query=${query}`,
+  CREATE: `${API_DOMAIN}/product`,
+  UPDATE: `${API_DOMAIN}/product`,
 };
 
 @Injectable()
@@ -30,26 +33,26 @@ export class ProductService {
     });
   }
 
-  //   addEmployee(data: any): Observable<any> {
-  //     return this.http.post<any>(ENDPOINT.CREATE, data, {
-  //       headers: new HttpHeaders({
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       }),
-  //     });
-  //   }
+  addProduct(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.CREATE, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  updateProduct(data: any): Observable<any> {
+    return this.http.patch<any>(ENDPOINT.UPDATE, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
 
   //   deleteEmployee(employeeId: string): Observable<any> {
   //     return this.http.delete<any>(ENDPOINT.DELETE(employeeId), {
-  //       headers: new HttpHeaders({
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       }),
-  //     });
-  //   }
-
-  //   updeteEmployee(data: any): Observable<any> {
-  //     return this.http.patch<any>(ENDPOINT.UPDATE, data, {
   //       headers: new HttpHeaders({
   //         'Content-Type': 'application/json',
   //         Authorization: `Bearer ${localStorage.getItem('token')}`,

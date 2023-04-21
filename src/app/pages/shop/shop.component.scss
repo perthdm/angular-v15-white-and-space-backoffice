@@ -5,8 +5,10 @@
 }
 
 .order-detail {
-  height: 450px;
+  height: 460px;
   overflow-y: scroll;
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
 }
 
 .button-group-wrapper {

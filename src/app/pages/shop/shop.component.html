@@ -1,7 +1,7 @@
 <div>
     <div nz-row>
         <div nz-col style="padding:40px 30px;width:calc(100% - 450px);">
-            <div nz-row>
+            <!-- <div nz-row>
                 <div nz-col [nzSpan]="24">
                     <nz-input-group [nzSuffix]="suffixIconSearch" class="searchbar-style">
                         <input type="text" nz-input placeholder=" ค้นหา Name / Serial / Barcode" />
@@ -10,31 +10,50 @@
                         <span nz-icon nzType="search"></span>
                     </ng-template>
                 </div>
-            </div>
-            <div class="radio-style" style="margin-top: 30px;">
-                <nz-radio-group [(ngModel)]="radioValue" nzButtonStyle="solid" nzSize="large">
-                    <label nz-radio-button nzValue="A">
+            </div> -->
+            <div class="radio-style">
+                <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
+                    (ngModelChange)="fetchProduct()">
+                    <label nz-radio-button nzValue="">
                         <img src="../assets/img/coffee-shop.png" style="margin-right: 5px; margin-bottom: 7px;"
                             alt="item" />
                         ทั้งหมด
                     </label>
-                    <label nz-radio-button nzValue="B">
-                        <img src="../assets/img/cake.png" style="margin-right: 5px;" alt="item" />ของหวาน</label>
-                    <label nz-radio-button nzValue="C"><img src="../assets/img/coffee.png"
-                            style="margin-right: 5px; margin-bottom: 9px;" alt="item" />กาแฟ</label>
-                    <label nz-radio-button nzValue="D"><img src="../assets/img/milkshake.png"
-                            style="margin-right: 5px; margin-bottom: 5px;" alt="item" />น้ำหวาน</label>
-                    <label nz-radio-button nzValue="F"><img src="../assets/img/product.png"
-                            style="margin-right: 10px;margin-bottom: 3px;" alt="item" />สินค้า</label>
+                    <label nz-radio-button nzValue="food">
+                        <img src="../assets/img/cake.png" style="margin-right: 5px;" alt="item" />
+                        อาหาร
+                    </label>
+                    <label nz-radio-button nzValue="desert">
+                        <img src="../assets/img/milkshake.png" style="margin-right: 5px; margin-bottom: 5px;"
+                            alt="item" />
+                        ของหวาน
+                    </label>
+                    <label nz-radio-button nzValue="beverage">
+                        <img src="../assets/img/coffee.png" style="margin-right: 5px; margin-bottom: 9px;" alt="item" />
+                        เครื่องดื่ม
+                    </label>
+                    <label nz-radio-button nzValue="etc">
+                        <img src="../assets/img/product.png" style="margin-right: 10px;margin-bottom: 3px;"
+                            alt="item" />
+                        สินค้า
+                    </label>
                 </nz-radio-group>
             </div>
-            <div nz-row [nzGutter]="[16,32]">
-                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" *ngFor="let item of list">
-                    <div class="card-product"><img
-                            src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
+            <div nz-row [nzGutter]="[20,20]">
+                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" *ngFor="let item of productList">
+                    <div class="card-product" (click)="updateCart(item, 'add')">
+                        <img src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
                             width="100%" alt="item" />
-                        <div class="product-name">Coffee cold brew 150ml.</div>
-                        <div class="price-tag">฿ 231</div>
+
+                        <div class="product-name">
+                            {{ item.name }}
+                            <nz-tag style="margin-left:5px" [nzColor]="getTagDetail(item.product_type).color">
+                                {{ getTagDetail(item.product_type).title }}
+                            </nz-tag>
+                        </div>
+                        <div class="price-tag">
+                            ฿ {{ item.price }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +63,7 @@
             <div style="height: 80px;padding: 10px 20px;">
                 <div nz-row [nzGutter]="20" style="height: 100%;">
                     <div nz-col nzFlex="60px" style="align-self: center;">
-                        <img src="https://api.lorem.space/image/face?w=150&h=150"
+                        <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                             className="c-avatar-img profile-xs c-sidebar-brand-full" style="
                             width: 60px;
                             height: 60px;
@@ -59,10 +78,11 @@
                 </div>
 
             </div>
+
             <div style="padding:15px;">
                 <h2 class="text-bold kanit">รายการอาหาร</h2>
                 <div class="order-detail">
-                    <div class="button-group-wrapper" *ngFor="let item of list">
+                    <div class="button-group-wrapper" *ngFor="let item of cart">
                         <div class="group-content">
                             <div nz-row [nzGutter]="20" style="height: 100%;">
                                 <div nz-col nzFlex="90px" style="align-self: center;"><img
@@ -71,24 +91,37 @@
                                 </div>
                                 <div nz-col nzFlex="auto" class="text-start text-bold" style="align-self: center;">
                                     <div nz-row>
-                                        <div nz-col [nzSpan]="24" class="product-name">Coffee</div>
+                                        <div nz-col [nzSpan]="24" class="product-name">{{ item.name }}</div>
                                     </div>
                                     <div nz-row [nzGutter]="10">
-                                        <div nz-col nzFlex="50px">x <span style="font-size: 20px;">1</span></div>
-                                        <div nz-col nzFlex="auto" class="text-start">add on</div>
+                                        <div nz-col [nzSpan]="4">x
+                                            <span style="font-size: 20px;">
+                                                {{ item.amount }}
+                                            </span>
+                                        </div>
+                                        <div nz-col [nzSpan]="20" style="text-align: right;">
+                                            <span style="font-size: 18px;">{{ item.totalPrice }} THB</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div nz-col nzFlex="125px" class="price-tag">59 <span>THB</span></div>
+                                <!-- <div nz-col nzFlex="125px" class="price-tag">59 <span>THB</span></div> -->
                             </div>
-                        </div><button class="group-del"><span nz-icon nzType="delete" nzTheme="fill"
-                                style="color:#ff5a5a;"></span></button>
+                        </div>
+
+                        <button class="group-del" (click)="updateCart(item, 'del')">
+                            <span nz-icon nzType="delete" nzTheme="fill" style="color:#ff5a5a;"></span>
+                        </button>
                     </div>
+
+                    <nz-empty style="position:absolute ; left:27% ; top : 30% ; " *ngIf="cart.length === 0"></nz-empty>
                 </div>
                 <div style="margin-top: 30px; padding: 20px;">
                     <div nz-row [nzGutter]="10">
                         <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size:24px;">Total</div>
-                        <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size:32px;">2000 <span
-                                style="font-size:16px;">THB</span></div>
+                        <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size:32px;">
+                            {{ totalPrice.toLocaleString() }}
+                            <span style="font-size:16px;">THB</span>
+                        </div>
                     </div>
                     <h2 class="text-bold kanit" style="margin-top: 30px;">ช่องทางการจ่ายเงิน</h2>
                     <div nz-row [nzGutter]="30" style="margin-top: 10px;">
@@ -99,9 +132,10 @@
             </div>
         </div>
     </div>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="ออเดอร์" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" [nzWidth]="600">
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="ออเดอร์" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+        [nzWidth]="600">
         <ng-container *nzModalContent>
-            <nz-table #basicTable [nzData]="dataList" [nzFrontPagination]="false">
+            <nz-table #basicTable [nzData]="mockupList" [nzFrontPagination]="false">
                 <thead>
                     <tr>
                         <th>รายการออเดอร์</th>
