@@ -25,8 +25,8 @@
     </div>
     <div class="app-content">
 
-        <nz-table style="margin:20px 0px; " #basicTable [nzData]="munuList" [nzShowPagination]="false"
-            style="min-height: 300px;" [nzPageSize]="pageLimit">
+        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="munuList" [nzShowPagination]="false"
+            [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th>รหัสสินค้า</th>
@@ -54,7 +54,8 @@
                 </tr>
             </tbody>
         </nz-table>
-        <div style=" padding:0px 20px 20px 20px; text-align: right;">
+
+        <div style="padding:0px 20px 20px 20px; text-align: right;">
             <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
                 [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchProduct()"
                 (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">

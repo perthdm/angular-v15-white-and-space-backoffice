@@ -14,11 +14,18 @@
                 <h3></h3>
             </div>
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button nz-button nzType="primary"
+                    style="height: 40px; border-radius: 10px; margin-right: 10px; background-color:#eaab36; border-color:#eaab36"
+                    (click)="showModal()">
+                    <span nz-icon nzType="history" nzTheme="outline"></span>
+                    ประวัติการนำเข้า
+                </button>
                 <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
                     (click)="showModal()">
                     <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    เพิ่มสินค้า
+                    นำเข้าสินค้า
                 </button>
+
             </div>
         </div>
 
@@ -28,29 +35,19 @@
             <thead>
                 <tr>
                     <th>วันที่</th>
-                    <th>ชื่อ</th>
+                    <th>รหัสนำเข้า</th>
+                    <th>ชื่อสินค้า</th>
                     <th>จำนวน</th>
                     <th>หน่วย</th>
-                    <th>เครื่องมือ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
                     <td>{{data.updateat}}</td>
+                    <td> IM0001 </td>
                     <td>{{data.name}}</td>
                     <td>{{data.amount}}</td>
                     <td>{{data.unit}}</td>
-                    <td>
-                        <nz-space>
-                            <button nz-button nzType="primary"
-                                style="background-color:rgb(234, 171, 54); border-color:rgb(234, 171, 54); margin: 0px 4px"><span
-                                    nz-icon nzType="edit" nzTheme="outline"></span>
-                            </button>
-                            <button nz-button nzType="primary" nzDanger>
-                                <span nz-icon nzType="delete" nzTheme="outline"></span>
-                            </button>
-                        </nz-space>
-                    </td>
                 </tr>
             </tbody>
         </nz-table>

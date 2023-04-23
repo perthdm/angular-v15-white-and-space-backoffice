@@ -100,7 +100,7 @@
             <div nz-row [nzGutter]="[0,24]">
                 <div nz-col class="gutter-row" [nzXs]="24">
                     <div class="ws-card-plain" style="height: 40px; background-color: #46a8fa; color:white">
-                        <div class="item" style="width:150px;"> # </div>
+                        <!-- <div class="item" style="width:150px;"> # </div> -->
                         <div class="item">รหัสสินค้า</div>
                         <div class="item">ชื่อสินค้า</div>
                         <div class="item">ราคา</div>
@@ -116,12 +116,13 @@
             <div nz-row [nzGutter]="[0,18]" *ngFor="let data of dataList">
                 <div nz-col class="gutter-row" [nzXs]="24">
                     <div class="ws-card-plain">
-                        <div class="item" style="width:150px; color:#e91e63; font-size: 24px;"> <span nz-icon
-                                nzType="exclamation-circle" nzTheme="outline"></span></div>
+                        <!-- <div class="item" style="width:150px; color:#e91e63; font-size: 24px;">
+                            <span nz-icon nzType="exclamation-circle" nzTheme="outline"></span>
+                        </div> -->
                         <div class="item">{{data.key}}</div>
                         <div class="item">{{data.name}}</div>
                         <div class="item">{{data.prize}} บาท</div>
-                        <div class="item">{{data.amount}} หน่วย</div>
+                        <div class="item">{{data.amount}}/100 </div>
                         <div class="item">
                             <nz-tag *ngIf="data.type == 'ของใช้งาน'" [nzColor]="'volcano'">{{data.type}}</nz-tag>
                             <nz-tag *ngIf="data.type == 'วัตถุดิบ'" [nzColor]="'geekblue'">{{data.type}}</nz-tag>
