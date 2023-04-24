@@ -8,7 +8,7 @@ $base-color: #e9ecef;
 
 .login-form-container {
   width: 25%;
-  height: 470px;
+  height: fit-content;
   background-color: white;
   position: absolute; /*Can also be `fixed`*/
   left: 0;
@@ -16,9 +16,8 @@ $base-color: #e9ecef;
   top: 0;
   bottom: 0;
   margin: auto;
-
+  overflow: hidden;
   /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
-  overflow: auto;
   padding: 2rem;
 
   border-color: #d7d7d7;

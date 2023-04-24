@@ -3,7 +3,7 @@
         [nzTrigger]="null">
         <div class="sidebar-logo">
             <a href="https://ng.ant.design/" target="_blank">
-                <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+                <img src="../../assets/img/logo.jpg" alt="logo" style="border-radius: 7px;">
                 <h1>White And Space</h1>
             </a>
         </div>
@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li nz-menu-item nzMatchRouter>
-                <a routerLink="/stock"> <span nz-icon nzType="golden" nzTheme="fill"></span><span
+                <a routerLink="/stock"> <span nz-icon nzType="ordered-list" nzTheme="outline"></span><span
                         class="menu-text">สต็อกสินค้า</span>
                 </a>
             </li>
@@ -54,7 +54,7 @@
 
             <li nz-menu-item nzMatchRouter (click)="logout()">
                 <a>
-                    <span nz-icon nzType="key" nzTheme="outline"></span><span class="menu-text">ออกจากระบบ</span>
+                    <span nz-icon nzType="logout" nzTheme="outline"></span><span class="menu-text">ออกจากระบบ</span>
                 </a>
             </li>
         </ul>
