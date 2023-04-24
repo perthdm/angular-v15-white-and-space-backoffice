@@ -34,8 +34,6 @@
             [nzPageSize]="pageLimit">
             <thead>
                 <tr>
-                    <th>วันที่</th>
-                    <th>รหัสนำเข้า</th>
                     <th>ชื่อสินค้า</th>
                     <th>จำนวน</th>
                     <th>หน่วย</th>
@@ -43,8 +41,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
-                    <td>{{data.updateat}}</td>
-                    <td> IM0001 </td>
                     <td>{{data.name}}</td>
                     <td>{{data.amount}}</td>
                     <td>{{data.unit}}</td>

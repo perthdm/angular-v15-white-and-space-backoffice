@@ -1,5 +1,5 @@
 .menu-right-wrapper {
-  height: 100vh;
+  height: 95vh;
   background: white;
   box-shadow: 1px 0px 3px 2px #fafafa;
 }
@@ -110,7 +110,7 @@
 .card-product {
   background: white;
   box-shadow: 1px 1px 4px 1px #ebebeb;
-  padding: 20px 15px 30px 15px !important;
+  padding: 20px 10px !important;
   // margin: 1rem;
   border-radius: 15px;
 
@@ -119,7 +119,7 @@
     object-fit: cover;
   }
   .product-name {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-family: 'Kanit';
     margin-top: .5rem;
     margin-bottom: .5 rem;

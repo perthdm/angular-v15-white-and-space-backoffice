@@ -35,6 +35,8 @@ export class ShopComponent {
     },
   ];
   productList: any = [];
+  productListPreview: any = [];
+
   cart: any = [];
   totalPrice: number = 0;
 
@@ -60,6 +62,7 @@ export class ShopComponent {
         let { items } = res;
         console.log(items);
         this.productList = items;
+        this.productListPreview = items;
       },
       (err) => {}
     );
@@ -68,11 +71,11 @@ export class ShopComponent {
   getTagDetail(type: string) {
     switch (type) {
       case 'food':
-        return { title: 'อาหาร', color: 'blue' };
+        return { title: 'อาหาร', color: 'volcano' };
       case 'desert':
         return { title: 'ของหวาน', color: 'magenta' };
       case 'beverage':
-        return { title: 'เครื่องดื่ม', color: 'volcano' };
+        return { title: 'เครื่องดื่ม', color: 'geekblue' };
       default:
         return { title: 'สินค้า', color: 'purple' };
     }
@@ -93,6 +96,7 @@ export class ShopComponent {
           name: item.name,
           amount: 1,
           price: item.price,
+          product_type : item.product_type,
           totalPrice: item.price,
         };
         this.cart.push(newItem);
@@ -129,5 +133,14 @@ export class ShopComponent {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isVisible = false;
+  }
+
+  filterByType() {
+    let nextList = [...this.productList];
+    if (this.categoryType !== '') {
+      nextList = nextList.filter((i) => i.product_type === this.categoryType);
+    }
+
+    this.productListPreview = nextList;
   }
 }

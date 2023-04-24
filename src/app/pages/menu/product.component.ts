@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { IProduct } from 'src/app/model/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { formatDateTime } from 'src/utils/utils';
@@ -24,6 +25,8 @@ export class ProductComponent {
 
   productData: any = {};
   productDataType: string = '';
+
+  fileList: NzUploadFile[] = [];
 
   constructor(
     private productService: ProductService,
@@ -141,11 +144,11 @@ export class ProductComponent {
   getTagDetail(type: string) {
     switch (type) {
       case 'food':
-        return { title: 'อาหาร', color: 'blue' };
+        return { title: 'อาหาร', color: 'volcano' };
       case 'desert':
         return { title: 'ของหวาน', color: 'magenta' };
       case 'beverage':
-        return { title: 'เครื่องดื่ม', color: 'volcano' };
+        return { title: 'เครื่องดื่ม', color: 'geekblue' };
       default:
         return { title: 'สินค้า', color: 'purple' };
     }
@@ -154,4 +157,9 @@ export class ProductComponent {
   mapDate(date: string) {
     return formatDateTime(date);
   }
+
+  beforeUpload = (file: NzUploadFile): boolean => {
+    this.fileList = [...this.fileList, file];
+    return false;
+  };
 }

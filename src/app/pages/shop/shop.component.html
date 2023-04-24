@@ -11,9 +11,9 @@
                     </ng-template>
                 </div>
             </div> -->
-            <div class="radio-style">
+            <div class="radio-style" style="margin-bottom: 10px;">
                 <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
-                    (ngModelChange)="fetchProduct()">
+                    (ngModelChange)="filterByType()">
                     <label nz-radio-button nzValue="">
                         <img src="../assets/img/coffee-shop.png" style="margin-right: 5px; margin-bottom: 7px;"
                             alt="item" />
@@ -39,17 +39,38 @@
                     </label>
                 </nz-radio-group>
             </div>
-            <div nz-row [nzGutter]="[20,20]">
-                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" *ngFor="let item of productList">
-                    <div class="card-product" (click)="updateCart(item, 'add')">
-                        <img src="https://img.freepik.com/premium-psd/cold-coffee-bottle-mockup_1119-1821.jpg"
-                            width="100%" alt="item" />
 
-                        <div class="product-name">
-                            {{ item.name }}
-                            <nz-tag style="margin-left:5px" [nzColor]="getTagDetail(item.product_type).color">
+            <div nz-row [nzGutter]="[20,20]">
+                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
+                    <div class="card-product" (click)="updateCart(item, 'add')">
+                        <div style="position: relative;">
+                            <img *ngIf="item.product_type === 'food'"
+                                src="https://ak-d.tripcdn.com/images/1i6232215bc32lxpc2B9D_R_400_10000_R5_Q90.jpg_.webp?proc=source/trip"
+                                width="100%" alt="food-item">
+
+                            <img *ngIf="item.product_type === 'desert'"
+                                src="https://www.mezzo.co/pub/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/1/_/1.chocolate_cake_1000px_1.jpg"
+                                width="100%" alt="desert-item">
+
+                            <img *ngIf="item.product_type === 'beverage'"
+                                src="https://img.freepik.com/premium-photo/cup-coffee-textured-grey-background-lifestyle-photo-with-natural-light-minimalistic-style-with-cup-coffee-milk-foam_4740-5149.jpg?w=2000"
+                                width="100%" alt="beverage-item">
+
+                            <img *ngIf="item.product_type === 'etc'"
+                                src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png"
+                                width="100%" alt="etc-item">
+
+
+
+
+                            <nz-tag style=" position: absolute; top: 8px ; right : 0px"
+                                [nzColor]="getTagDetail(item.product_type).color">
                                 {{ getTagDetail(item.product_type).title }}
                             </nz-tag>
+                        </div>
+                        <div class="product-name">
+                            {{ item.name }}
+
                         </div>
                         <div class="price-tag">
                             ฿ {{ item.price }}
@@ -85,9 +106,24 @@
                     <div class="button-group-wrapper" *ngFor="let item of cart">
                         <div class="group-content">
                             <div nz-row [nzGutter]="20" style="height: 100%;">
-                                <div nz-col nzFlex="90px" style="align-self: center;"><img
+                                <div nz-col nzFlex="90px" style="align-self: center;">
+
+                                    <img *ngIf="item.product_type === 'food'"
+                                        src="https://ak-d.tripcdn.com/images/1i6232215bc32lxpc2B9D_R_400_10000_R5_Q90.jpg_.webp?proc=source/trip"
+                                        alt="food-item">
+
+                                    <img *ngIf="item.product_type === 'desert'"
+                                        src="https://www.mezzo.co/pub/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/1/_/1.chocolate_cake_1000px_1.jpg"
+                                        alt="item">
+
+                                    <img *ngIf="item.product_type === 'beverage'"
                                         src="https://img.freepik.com/premium-photo/cup-coffee-textured-grey-background-lifestyle-photo-with-natural-light-minimalistic-style-with-cup-coffee-milk-foam_4740-5149.jpg?w=2000"
                                         alt="item">
+
+                                    <img *ngIf="item.product_type === 'etc'"
+                                        src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png"
+                                        alt="bear">
+
                                 </div>
                                 <div nz-col nzFlex="auto" class="text-start text-bold" style="align-self: center;">
                                     <div nz-row>
@@ -112,6 +148,7 @@
                             <span nz-icon nzType="delete" nzTheme="fill" style="color:#ff5a5a;"></span>
                         </button>
                     </div>
+
 
                     <nz-empty style="position:absolute ; left:27% ; top : 30% ; " *ngIf="cart.length === 0"></nz-empty>
                 </div>

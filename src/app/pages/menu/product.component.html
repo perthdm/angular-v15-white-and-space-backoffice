@@ -45,8 +45,8 @@
                     <td>{{ data.price.toLocaleString() }}</td>
                     <td>{{ mapDate(data.createdAt) }}</td>
                     <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="getTagDetail(data.product_type).color">{{
-                            getTagDetail(data.product_type).title }}</nz-tag>
+                        <nz-tag [nzColor]="getTagDetail(data.product_type).color">
+                            {{ getTagDetail(data.product_type).title }}</nz-tag>
                     </td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
@@ -88,6 +88,15 @@
                     <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
                     <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
                 </nz-select>
+
+                <h4 style="margin-top: 8px;">รูปภาพสินค้า</h4>
+                <nz-upload class="upload-style" [nzLimit]="1" nzListType="picture" [nzBeforeUpload]="beforeUpload"
+                    [(nzFileList)]="fileList">
+                    <button nz-button nzType="primary" style="margin-bottom:1rem;" *ngIf="fileList.length === 0">
+                        <span nz-icon nzType="upload"></span>
+                        อัพโหลด
+                    </button>
+                </nz-upload>
             </ng-container>
         </nz-modal>
     </div>
