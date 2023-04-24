@@ -57,8 +57,8 @@
                                 width="100%" alt="beverage-item">
 
                             <img *ngIf="item.product_type === 'etc'"
-                                src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png"
-                                width="100%" alt="etc-item">
+                                src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png" width="100%"
+                                alt="etc-item">
 
 
 
@@ -81,7 +81,7 @@
         </div>
 
         <div nz-col style="width:450px" class="menu-right-wrapper">
-            <div style="height: 80px;padding: 10px 20px;">
+            <div style="height: 80px;padding: 10px 20px; margin-top: 10px;">
                 <div nz-row [nzGutter]="20" style="height: 100%;">
                     <div nz-col nzFlex="60px" style="align-self: center;">
                         <img src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
@@ -152,7 +152,7 @@
 
                     <nz-empty style="position:absolute ; left:27% ; top : 30% ; " *ngIf="cart.length === 0"></nz-empty>
                 </div>
-                <div style="margin-top: 30px; padding: 20px;">
+                <div style="margin-top: 10px; padding: 20px;">
                     <div nz-row [nzGutter]="10">
                         <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size:24px;">Total</div>
                         <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size:32px;">
@@ -160,7 +160,7 @@
                             <span style="font-size:16px;">THB</span>
                         </div>
                     </div>
-                    <h2 class="text-bold kanit" style="margin-top: 30px;">ช่องทางการจ่ายเงิน</h2>
+                    <h2 class="text-bold kanit" style="margin-top: 25px;">ช่องทางการจ่ายเงิน</h2>
                     <div nz-row [nzGutter]="30" style="margin-top: 10px;">
                         <div nz-col [nzSpan]="12"><button class="payment-button">เงินสด</button></div>
                         <div nz-col [nzSpan]="12"><button class="payment-button">โอน</button></div>

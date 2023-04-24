@@ -1,75 +1,66 @@
 <nz-layout class="app-layout">
-    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-        [nzTrigger]="null">
-        <div class="sidebar-logo">
-            <a href="https://ng.ant.design/" target="_blank">
-                <img src="../../assets/img/logo.jpg" alt="logo" style="border-radius: 7px;">
-                <h1>White And Space</h1>
-            </a>
-        </div>
-
-        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-            <li nz-menu-item nzMatchRouter nzIcon="user">
-                <a routerLink="/shop"><span nz-icon nzType="shop" nzTheme="fill"></span>
-                    <span class="menu-text">หน้าขาย</span></a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
-                    <span class="menu-text">แดชบอร์ด</span></a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
-                        class="menu-text">รายงาน</span>
-                </a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/billing-history"><span nz-icon nzType="file-text" nzTheme="fill"></span>
-                    <span class="menu-text">ประวัติขาย</span></a>
-            </li>
-
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/menu"> <span nz-icon nzType="golden" nzTheme="fill"></span><span
-                        class="menu-text">สินค้า / บริการ</span>
-                </a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-                <a routerLink="/stock"> <span nz-icon nzType="ordered-list" nzTheme="outline"></span><span
-                        class="menu-text">สต็อกสินค้า</span>
-                </a>
-            </li>
-
-            <li nz-submenu nzOpen nzTitle="ADMIN" nzIcon="user">
-                <ul>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/user">ผู้ใช้งาน</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/time-stamp">ประวัติการเข้างาน</a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/setting">ตั้งค่าร้าน</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li nz-menu-item nzMatchRouter (click)="logout()">
-                <a>
-                    <span nz-icon nzType="logout" nzTheme="outline"></span><span class="menu-text">ออกจากระบบ</span>
-                </a>
-            </li>
-        </ul>
-    </nz-sider>
-
     <nz-layout>
         <nz-header>
             <div class="app-header">
-                <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-                    <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
-                </span>
+                <ul nz-menu nzTheme="dark" nzMode="horizontal">
+                    <li nz-menu-item nzMatchRouter nzIcon="user">
+                        <a routerLink="/shop">
+                            <img src="../../assets/img/logo.jpg" alt="logo"
+                                style="border-radius: 7px; height: 30px; margin-right: 10px;">
+                            <span class="menu-text" style="font-weight: bold;">White And Space</span>
+                        </a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
+                            <span class="menu-text">แดชบอร์ด</span></a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
+                                class="menu-text">รายงาน</span>
+                        </a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/billing-history"><span nz-icon nzType="file-text" nzTheme="fill"></span>
+                            <span class="menu-text">ประวัติขาย</span></a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/menu"> <span nz-icon nzType="golden" nzTheme="fill"></span><span
+                                class="menu-text">สินค้า / บริการ</span>
+                        </a>
+                    </li>
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/stock"> <span nz-icon nzType="ordered-list" nzTheme="outline"></span><span
+                                class="menu-text">สต็อกสินค้า</span>
+                        </a>
+                    </li>
+
+                    <li nz-submenu nzTitle="ADMIN" nzIcon="user">
+                        <ul>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/user">ผู้ใช้งาน</a>
+                            </li>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/time-stamp">ประวัติการเข้างาน</a>
+                            </li>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/setting">ตั้งค่าร้าน</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
+                        <a>
+                            <span nz-icon nzType="logout" nzTheme="outline"></span><span
+                                class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </nz-header>
         <nz-content>
             <router-outlet></router-outlet>
         </nz-content>
+        <!-- <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer> -->
     </nz-layout>
 </nz-layout>
