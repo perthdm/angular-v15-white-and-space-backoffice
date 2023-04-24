@@ -130,13 +130,14 @@
                                         <div nz-col [nzSpan]="24" class="product-name">{{ item.name }}</div>
                                     </div>
                                     <div nz-row [nzGutter]="10">
-                                        <div nz-col [nzSpan]="4">x
+                                        <div nz-col [nzSpan]="6">x
                                             <span style="font-size: 20px;">
                                                 {{ item.amount }}
                                             </span>
                                         </div>
-                                        <div nz-col [nzSpan]="20" style="text-align: right;">
-                                            <span style="font-size: 18px;">{{ item.totalPrice }} THB</span>
+                                        <div nz-col [nzSpan]="18" style="text-align: right;">
+                                            <span style="font-size: 18px;">{{ item.totalPrice.toLocaleString() }}
+                                                THB</span>
                                         </div>
                                     </div>
                                 </div>
