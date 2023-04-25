@@ -8,13 +8,14 @@
         </div>
     </div>
     <div class="radio-style">
-        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large" (ngModelChange)="fetchProduct()">
+        <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
+            (ngModelChange)="fetchProduct()">
             <label nz-radio-button nzValue="">
-                ทั้งหมด <span>(99)</span>
+                ทั้งหมด <span>({{ total }})</span>
             </label>
             <label nz-radio-button nzValue="food">อาหาร <span>(9)</span></label>
             <label nz-radio-button nzValue="desert"> ของหวาน <span>(9)</span></label>
-            <label nz-radio-button nzValue="beverage">เครื่องดื่ม<span>(9)</span></label>
+            <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>(9)</span></label>
             <label nz-radio-button nzValue="etc">อื่นๆ <span>(12)</span></label>
         </nz-radio-group>
         <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
@@ -25,7 +26,7 @@
     </div>
     <div class="app-content">
 
-        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="munuList" [nzShowPagination]="false"
+        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="menuList" [nzShowPagination]="false"
             [nzPageSize]="pageLimit">
             <thead>
                 <tr>

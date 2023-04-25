@@ -12,7 +12,7 @@ import { formatDateTime } from 'src/utils/utils';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent {
-  munuList: any = [];
+  menuList: any = [];
 
   isLoading: boolean = true;
   isEdit: boolean = false;
@@ -22,8 +22,8 @@ export class ProductComponent {
 
   page: number = 1;
   pageLimit: number = 10;
-  total: number = 10;
-  productType = '';
+  total: number = 0;
+  categoryType = '';
   query: string = '';
 
   productData: any = {};
@@ -45,13 +45,13 @@ export class ProductComponent {
     let reqData = {
       page: this.page,
       limit: this.pageLimit,
-      type: this.productType,
+      type: this.categoryType,
       query: this.query,
     };
     this.productService.getAllProduct(reqData).subscribe(
       (res) => {
-        let { total, page, last_page, items } = res;
-        this.munuList = items;
+        let { total, items } = res;
+        this.menuList = items;
         this.total = total;
         this.isLoading = false;
       },
