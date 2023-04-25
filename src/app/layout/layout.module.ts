@@ -24,7 +24,7 @@ import { UserComponent } from '../pages/user/user.component';
 import { UserService } from '../services/user.service';
 import { ProductComponent } from '../pages/menu/product.component';
 import { ProductService } from '../services/product.service';
-
+import { StockService } from '../services/stock.service';
 @NgModule({
   imports: [
     LayoutRoutingModule,
@@ -47,7 +47,7 @@ import { ProductService } from '../services/product.service';
     SettingComponent
   ],
 
-  providers: [AuthGuardService, EmployeeService, UserService, ProductService],
+  providers: [AuthGuardService, EmployeeService, UserService, ProductService,StockService],
   bootstrap: [LayoutComponent],
 })
 export class LayoutModule {}

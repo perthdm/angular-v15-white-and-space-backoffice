@@ -30,26 +30,53 @@
             <thead>
                 <tr>
                     <th>รหัสสินค้า</th>
+                    <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
                     <th>ชื่อสินค้า</th>
                     <th>ราคา</th>
-                    <th>สร้างเมื่อ</th>
-                    <th [nzAlign]="'center'">หมวดหมู่</th>
+                    <!-- <th [nzAlign]="'center'">สต็อก</th> -->
+                    <th [nzAlign]="'center'" nzWidth="100px">จำนวน</th>
                     <th [nzAlign]="'center'">สถานะ</th>
+                    <!-- <th>สร้างเมื่อ</th> -->
+                    <th>เครื่องมือ</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
-                    (click)="editProduct(data)">
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;">
                     <td>{{ data.product_id }}</td>
-                    <td>{{ data.name }}</td>
-                    <td>{{ data.price.toLocaleString() }}</td>
-                    <td>{{ mapDate(data.createdAt) }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
                             {{ getTagDetail(data.product_type).title }}</nz-tag>
                     </td>
+                    <td>{{ data.name }}</td>
+                    <td>{{ data.price.toLocaleString() }}</td>
+                    <!-- <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="getTagStockDetail(data.stock).color">
+                            {{ getTagStockDetail(data.stock).title }}
+                        </nz-tag>
+                    </td> -->
+                    <td [nzAlign]="'center'">
+                        <ng-container *ngIf="data.stock !== false; else zeroAmount">
+                            {{ data.amount }}
+                        </ng-container>
+                        <ng-template #zeroAmount>
+                            -
+                        </ng-template>
+                    </td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
+                    </td>
+                    <!-- <td>{{ mapDate(data.createdAt) }}</td> -->
+                    <td>
+                        <button nz-button
+                            style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #FFC107;"
+                            (click)="editProduct(data)">
+                            แก้ไขข้อมูล
+                        </button>
+                        <button nz-button
+                            style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #F8F9FA;"
+                            (click)="editStock(data)">
+                            ปรับสต็อก
+                        </button>
                     </td>
                 </tr>
             </tbody>
@@ -97,6 +124,22 @@
                         อัพโหลด
                     </button>
                 </nz-upload>
+            </ng-container>
+        </nz-modal>
+
+        <nz-modal [(nzVisible)]="isVisibleStockMnm" nzTitle="แก้ไขสต็อก" (nzOnCancel)="handleCancel()"
+            (nzOnOk)="handleOk()">
+            <ng-container *nzModalContent>
+                <h4 style="margin-top: 8px;">จำนวน</h4>
+                <input nz-input class="wns-input" placeholder="กรุณากรอกราคาสินค้า" (change)="onChangeData($event)"
+                    name="amount" type="number" />
+
+                <h4 style="margin-top: 8px;">ประเภท</h4>
+                <nz-select [(ngModel)]="productDataType" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
+                    class="select-style">
+                    <nz-option nzValue="in" nzLabel="นำเข้า"></nz-option>
+                    <nz-option nzValue="out" nzLabel="นำออก"></nz-option>
+                </nz-select>
             </ng-container>
         </nz-modal>
     </div>

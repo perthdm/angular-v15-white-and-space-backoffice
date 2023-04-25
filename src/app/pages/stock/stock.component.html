@@ -1,7 +1,7 @@
 <div class="inner-content">
     <div nz-row>
         <div nz-col [nzSpan]="8">
-            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สต็อกสินค้า</h3>
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">การเคลื่อนไหวสินค้า</h3>
         </div>
         <div nz-col [nzSpan]="16">
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
@@ -9,60 +9,58 @@
     </div>
 
     <div class="app-content">
-        <div nz-row style="padding:0px 20px">
-            <div nz-col [nzSpan]="8">
-                <h3></h3>
-            </div>
-            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <button nz-button nzType="primary"
-                    style="height: 40px; border-radius: 10px; margin-right: 10px; background-color:#eaab36; border-color:#eaab36"
-                    (click)="showModal()">
-                    <span nz-icon nzType="history" nzTheme="outline"></span>
-                    ประวัติการนำเข้า
-                </button>
-                <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
-                    (click)="showModal()">
-                    <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    นำเข้าสินค้า
-                </button>
-
-            </div>
-        </div>
 
 
-        <nz-table style="margin:20px 0px; " #basicTable [nzData]="stockList" [nzShowPagination]="false"
-            [nzPageSize]="pageLimit">
+        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="stockList"
+            [nzShowPagination]="false" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
+                    <th>วันที่</th>
+                    <th>รหัสสินค้า</th>
                     <th>ชื่อสินค้า</th>
+                    <th>ชนิด</th>
                     <th>จำนวน</th>
-                    <th>หน่วย</th>
+                    <th [nzAlign]="'center'">ผู้ทำรายการ</th>
+                    <!-- <th>ราคา</th>
+                    <th>สร้างเมื่อ</th>
+                    <th [nzAlign]="'center'">หมวดหมู่</th>
+                    <th [nzAlign]="'center'">สถานะ</th> -->
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index ">
-                    <td>{{data.name}}</td>
-                    <td>{{data.amount}}</td>
-                    <td>{{data.unit}}</td>
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
+                    (click)="editStock(data)">
+                    <td>{{ mapDate(data.createdAt) }}</td>
+                    <td>{{ data?.product?.product_id }}</td>
+                    <td>{{ data?.product?.name }}</td>
+                    <td>
+                        <nz-tag [nzColor]="getTagDetail(data.type).color">
+                            {{ getTagDetail(data.type).title }}
+                        </nz-tag>
+                    </td>
+                    <td>{{ data?.amount }}</td>
+                    <td>{{ data?.user_created?.username }}</td>
+                    <!-- <td>{{ data.price.toLocaleString() }}</td> -->
+                    <!-- <td>{{ mapDate(data.createdAt) }}</td> -->
+                    <!-- <td [nzAlign]="'center'">
+                    <nz-tag [nzColor]="getTagDetail(data.product_type).color">
+                        {{ getTagDetail(data.product_type).title }}</nz-tag>
+                </td> -->
+                    <!-- <td [nzAlign]="'center'">
+                    <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
+                </td> -->
                 </tr>
             </tbody>
         </nz-table>
         <div style="padding:0px 20px 20px 20px; text-align: right;">
-            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="dataCount" [nzSimple]="false" [(nzPageSize)]="pageLimit"
-                [nzShowSizeChanger]="true">
+            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
+                [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchStock()"
+                (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
             </nz-pagination>
+
+            <ng-template #rangeTemplate let-range="range" let-total>
+                {{ range[0] }}-{{ range[1] }} of {{ total }} items
+            </ng-template>
         </div>
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า">
-            <ng-container *nzModalContent>
-                <nz-input-group nzCompact>
-                    <input type="text" nz-input [ngModel]="stockData.name" style="width: 40%;" placeholder="ชื่อ" />
-                    <input type="text" nz-input [ngModel]="stockData.amount" style="width:20%;" placeholder="จำนวน" />
-                    <nz-select nzPlaceHolder="เลือกหน่วย" [ngModel]="stockData.unit">
-                        <nz-option [nzLabel]="'kg'" [nzValue]="'kg'"></nz-option>
-                        <nz-option [nzLabel]="'pack'" [nzValue]="'pack'"></nz-option>
-                    </nz-select>
-                </nz-input-group>
-            </ng-container>
-        </nz-modal>
     </div>
 </div>
