@@ -29,8 +29,8 @@
             </thead>
             <tbody *ngFor="let data of basicTable.data ;let index = index">
                 <tr style="background-color: #4479a4;">
-                    <td [nzAlign]="'center'" style="color:white ; padding:4px ; font-weight: bold;">{{data.date}}</td>
-                    <td [nzAlign]="'center'" [colSpan]="24"></td>
+                    <td class="td-no-hover" [nzAlign]="'center'" style="color:white ; padding:4px ; font-weight: bold;">{{data.date}}</td>
+                    <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                 </tr>
                 <tr *ngFor="let bill of data.bills;">
                     <td></td>
