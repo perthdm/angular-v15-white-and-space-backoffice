@@ -163,14 +163,42 @@
                     </div>
                     <h2 class="text-bold kanit" style="margin-top: 25px;">ช่องทางการจ่ายเงิน</h2>
                     <div nz-row [nzGutter]="30" style="margin-top: 10px;">
-                        <div nz-col [nzSpan]="12"><button class="payment-button">เงินสด</button></div>
-                        <div nz-col [nzSpan]="12"><button class="payment-button">โอน</button></div>
+                        <div nz-col [nzSpan]="12">
+                            <button nz-button nzType="primary" [disabled]="cart.length == 0" class="payment-button"
+                                style="background-color: #eaab36;" (click)="handleConfirmOrder('cash')">เงินสด
+                            </button>
+                        </div>
+                        <div nz-col [nzSpan]="12">
+                            <button nz-button nzType="primary" class="payment-button" [disabled]="cart.length == 0"
+                                style="background-color: #29f;" (click)="handleConfirmOrder('mobileBanking')">โอน
+                            </button>
+                        </div>
                     </div>
+
+                    <button nz-button class="clear-btn"
+                        style="background-color: #ee4646;color: white;border-color:#ee4646"
+                        (click)="handleClearOrder()">
+                        <span nz-icon nzType="clear" nzTheme="outline"></span>เคลียร์
+                    </button>
                 </div>
             </div>
         </div>
     </div>
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="ออเดอร์" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
+
+    <!-- <div class="menu-footer">
+        <button nz-button style="background-color: #ee4646;color: white;border-color:#ee4646"
+            (click)="handleClearOrder()">
+            <span nz-icon nzType="clear" nzTheme="outline"></span>เคลียร์
+        </button>
+        <button nz-button nzType="primary">
+            <span nz-icon nzType="pause" nzTheme="outline"></span>พัก
+        </button>
+        <button nz-button nzType="primary" (click)="showModal()">
+            <span nz-icon nzType="ordered-list" nzTheme="outline"></span>ดึงออเดอร์
+        </button>
+    </div> -->
+
+    <!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="ออเดอร์" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()"
         [nzWidth]="600">
         <ng-container *nzModalContent>
             <nz-table #basicTable [nzData]="mockupList" [nzFrontPagination]="false">
@@ -202,16 +230,7 @@
         </ng-container>
         <div *nzModalFooter>
         </div>
-    </nz-modal>
-    <div class="menu-footer">
-        <button nz-button style="background-color: #ee4646;color: white;border-color:#ee4646">
-            <span nz-icon nzType="clear" nzTheme="outline"></span>เคลียร์
-        </button>
-        <button nz-button nzType="primary">
-            <span nz-icon nzType="pause" nzTheme="outline"></span>พัก
-        </button>
-        <button nz-button nzType="primary" (click)="showModal()">
-            <span nz-icon nzType="ordered-list" nzTheme="outline"></span>ดึงออเดอร์
-        </button>
-    </div>
+    </nz-modal> -->
+
+
 </div>

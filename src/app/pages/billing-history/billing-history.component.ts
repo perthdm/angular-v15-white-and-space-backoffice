@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
+import { OrderService } from 'src/app/services/order.service';
 import { formatDateTime } from 'src/utils/utils';
+import * as moment from 'moment';
 
-interface Bill {
+interface IBillList {
   date: string;
-  bills: BillDetail[];
+  bills: IBill[];
   totalProfit: number;
   totalBill: number;
-}
-
-interface BillDetail {
-  billId: string;
   totalOrder: number;
-  totalPrice: number;
-  createdAt: string;
-  status: string;
-  paymentGateway: string;
 }
 
-// interface Menu {
-//   name: string;
-//   unitPrice: string;
-// }
+interface IBill {
+  order_id: string;
+  items: IBillDetail[];
+  price: number;
+  status: string;
+  createdAt: string;
+  user_created: any;
+  paymentGateway: string;
+  totalOrder: number;
+}
+
+interface IBillDetail {}
 
 @Component({
   selector: 'app-billing-history',
@@ -28,95 +30,59 @@ interface BillDetail {
   styleUrls: ['./billing-history.component.scss'],
 })
 export class BillingHistoryComponent {
-  billList: Bill[] = [];
-  date = null;
+  billList: IBillList[] = [];
+  currentBill: any = {};
   isLoading: boolean = true;
+  isShow: boolean = false;
+
+  // === PAGINATION === //
+  date = [new Date(), new Date()];
+  dateFormat = 'dd-MM-YYYY';
+
+  constructor(private orderService: OrderService) {}
 
   ngOnInit() {
-    this.billList = [
-      {
-        date: formatDateTime('2020-04-03', 'onlyDate'),
-        bills: [
-          {
-            billId: 'PD007',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-          {
-            billId: 'PD006',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-          {
-            billId: 'PD005',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-        ],
-        totalProfit: 3069,
-        totalBill: 69,
-      },
-      {
-        date: formatDateTime('2020-04-02', 'onlyDate'),
-        bills: [
-          {
-            billId: 'PD004',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-          {
-            billId: 'PD003',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-        ],
-        totalProfit: 2046,
-        totalBill: 46,
-      },
-      {
-        date: formatDateTime('2020-04-01', 'onlyDate'),
-        bills: [
-          {
-            billId: 'PD002',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-          {
-            billId: 'PD001',
-            totalOrder: 23,
-            totalPrice: 1023,
-            createdAt: formatDateTime(),
-            status: 'success',
-            paymentGateway: 'Mobile Banking',
-          },
-        ],
-        totalProfit: 2046,
-        totalBill: 46,
-      },
-    ];
-
+    this.fetchBill();
     this.isLoading = false;
+  }
+
+  fetchBill() {
+    let reqConfig: any = {
+      start: this.date[0] ? moment(this.date[0]).startOf('day') : null,
+      end: this.date[1] ? moment(this.date[1]).endOf('day') : null,
+    };
+    this.orderService.getAllBill(reqConfig).subscribe((res) => {
+      let { items } = res;
+      console.log(items);
+
+      items.map((dt: IBillList) => {
+        let sum = 0;
+        let orderSum = 0;
+        dt.bills.map((bd: IBill) => {
+          sum += bd.price;
+          orderSum += bd.items.length;
+        });
+
+        dt.totalProfit = sum;
+        dt.totalOrder = orderSum;
+      });
+
+      this.billList = res.items;
+    });
   }
 
   onChange(result: Date[]): void {
     console.log('onChange: ', result);
+  }
+
+  handleShowBillDetail(bill: IBill) {
+    this.isShow = true;
+    this.currentBill = bill;
+    console.log(this.currentBill);
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isShow = false;
   }
 }

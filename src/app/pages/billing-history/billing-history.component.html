@@ -4,7 +4,7 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ประวัติการขาย</h3>
         </div>
         <div nz-col [nzSpan]="16">
-            <nz-range-picker [(ngModel)]="date" (ngModelChange)="onChange($event)"></nz-range-picker>
+            <nz-range-picker [(ngModel)]="date" (ngModelChange)="fetchBill()"></nz-range-picker>
         </div>
     </div>
 
@@ -14,12 +14,12 @@
         </div>
 
         <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="billList" [nzShowPagination]="false"
-            [nzFrontPagination]="false" [nzLoading]="isLoading">
+            [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
             <thead>
                 <tr>
                     <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
                     <th id="name" [nzAlign]="'center'">เลขที่บิล</th>
-                    <th id="empty" nzWidth="45%"></th>
+                    <th id="empty" nzWidth="40%"></th>
                     <th id="checkIn" [nzAlign]="'right'">รายการ</th>
                     <th id="checkIn" [nzAlign]="'right'">ยอดรวม</th>
                     <th id="checkOut" [nzAlign]="'center'">ชำระโดย</th>
@@ -34,31 +34,67 @@
                 </tr>
                 <tr *ngFor="let bill of data.bills;">
                     <td></td>
-                    <td [nzAlign]="'center'">{{ bill.billId }}</td>
+                    <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                     <td></td>
-                    <td [nzAlign]="'right'">{{ bill.totalOrder.toLocaleString() }}</td>
-                    <td [nzAlign]="'right'">{{ bill.totalPrice.toLocaleString() }}</td>
-                    <td [nzAlign]="'center'">{{ bill.paymentGateway }}</td>
+                    <td [nzAlign]="'right'"> {{ bill.items.length }} </td>
+                    <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
+                    <td [nzAlign]="'center'"> {{ bill.paymentGateway ? bill.paymentGateway : "Mobile Banking" }} </td>
                     <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="'blue'" style="margin-right:0px">{{ bill.status }}</nz-tag>
+                        <nz-tag [nzColor]="'blue'" style="margin-right:0px"> {{ bill.status }} </nz-tag>
                     </td>
                     <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" nzShape="circle">
+                        <button nz-button nzType="primary" nzShape="circle" (click)="handleShowBillDetail(bill)">
                             <span nz-icon nzType="file-text" nzTheme="outline"></span>
                         </button>
                     </td>
                 </tr>
                 <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                     <td [nzAlign]="'center'" style="padding:6px 14px">รวม</td>
+                    <td [nzAlign]="'center'"> จำนวนบิล : {{ data.totalBill.toLocaleString() }} </td>
                     <td></td>
-                    <td></td>
-                    <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalBill.toLocaleString() }}</td>
-                    <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalProfit.toLocaleString() }}</td>
+                    <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalOrder.toLocaleString() }} </td>
+                    <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalProfit.toLocaleString() }} </td>
                     <td></td>
                     <td></td>
                     <td></td>
                 </tr>
             </tbody>
         </nz-table>
+
+
+        <nz-modal [(nzVisible)]="isShow" nzTitle="รายละเอียดบิล" (nzOnCancel)="handleCancel()">
+            <ng-container *nzModalContent>
+
+                <nz-table style="margin:20px 0px;" #currentTable nzBordered [nzData]="currentBill.items"
+                    [nzShowPagination]="false" [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
+                    <thead>
+                        <tr>
+                            <th id="id" [nzAlign]="'center'">#</th>
+                            <th id="name">ชื่อรายการ</th>
+                            <th id="checkOut" [nzAlign]="'center'">จำนวน</th>
+                            <th id="checkIn" [nzAlign]="'center'">ราคา</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of currentTable.data ;let index = index">
+                            <td [nzAlign]="'center'">{{ index+1 }}</td>
+                            <td> {{data.product}} </td>
+                            <td [nzAlign]="'center'">{{ data.amount }} </td>
+                            <td [nzAlign]="'center'"> {{ data.price }} </td>
+                        </tr>
+                        <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
+                            <td [nzAlign]="'center'">รวม</td>
+                            <td> </td>
+                            <td [nzAlign]="'center'"> - </td>
+                            <td [nzAlign]="'center'">{{ currentBill.price }} </td>
+
+                        </tr>
+                    </tbody>
+
+                </nz-table>
+
+
+            </ng-container>
+        </nz-modal>
     </div>
 </div>
