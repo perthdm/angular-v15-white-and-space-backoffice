@@ -36,7 +36,7 @@
                     <td></td>
                     <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                     <td></td>
-                    <td [nzAlign]="'right'"> {{ bill.items.length }} </td>
+                    <td [nzAlign]="'right'"> {{ bill.amount }} </td>
                     <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
                     <td [nzAlign]="'center'"> {{ bill.paymentGateway ? bill.paymentGateway : "Mobile Banking" }} </td>
                     <td [nzAlign]="'center'">
