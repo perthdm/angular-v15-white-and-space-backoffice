@@ -20,6 +20,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 @NgModule({
   imports: [],
   exports: [
@@ -45,6 +46,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
     NzMessageModule,
     NzBadgeModule,
     NzUploadModule,
+    NzSwitchModule
   ],
   declarations: [],
 })

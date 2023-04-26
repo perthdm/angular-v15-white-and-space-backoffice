@@ -13,7 +13,7 @@ import { formatDateTime } from 'src/utils/utils';
 })
 export class ProductComponent {
   menuList: any = [];
-
+  switchValue = false;
   isLoading: boolean = true;
   isEdit: boolean = false;
   isStock: boolean = false;
@@ -103,6 +103,7 @@ export class ProductComponent {
           description: '',
           price: this.productData.price,
           add_on_id: [],
+          auto_stock:this.productData.auto_stock,
         };
 
         this.productService.addProduct(reqData).subscribe(
@@ -125,6 +126,7 @@ export class ProductComponent {
           product_type: this.productDataType,
           price: this.productData.price,
           product_id: this.productData.product_id,
+          auto_stock:this.productData.auto_stock,
         };
         this.productService.updateProduct(reqData).subscribe(
           (res) => {
