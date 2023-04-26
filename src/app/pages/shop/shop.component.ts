@@ -3,6 +3,7 @@ import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import Swal from 'sweetalert2';
+import { CART_ACTION, PAYMENT_TYPE } from 'src/utils/constatnt';
 
 interface Order {
   orderno: string;
@@ -10,11 +11,6 @@ interface Order {
   time: string;
   status: string;
 }
-
-const CART = {
-  ADD: 'add',
-  DEL: 'del',
-};
 
 @Component({
   selector: 'app-shop',
@@ -91,7 +87,7 @@ export class ShopComponent {
       (current: any) => current._id === item._id
     );
 
-    if (type === CART.ADD) {
+    if (type === CART_ACTION.ADD) {
       if (existingItem) {
         existingItem.amount++;
         existingItem.totalPrice += item.price;
@@ -108,7 +104,7 @@ export class ShopComponent {
       }
 
       this.totalPrice += item.price;
-    } else if (type == CART.DEL) {
+    } else if (type == CART_ACTION.DEL) {
       if (existingItem) {
         if (existingItem.amount >= 1) {
           existingItem.amount--;
@@ -169,17 +165,31 @@ export class ShopComponent {
       cancelButtonText: 'ยกเลิก',
     }).then((result) => {
       if (result.value) {
-        this.orderService.checkOutOrder(b).subscribe(
-          (res) => {
-            Swal.fire(
-              'ทำรายการสำเร็จ !',
-              'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-              'success'
-            );
-            this.handleClearOrder();
-          },
-          (err) => {}
-        );
+        if (paymentType === PAYMENT_TYPE.CASH) {
+          this.orderService.checkOutCashOrder(b).subscribe(
+            (res) => {
+              Swal.fire(
+                'ทำรายการสำเร็จ !',
+                'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+                'success'
+              );
+              this.handleClearOrder();
+            },
+            (err) => {}
+          );
+        } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
+          this.orderService.checkOutBankingOrder(b).subscribe(
+            (res) => {
+              Swal.fire(
+                'ทำรายการสำเร็จ !',
+                'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+                'success'
+              );
+              this.handleClearOrder();
+            },
+            (err) => {}
+          );
+        }
       }
     });
   }

@@ -14,7 +14,8 @@ interface Pagination {
 const ENDPOINT = {
   GET_ALL: ({ start, end }: any) =>
     `${API_DOMAIN}/order?start=${start}&end=${end}`,
-  CONFIRM_ORDER: `${API_DOMAIN}/order/employee-confirm`,
+  CASH_ORDER: `${API_DOMAIN}/order/employee-confirm-cash`,
+  BANKING_ORDER: `${API_DOMAIN}/order/employee-confirm-banking`,
 };
 
 @Injectable()
@@ -30,8 +31,17 @@ export class OrderService {
     });
   }
 
-  checkOutOrder(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.CONFIRM_ORDER, data, {
+  checkOutCashOrder(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.CASH_ORDER, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  checkOutBankingOrder(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.BANKING_ORDER, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

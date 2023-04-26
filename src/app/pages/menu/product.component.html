@@ -30,7 +30,7 @@
             [nzPageSize]="pageLimit">
             <thead>
                 <tr>
-                    <th>รหัสสินค้า</th>
+                    <th [nzAlign]="'center'">รหัสสินค้า</th>
                     <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
                     <th>ชื่อสินค้า</th>
                     <th>ราคา</th>
@@ -45,7 +45,7 @@
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
                     (click)="editProduct(data)">
-                    <td>{{ data.product_id }}</td>
+                    <td [nzAlign]="'center'">{{ data.product_id }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
                             {{ getTagDetail(data.product_type).title }}</nz-tag>

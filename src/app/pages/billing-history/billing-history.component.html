@@ -33,14 +33,21 @@
                     <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                 </tr>
                 <tr *ngFor="let bill of data.bills;">
-                    <td></td>
+                    <td [nzAlign]="'center'"> {{ mapDate(bill.createdAt , 'onlyTime') }} </td>
                     <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                     <td></td>
                     <td [nzAlign]="'right'"> {{ bill.amount }} </td>
                     <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
-                    <td [nzAlign]="'center'"> {{ bill.paymentGateway ? bill.paymentGateway : "Mobile Banking" }} </td>
                     <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="'blue'" style="margin-right:0px"> {{ bill.status }} </nz-tag>
+
+                        <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color" style="margin-right:0px"> {{
+                            getPaymentsDetail(bill.payment).title }}
+                        </nz-tag>
+
+                    </td>
+                    <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="getStatusDetail(bill.status).color" style="margin-right:0px"> {{
+                            getStatusDetail(bill.status).title }} </nz-tag>
                     </td>
                     <td [nzAlign]="'center'">
                         <button nz-button nzType="primary" nzShape="circle" (click)="handleShowBillDetail(bill)">
@@ -78,15 +85,15 @@
                     <tbody>
                         <tr *ngFor="let data of currentTable.data ;let index = index">
                             <td [nzAlign]="'center'">{{ index+1 }}</td>
-                            <td> {{data.product}} </td>
-                            <td [nzAlign]="'center'">{{ data.amount }} </td>
-                            <td [nzAlign]="'center'"> {{ data.price }} </td>
+                            <td> {{data.product.name}} </td>
+                            <td [nzAlign]="'center'">{{ data.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'center'"> {{ data.price.toLocaleString() }} </td>
                         </tr>
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                             <td [nzAlign]="'center'">รวม</td>
                             <td> </td>
-                            <td [nzAlign]="'center'"> - </td>
-                            <td [nzAlign]="'center'">{{ currentBill.price }} </td>
+                            <td [nzAlign]="'center'"> {{ currentBill.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'center'">{{ currentBill.price.toLocaleString() }} </td>
 
                         </tr>
                     </tbody>
