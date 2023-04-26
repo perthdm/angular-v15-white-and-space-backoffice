@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { formatDateTime } from 'src/utils/utils';
 import * as moment from 'moment';
+import { PAYMENT_TYPE } from 'src/utils/constatnt';
 
 interface IBillList {
   date: string;
@@ -18,7 +19,7 @@ interface IBill {
   status: string;
   createdAt: string;
   user_created: any;
-  paymentGateway: string;
+  payment: string;
   amount: number;
 }
 
@@ -102,5 +103,29 @@ export class BillingHistoryComponent {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.isShow = false;
+  }
+
+  getStatusDetail(type: string) {
+    switch (type) {
+      case 'close':
+        return { title: 'Close', color: '#f50' };
+      default:
+        return { title: 'Open', color: '#87d068' };
+    }
+  }
+
+  getPaymentsDetail(type: string) {
+    switch (type) {
+      case PAYMENT_TYPE.CASH:
+        return { title: 'Cash', color: 'green' };
+      case PAYMENT_TYPE.MOBILE_BANKING:
+        return { title: 'Mobile Banking', color: 'blue' };
+      default:
+        return { title: 'Unknown', color: 'default' };
+    }
+  }
+
+  mapDate(date: string, option?: string) {
+    return formatDateTime(date, option);
   }
 }

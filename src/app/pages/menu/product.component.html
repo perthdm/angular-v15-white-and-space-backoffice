@@ -30,7 +30,7 @@
             [nzPageSize]="pageLimit">
             <thead>
                 <tr>
-                    <th>รหัสสินค้า</th>
+                    <th [nzAlign]="'center'">รหัสสินค้า</th>
                     <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
                     <th>ชื่อสินค้า</th>
                     <th>ราคา</th>
@@ -42,8 +42,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;" (click)="editProduct(data)">
-                    <td>{{ data.product_id }}</td>
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
+                    (click)="editProduct(data)">
+                    <td [nzAlign]="'center'">{{ data.product_id }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
                             {{ getTagDetail(data.product_type).title }}</nz-tag>
@@ -94,7 +95,8 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
+            (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.product_id"
