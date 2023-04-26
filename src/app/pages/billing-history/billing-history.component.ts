@@ -19,10 +19,29 @@ interface IBill {
   createdAt: string;
   user_created: any;
   paymentGateway: string;
-  totalOrder: number;
+  amount: number;
 }
 
-interface IBillDetail {}
+interface IBillDetail {
+  add_on: any;
+  amount: number;
+  auto_stock: boolean;
+  createdAt: string;
+  description: string;
+  name: string;
+  price: number;
+  product_id: string;
+  product_type: ProductType;
+  status: boolean;
+  stock: boolean;
+}
+
+enum ProductType {
+  FOOD = 'food',
+  DESERT = 'desert',
+  BEVERAGE = 'beverage',
+  ETC = 'etc',
+}
 
 @Component({
   selector: 'app-billing-history',
@@ -53,21 +72,20 @@ export class BillingHistoryComponent {
     };
     this.orderService.getAllBill(reqConfig).subscribe((res) => {
       let { items } = res;
-      console.log(items);
+      // console.log(items);
 
       items.map((dt: IBillList) => {
         let sum = 0;
-        let orderSum = 0;
+
         dt.bills.map((bd: IBill) => {
           sum += bd.price;
-          orderSum += bd.items.length;
         });
-
         dt.totalProfit = sum;
-        dt.totalOrder = orderSum;
       });
 
-      this.billList = res.items;
+      console.log(items);
+
+      this.billList = items;
     });
   }
 

@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
           let { access_token } = res;
           const payload: JwtPayload = jwt_decode(access_token);
           if (payload) {
+            console.log(payload);
+
             localStorage.setItem('username', payload.username);
             localStorage.setItem('token', access_token);
             this.router.navigate(['/shop']);
