@@ -9,8 +9,8 @@
                         <div class="card-icon" style="background-color: #fff3b9;">
                             <span nz-icon nzType="dollar-circle" nzTheme="outline" style="color:#e4ca6e"></span>
                         </div>
-                        <span class="card-title">Profit Daily</span>
-                        <div class="card-sub-title">48,232</div>
+                        <span class="card-title">Daily Profit</span>
+                        <div class="card-sub-title">{{ cardData.dailyProfit.toLocaleString() }} ฿</div>
                         <div class="card-info">
                             <span style="color:#f46666 ; font-weight: bold;">-0.7%</span>
                             <span style="color:#b0b6bc ; font-size:14px;"> *Going down*</span>
@@ -23,8 +23,8 @@
                         <div class="card-icon">
                             <span nz-icon nzType="bar-chart" nzTheme="outline"></span>
                         </div>
-                        <span class="card-title">Profit Average</span>
-                        <div class="card-sub-title">48,232</div>
+                        <span class="card-title">Daily Bill</span>
+                        <div class="card-sub-title">{{ cardData.dailyBill.toLocaleString() }} </div>
                         <div class="card-info">
                             <span style="color:#289fa1 ; font-weight: bold;">+3.7%</span>
                             <span style="color:#b0b6bc ; font-size:14px;"> Looks pretty good</span>
@@ -38,7 +38,7 @@
                             <span nz-icon nzType="history" nzTheme="outline" style="color:#8e77e1"></span>
                         </div>
                         <span class="card-title">Profit Average (7 Days)</span>
-                        <div class="card-sub-title">48,232</div>
+                        <div class="card-sub-title">{{ cardData.weeklyProfit.toLocaleString() }} ฿</div>
                         <div class="card-info">
                             <span style="color:#289fa1 ; font-weight: bold;">+3.7%</span>
                             <span style="color:#b0b6bc ; font-size:14px; ;"> Looks pretty good</span>
@@ -106,15 +106,15 @@
                     <div nz-row [nzGutter]="[0,18]" *ngFor="let data of dataList">
                         <div nz-col class="gutter-row" [nzXs]="24">
                             <div class="ws-card-plain">
-                                <div class="item">{{data.key}}</div>
+                                <div class="item">{{data._id}}</div>
                                 <div class="item">{{data.name}}</div>
-                                <div class="item">{{data.prize}} บาท</div>
-                                <div class="item">{{data.amount}}/100 </div>
+                                <div class="item">{{data.price}} บาท</div>
+                                <div class="item"> ?? </div>
                                 <div class="item">
-                                    <nz-tag *ngIf="data.type == 'ของใช้งาน'"
+                                    <!-- <nz-tag *ngIf="data.type == 'ของใช้งาน'"
                                         [nzColor]="'volcano'">{{data.type}}</nz-tag>
                                     <nz-tag *ngIf="data.type == 'วัตถุดิบ'"
-                                        [nzColor]="'geekblue'">{{data.type}}</nz-tag>
+                                        [nzColor]="'geekblue'">{{data.type}}</nz-tag> -->
                                 </div>
                                 <div class="item">
                                     <nz-space>

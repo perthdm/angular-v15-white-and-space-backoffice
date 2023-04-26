@@ -5,12 +5,6 @@ import { API_DOMAIN } from 'src/utils/utils';
 
 // import { map } from 'rxjs/operators';
 
-interface Pagination {
-  page: number;
-  limit: number;
-  query?: string;
-}
-
 const ENDPOINT = {
   GET_ALL: ({ start, end }: any) =>
     `${API_DOMAIN}/order?start=${start}&end=${end}`,

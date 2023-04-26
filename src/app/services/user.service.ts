@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserPagination } from 'src/app/model/user.model';
 import { API_DOMAIN } from 'src/utils/utils';
+import { UserPagination } from '../model/user.model';
+import { IPagination } from '../model/pagination.model';
 // import { map } from 'rxjs/operators';
 
-interface Pagination {
-  page: number;
-  limit: number;
-  query?: string;
-}
-
 const ENDPOINT = {
-  GET_ALL: ({ page, limit, query }: Pagination) =>
+  GET_ALL: ({ page, limit, query }: IPagination) =>
     `${API_DOMAIN}/user?page=${page}&limit=${limit}&query=${query}`,
   ADD: `${API_DOMAIN}/user`,
   UPDATE: `${API_DOMAIN}/user`,

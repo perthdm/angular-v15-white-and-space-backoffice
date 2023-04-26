@@ -29,10 +29,10 @@
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
                     <td [nzAlign]="'center'">{{data.date}}</td>
-                    <td [nzAlign]="'center'">{{data.assignee}}</td>
+                    <td [nzAlign]="'center'">จักรพร เต่าบิน</td>
                     <td></td>
-                    <td [nzAlign]="'center'">{{data.bill}}</td>
-                    <td [nzAlign]="'right'">{{data.profit.toLocaleString()}}</td>
+                    <td [nzAlign]="'center'">{{data.totalBill}}</td>
+                    <td [nzAlign]="'right'">{{data.totalProfit.toLocaleString()}}</td>
                     <td [nzAlign]="'center'">
                         <button nz-button nzType="primary" nzShape="circle">
                             <span nz-icon nzType="search" nzTheme="outline"></span>
@@ -44,8 +44,8 @@
                     <td [nzAlign]="'center'">รวม</td>
                     <td></td>
                     <td></td>
-                    <td [nzAlign]="'center'">{{ totalBill.toLocaleString() }}</td>
-                    <td [nzAlign]="'right'">{{ totalProfit.toLocaleString() }}</td>
+                    <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
+                    <td [nzAlign]="'right'">{{ summaryData.totalProfit.toLocaleString() }}</td>
                     <td></td>
                 </tr>
             </tbody>

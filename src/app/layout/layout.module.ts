@@ -27,6 +27,8 @@ import { ProductService } from '../services/product.service';
 import { StockService } from '../services/stock.service';
 import { OrderService } from '../services/order.service';
 import { CafeService } from '../services/cafe.service';
+import { ReportService } from '../services/report.service';
+
 @NgModule({
   imports: [
     LayoutRoutingModule,
@@ -56,7 +58,8 @@ import { CafeService } from '../services/cafe.service';
     ProductService,
     StockService,
     OrderService,
-    CafeService
+    CafeService,
+    ReportService,
   ],
   bootstrap: [LayoutComponent],
 })

@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_DOMAIN } from 'src/utils/utils';
-import { IStockPagination } from '../model/stock.model';
 import { IPagination } from '../model/pagination.model';
 
 // import { map } from 'rxjs/operators';
 
 const ENDPOINT = {
-  GET_ALL: ({ page, limit, type, query }: IPagination) =>
-    `${API_DOMAIN}/stock?page=${page}&limit=${limit}&type=${type}&query=${query}`,
-  UPDATE: `${API_DOMAIN}/stock`,
+  GET_FULL_REPORT: ({ start, end }: any) =>
+    `${API_DOMAIN}/order/summary?start=${start}&end=${end}`,
+  GET_OVERVIEW_REPORT: ({ page, limit }: IPagination) =>
+    `${API_DOMAIN}/report?page=${page}&limit=${limit}`,
 };
 
 @Injectable()
-export class StockService {
+export class ReportService {
   constructor(private readonly http: HttpClient) {}
 
-  getAllStock(pageConfig: IPagination): Observable<IStockPagination> {
-    return this.http.get<IStockPagination>(ENDPOINT.GET_ALL(pageConfig), {
+  getMonthlyReport(data: any): Observable<any> {
+    return this.http.get<any>(ENDPOINT.GET_FULL_REPORT(data), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -26,8 +26,8 @@ export class StockService {
     });
   }
 
-  updateStock(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.UPDATE, data, {
+  getOverviewReport(pageConfig: IPagination): Observable<any> {
+    return this.http.get<any>(ENDPOINT.GET_OVERVIEW_REPORT(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
