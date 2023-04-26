@@ -65,6 +65,7 @@ export class ProductComponent {
   }
 
   showModal(): void {
+    this.isEdit = false;
     this.isVisible = true;
   }
 
@@ -160,13 +161,14 @@ export class ProductComponent {
   }
 
   editProduct(current: any) {
+    this.isEdit = true;
     this.productData = current;
     this.productDataType = current.product_type;
     this.isVisible = true;
-    this.isEdit = true;
   }
 
-  editStock(current: any) {
+  editStock(current: any, event: MouseEvent) {
+    event.stopPropagation();
     this.productData = current;
     this.productDataType = current.product_type;
     this.isVisibleStockMnm = true;

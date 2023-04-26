@@ -6,3 +6,6 @@
         align-items: center !important;
     }
   }
+.ant-table-tbody>tr.ant-table-row:hover>.td-no-hover {
+    background: unset;
+}

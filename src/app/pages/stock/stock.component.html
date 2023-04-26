@@ -7,7 +7,14 @@
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
         </div>
     </div>
-
+    <div class="radio-style">
+        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large"
+            (ngModelChange)="fetchStock()">
+            <label nz-radio-button nzValue="in"> รายการนำเข้า </label>
+            <label nz-radio-button nzValue="out">รายการนำออก </label>
+            <label nz-radio-button nzValue="order">ออเดอร์ </label>
+        </nz-radio-group>
+    </div>
     <div class="app-content">
 
 
@@ -59,7 +66,7 @@
             </nz-pagination>
 
             <ng-template #rangeTemplate let-range="range" let-total>
-                {{ range[0] }}-{{ range[1] }} of {{ total }} items
+                {{ range[0] }}-{{ range[1] }} จากทั้งหมด {{ total }} รายการ
             </ng-template>
         </div>
     </div>

@@ -27,7 +27,7 @@ export class StockComponent {
   pageLimit: number = 10;
   dataCount: number = 10;
   radioValue = 'all';
-  productType = '';
+  productType = 'in';
   query: string = '';
 
   constructor(
@@ -60,6 +60,8 @@ export class StockComponent {
         return { title: 'นำเข้า', color: 'green' };
       case 'out':
         return { title: 'นำออก', color: 'volcano' };
+      case 'order':
+        return { title: 'ออเดอร์', color: 'magenta' };
       default:
         return { title: '-', color: 'red' };
     }

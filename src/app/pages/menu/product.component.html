@@ -42,7 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;">
+                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;" (click)="editProduct(data)">
                     <td>{{ data.product_id }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
@@ -68,14 +68,14 @@
                     </td>
                     <!-- <td>{{ mapDate(data.createdAt) }}</td> -->
                     <td>
-                        <button nz-button
+                        <!-- <button nz-button
                             style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #FFC107;"
                             (click)="editProduct(data)">
                             แก้ไขข้อมูล
-                        </button>
+                        </button> -->
                         <button nz-button
                             style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #F8F9FA;"
-                            (click)="editStock(data)">
+                            (click)="editStock(data, $event)">
                             ปรับสต็อก
                         </button>
                     </td>
@@ -94,7 +94,7 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" nzTitle="เพิ่มสินค้า" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.product_id"
