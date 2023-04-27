@@ -1,17 +1,21 @@
 import { IAddOn } from './addon.model';
 
 export interface IProduct {
-  _id: string;
+  add_on: any;
+  amount: number;
+  auto_stock: boolean;
+  createdAt: string;
+  description: string;
   name: string;
-  description?: string;
-  category: object;
   price: number;
-  status?: boolean;
-  add_on?: IAddOn[];
-  user_created?: object;
-  user_updated?: object;
-  createdAt?: string;
-  updatedAt?: string;
+  product_id: string;
+  product_type: string;
+  status: boolean;
+  stock: boolean;
+  updatedAt: string;
+  user_created: object;
+  user_updated: object;
+  _id: string;
 }
 
 export interface IProductPagination {
@@ -19,4 +23,5 @@ export interface IProductPagination {
   total: number;
   page: number;
   last_page: number;
+  summary: any;
 }

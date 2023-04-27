@@ -26,6 +26,7 @@ export class ShopComponent {
   query: string = '';
   userFullName: any = 'White And Space';
   userRole: any = '';
+  categoryCount: any = {};
 
   constructor(
     private productService: ProductService,
@@ -48,7 +49,19 @@ export class ShopComponent {
     };
     this.productService.getAllProduct(pageConfig).subscribe(
       (res) => {
-        let { items } = res;
+        let { items, summary } = res;
+        let nextSum: any = {
+          total: 0,
+          food: 0,
+          desert: 0,
+          beverage: 0,
+          etc: 0,
+        };
+        summary.map((i: any) => {
+          nextSum[i.product_type] = i.count;
+          nextSum['total'] += i.count;
+        });
+        this.categoryCount = nextSum;
         this.productList = items;
         this.productListPreview = items;
       },

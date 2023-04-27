@@ -11,12 +11,12 @@
         <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
             (ngModelChange)="fetchProduct()">
             <label nz-radio-button nzValue="">
-                ทั้งหมด <span>({{ total }})</span>
+                ทั้งหมด <span>({{ productCount.total }})</span>
             </label>
-            <label nz-radio-button nzValue="food">อาหาร <span>(9)</span></label>
-            <label nz-radio-button nzValue="desert"> ของหวาน <span>(9)</span></label>
-            <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>(9)</span></label>
-            <label nz-radio-button nzValue="etc">อื่นๆ <span>(12)</span></label>
+            <label nz-radio-button nzValue="food">อาหาร <span>({{ productCount.food }})</span></label>
+            <label nz-radio-button nzValue="desert"> ของหวาน <span>({{ productCount.desert }})</span></label>
+            <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>({{ productCount.beverage }})</span></label>
+            <label nz-radio-button nzValue="etc">อื่นๆ <span>({{ productCount.etc }})</span></label>
         </nz-radio-group>
         <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
             (click)="showModal()">

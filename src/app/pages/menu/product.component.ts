@@ -28,6 +28,7 @@ export class ProductComponent {
 
   productData: any = {};
   productDataType: string = '';
+  productCount: any = {};
 
   fileList: NzUploadFile[] = [];
 
@@ -50,7 +51,20 @@ export class ProductComponent {
     };
     this.productService.getAllProduct(reqData).subscribe(
       (res) => {
-        let { total, items } = res;
+        let { total, items, summary } = res;
+        let nextSum: any = {
+          total: 0,
+          food: 0,
+          desert: 0,
+          beverage: 0,
+          etc: 0,
+        };
+        summary.map((i: any) => {
+          nextSum[i.product_type] = i.count;
+          nextSum['total'] += i.count;
+        });
+
+        this.productCount = nextSum;
         this.menuList = items;
         this.total = total;
         this.isLoading = false;
