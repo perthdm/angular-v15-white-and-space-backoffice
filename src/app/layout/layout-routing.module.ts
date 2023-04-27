@@ -35,7 +35,7 @@ const routes: Routes = [
         component: BillingHistoryComponent,
       },
       {
-        path: 'time-stamp',
+        path: 'attendance',
         component: AttendanceComponent,
       },
       {

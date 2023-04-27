@@ -20,8 +20,10 @@
                         </a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/billing-history"><span nz-icon nzType="file-text" nzTheme="fill"></span>
-                            <span class="menu-text">ประวัติขาย</span></a>
+                        <a routerLink="/billing-history">
+                            <span nz-icon nzType="file-text" nzTheme="fill"></span>
+                            <span class="menu-text">ประวัติขาย</span>
+                        </a>
                     </li>
 
                     <li nz-menu-item nzMatchRouter>
@@ -30,8 +32,9 @@
                         </a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/stock"> <span nz-icon nzType="history" nzTheme="outline"></span><span
-                                class="menu-text">การเคลื่อนไหวสินค้า</span>
+                        <a routerLink="/stock">
+                            <span nz-icon nzType="history" nzTheme="outline"></span>
+                            <span class="menu-text">การเคลื่อนไหวสินค้า</span>
                         </a>
                     </li>
 
@@ -41,18 +44,25 @@
                                 <a routerLink="/user">ผู้ใช้งาน</a>
                             </li>
                             <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/time-stamp">ประวัติการเข้างาน</a>
-                            </li>
-                            <li nz-menu-item nzMatchRouter>
                                 <a routerLink="/setting">ตั้งค่าร้าน</a>
                             </li>
                         </ul>
                     </li>
 
+
+
+
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
-                            <span nz-icon nzType="logout" nzTheme="outline"></span><span
-                                class="menu-text">ออกจากระบบ</span>
+                            <span nz-icon nzType="logout" nzTheme="outline"></span>
+                            <span class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter style="float: right;">
+                        <a routerLink="/attendance">
+                            <span nz-icon nzType="history" nzTheme="outline"></span>
+                            <span class="menu-text">ประวัติเข้างาน</span>
                         </a>
                     </li>
                 </ul>
@@ -63,4 +73,21 @@
         </nz-content>
         <!-- <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer> -->
     </nz-layout>
+
+
+    <div *ngIf="isCheckIn === true"
+        style="background-color : #2c292999 ; position: fixed; width: 100%; height: 100%; z-index: 100;display: flex; justify-content: center; align-items: center; ">
+        <div
+            style="width: 420px; height: 420px; z-index: 101; border:2px solid #c81150; background-color: white; border-radius: 15px ; display: flex; justify-content: center; flex-direction: column; align-items: center;">
+            <img src="https://cdn-icons-png.flaticon.com/512/4318/4318048.png" width="180px" height="180px" />
+            <h4 style="margin-top: 20px; margin-bottom: 5px; font-size: 22px; ">กรุณา "เช็คอินเข้างาน" ก่อนใช้งาน</h4>
+            <h5 style="margin-bottom: 20px; font-size: 16px; color:#5d5f61 ">(คุณยังไม่ได้เช็คอินเข้างานในวันนี้) </h5>
+            <button nz-button nzType="primary"
+                style="height: 45px; font-size: 20px; border-radius: 10px; font-weight: bold;"
+                (click)="handleCheckIn()">
+                Check-In
+            </button>
+        </div>
+    </div>
+
 </nz-layout>

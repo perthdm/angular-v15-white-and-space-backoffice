@@ -71,10 +71,10 @@ export class BillingHistoryComponent {
       start: this.date[0] ? moment(this.date[0]).startOf('day') : null,
       end: this.date[1] ? moment(this.date[1]).endOf('day') : null,
     };
+    console.log(reqConfig);
+
     this.orderService.getAllBill(reqConfig).subscribe((res) => {
       let { items } = res;
-      // console.log(items);
-
       items.map((dt: IBillList) => {
         let sum = 0;
 

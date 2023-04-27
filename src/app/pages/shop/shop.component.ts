@@ -18,29 +18,14 @@ interface Order {
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent {
-  // mockupList: Order[] = [
-  //   {
-  //     orderno: '20041234',
-  //     table: 4,
-  //     time: '20/04/2023 13:44',
-  //     status: 'cooking',
-  //   },
-  //   {
-  //     orderno: '20044124',
-  //     table: 1,
-  //     time: '20/04/2023 14:21',
-  //     status: 'cooking',
-  //   },
-  // ];
   productList: any = [];
   productListPreview: any = [];
-
   cart: any = [];
   totalPrice: number = 0;
-
   categoryType = '';
   query: string = '';
-  // isVisible = false;
+  userFullName: any = 'White And Space';
+  userRole: any = '';
 
   constructor(
     private productService: ProductService,
@@ -50,6 +35,8 @@ export class ShopComponent {
 
   ngOnInit() {
     this.fetchProduct();
+    this.userFullName = localStorage.getItem('name');
+    this.userRole = localStorage.getItem('role');
   }
 
   fetchProduct() {

@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
   _id: string;
   username: string;
   role: string;
@@ -7,12 +7,15 @@ export interface User {
   salary: number;
   gender: string;
   dob: Date;
+  is_check_in: false;
+  status: string;
+  type: string;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface UserPagination {
-  items: User[];
+export interface IUserPagination {
+  items: IUser[];
   total: number;
   page: number;
   last_page: number;

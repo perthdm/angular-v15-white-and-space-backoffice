@@ -19,8 +19,8 @@
             <thead>
                 <tr>
                     <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
-                    <th id="assignee" [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th>
-                    <th id="empty" nzWidth="60%"></th>
+                    <!-- <th id="assignee" [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th> -->
+                    <th id="empty" nzWidth="55%"></th>
                     <th id="bill" [nzAlign]="'center'">จำนวนบิล</th>
                     <th id="profit" [nzAlign]="'right'">ยอดขาย (บาท)</th>
                     <th id="empty2"></th>
@@ -29,7 +29,7 @@
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
                     <td [nzAlign]="'center'">{{data.date}}</td>
-                    <td [nzAlign]="'center'">จักรพร เต่าบิน</td>
+                    <!-- <td [nzAlign]="'center'">จักรพร เต่าบิน</td> -->
                     <td></td>
                     <td [nzAlign]="'center'">{{data.totalBill}}</td>
                     <td [nzAlign]="'right'">{{data.totalProfit.toLocaleString()}}</td>
@@ -42,7 +42,6 @@
                 </tr>
                 <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                     <td [nzAlign]="'center'">รวม</td>
-                    <td></td>
                     <td></td>
                     <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
                     <td [nzAlign]="'right'">{{ summaryData.totalProfit.toLocaleString() }}</td>

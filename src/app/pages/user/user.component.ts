@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { User, UserPagination } from 'src/app/model/user.model';
+import { IUser, IUserPagination } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { formatDateTime } from 'src/utils/utils';
 
@@ -10,7 +10,7 @@ import { formatDateTime } from 'src/utils/utils';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent {
-  dataList: User[] | any;
+  dataList: IUser[] | any;
   userData: any = {};
   gender: string = '';
   dob: Date | any = null;
@@ -47,7 +47,7 @@ export class UserComponent {
     this.userService.getAllUser(pageConfig).subscribe(
       (res) => {
         let { total, page, last_page, items } = res;
-        items.map((us: User) => {
+        items.map((us: IUser) => {
           us.createdAt = formatDateTime(us.createdAt);
           us.updatedAt = formatDateTime(us.updatedAt);
         });
@@ -128,7 +128,7 @@ export class UserComponent {
     this.fetchUser();
   }
 
-  handleEditUser(usData: User) {
+  handleEditUser(usData: IUser) {
     this.userData = usData;
     this.dob = usData.dob;
     this.gender = usData.gender;
