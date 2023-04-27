@@ -74,8 +74,27 @@ export class ProductComponent {
     this.productDataType = '';
   };
 
+  handleDelete(current: any, event: MouseEvent) {
+    event.stopPropagation();
+    this.productData = current;
+    this.productService.deleteProduct(this.productData?._id).subscribe(
+      (res) => {
+        this.fetchProduct();
+        this.resetData();
+        this.message.create('success', 'ลบสินค้าสำเร็จ');
+        return;
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
+  }
+
   handleOk(): void {
-    if (this.isStock) { 
+    if (this.isStock) {
       let reqData = {
         product_id: this.productData._id,
         type: this.productDataType,
@@ -93,7 +112,7 @@ export class ProductComponent {
             `Please try again ${err.error.message}::${err.error.statusCode}`
           );
         }
-        );
+      );
     } else {
       if (!this.isEdit) {
         let reqData = {
@@ -103,7 +122,7 @@ export class ProductComponent {
           description: '',
           price: this.productData.price,
           add_on_id: [],
-          auto_stock:this.productData.auto_stock,
+          auto_stock: this.productData.auto_stock,
         };
 
         this.productService.addProduct(reqData).subscribe(
@@ -126,7 +145,7 @@ export class ProductComponent {
           product_type: this.productDataType,
           price: this.productData.price,
           product_id: this.productData.product_id,
-          auto_stock:this.productData.auto_stock,
+          auto_stock: this.productData.auto_stock,
         };
         this.productService.updateProduct(reqData).subscribe(
           (res) => {
@@ -138,7 +157,7 @@ export class ProductComponent {
             this.message.create(
               'error',
               `Please try again ${err.error.message}::${err.error.statusCode}`
-            );  
+            );
           }
         );
       }

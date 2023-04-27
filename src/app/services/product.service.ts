@@ -12,6 +12,7 @@ const ENDPOINT = {
     `${API_DOMAIN}/product?page=${page}&limit=${limit}&type=${type}&query=${query}`,
   CREATE: `${API_DOMAIN}/product`,
   UPDATE: `${API_DOMAIN}/product`,
+  DELETE: (productId: string) => `${API_DOMAIN}/product/${productId}`,
 };
 
 @Injectable()
@@ -45,12 +46,12 @@ export class ProductService {
     });
   }
 
-  //   deleteEmployee(employeeId: string): Observable<any> {
-  //     return this.http.delete<any>(ENDPOINT.DELETE(employeeId), {
-  //       headers: new HttpHeaders({
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${localStorage.getItem('token')}`,
-  //       }),
-  //     });
-  //   }
+  deleteProduct(productId: string): Observable<any> {
+    return this.http.delete<any>(ENDPOINT.DELETE(productId), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
 }
