@@ -9,15 +9,30 @@ import { CafeService } from 'src/app/services/cafe.service';
 })
 export class SettingComponent {
   cafeData: any = {};
+  cafeList: any = [];
+  isLoading: boolean = true;
   switchValue = false;
   constructor(
     private cafeService: CafeService,
     private message: NzMessageService
   ) {}
+  ngOnInit() {
+    this.fetchCafe();
+  }
 
   resetData = () => {
     this.cafeData = {};
   };
+
+  fetchCafe() {
+    this.cafeService.getCafe().subscribe(
+      (res) => {
+        this.cafeList = res;
+        this.isLoading = false;
+      },
+      (err) => {}
+    );
+  }
 
   handleOk(): void {
     let reqData = {
@@ -31,6 +46,7 @@ export class SettingComponent {
     };
     this.cafeService.updateCafe(reqData).subscribe(
       (res) => {
+        this.fetchCafe();
         this.resetData();
         this.message.create('success', `แก้ไขสินค้าสำเร็จ`);
       },

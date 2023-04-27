@@ -1,22 +1,26 @@
 <div class="inner-content">
     <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ตั้งค่าร้าน</h3>
     <div class="app-content" style="padding-left: 1.5rem; padding-right:1.5rem;">
+        <h3>ชื่อร้าน</h3>
         <nz-input-group nzAddOnBeforeIcon="home" class="input-group-style" style="margin-bottom:1rem;">
-            <input type="text" (change)="onChangeData($event)" nz-input placeholder="ชื่อร้าน..." name="name" [ngModel]="cafeData.name" />
+            <input type="text" (change)="onChangeData($event)" nz-input placeholder="ชื่อร้าน..." name="name" [ngModel]="cafeList.name" />
         </nz-input-group>
+        <h3>คำอธิบายร้าน</h3>
         <nz-input-group nzAddOnBeforeIcon="info" class="input-group-style" style="margin-bottom:1rem;">
-            <input type="text" (change)="onChangeData($event)" nz-input placeholder="คำอธิบายร้าน..." name="description" [ngModel]="cafeData.description" />
+            <input type="text" (change)="onChangeData($event)" nz-input placeholder="คำอธิบายร้าน..." name="description" [ngModel]="cafeList.description" />
         </nz-input-group>
-
+        <h3>เบอร์ติดต่อ</h3>
         <nz-input-group nzAddOnBeforeIcon="phone" class="input-group-style" style="margin-bottom:1rem;">
-            <input type="text" (change)="onChangeData($event)" nz-input placeholder="เบอร์โทร..." name="telephone" [ngModel]="cafeData.telephone" />
+            <input type="text" (change)="onChangeData($event)" nz-input placeholder="เบอร์ติดต่อ..." name="telephone" [ngModel]="cafeList.telephone" />
         </nz-input-group>
+        <h3>ที่อยู่ร้าน(Google map embed)</h3>
         <nz-input-group nzAddOnBeforeIcon="google" class="input-group-style" style="margin-bottom:1rem;">
-            <input type="text" (change)="onChangeData($event)" nz-input placeholder="google map..." name="location" [ngModel]="cafeData.location" />
+            <input type="text" (change)="onChangeData($event)" nz-input placeholder="google map..." name="location" [ngModel]="cafeList.location" />
         </nz-input-group>
-        <nz-input-group nzAddOnBeforeIcon="phone" class="input-group-style" style="margin-bottom:1rem;">
+        <h3>แจ้งเตือนสต็อกใกล้หมด</h3>
+        <nz-input-group nzAddOnBeforeIcon="warning" class="input-group-style" style="margin-bottom:1rem;">
             <input type="text" (change)="onChangeData($event)" nz-input placeholder="แจ้งเตือนสต็อกใกล้หมด..."
-                [ngModel]="cafeData.product_min_amount"  name="product_min_amount" />
+                [ngModel]="cafeList.product_min_amount"  name="product_min_amount" />
         </nz-input-group>
         <nz-upload class="upload-style" nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
             [nzHeaders]="{ authorization: 'authorization-text' }" (nzChange)="handleChange($event)">
@@ -26,7 +30,7 @@
             </button>
         </nz-upload>
         <div style="margin-bottom: 1rem;">
-            <nz-switch style="margin-right: 1rem;" [ngModel]="cafeData.status"></nz-switch>
+            <nz-switch style="margin-right: 1rem;" [ngModel]="cafeList.status"></nz-switch>
             สถานะการเปิด/ปิดร้าน
         </div>
         <button nz-button nzType="primary" style="border-radius: 5px;height: 45px;" (click)="handleOk()">
