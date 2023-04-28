@@ -1,65 +1,62 @@
 <div class="inner-content">
     <div nz-row>
         <div nz-col [nzSpan]="8">
-            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">การเคลื่อนไหวสินค้า</h3>
+            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">คลังสินค้า</h3>
         </div>
         <div nz-col [nzSpan]="16">
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
         </div>
+
+        <div class="radio-style">
+            <nz-radio-group [(ngModel)]="stockType" nzButtonStyle="solid" nzSize="large"
+                (ngModelChange)="handleChangeGroup()" style="width: 100%;">
+                <label nz-radio-button nzValue="inventory"> คลังสินค้า </label>
+                <label nz-radio-button nzValue="order" style="float :right;">ออเดอร์ </label>
+                <label nz-radio-button nzValue="export" style="float :right;">รายการนำออก </label>
+                <label nz-radio-button nzValue="import" style="float :right;"> รายการนำเข้า </label>
+            </nz-radio-group>
+        </div>
     </div>
-    <div class="radio-style">
-        <nz-radio-group [(ngModel)]="productType" nzButtonStyle="solid" nzSize="large" (ngModelChange)="fetchStock()">
-            <label nz-radio-button nzValue="in"> รายการนำเข้า </label>
-            <label nz-radio-button nzValue="out">รายการนำออก </label>
-            <label nz-radio-button nzValue="order">ออเดอร์ </label>
-        </nz-radio-group>
-    </div>
+
     <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <div nz-col [nzSpan]="8">
+                <h3></h3>
+            </div>
+            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+                <button *ngIf="stockType !== 'order'" nz-button nzType="primary"
+                    style="height: 40px; border-radius: 10px;" (click)="showModal()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    {{ getNameModal() }}สต็อก
+                </button>
+            </div>
+        </div>
 
-
-        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="stockList"
+        <nz-table *ngIf="stockType === 'inventory'" style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="stockList"
             [nzShowPagination]="false" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
-                    <th>วันที่</th>
-                    <th>รหัสสินค้า</th>
+                    <th [nzAlign]="'center'">#</th>
                     <th>ชื่อสินค้า</th>
-                    <th>ชนิด</th>
-                    <th>จำนวน</th>
+                    <th [nzAlign]="'right'">จำนวนคงเหลือ</th>
+                    <th [nzAlign]="'center'">สร้างเมื่อ</th>
                     <th [nzAlign]="'center'">ผู้ทำรายการ</th>
-                    <!-- <th>ราคา</th>
-                    <th>สร้างเมื่อ</th>
-                    <th [nzAlign]="'center'">หมวดหมู่</th>
-                    <th [nzAlign]="'center'">สถานะ</th> -->
+                    <th>หมายเหตุ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
                     (click)="editStock(data)">
-                    <td>{{ mapDate(data.createdAt) }}</td>
-                    <td>{{ data?.product?.product_id }}</td>
-                    <td>{{ data?.product?.name }}</td>
-                    <td>
-                        <nz-tag [nzColor]="getTagDetail(data.type).color">
-                            {{ getTagDetail(data.type).title }}
-                        </nz-tag>
-                    </td>
-                    <td>{{ data?.amount }}</td>
-
-                    <td [nzAlign]="'center'">{{ data?.user_created?.username }}</td>
-                    <!-- <td>{{ data.price.toLocaleString() }}</td> -->
-                    <!-- <td>{{ mapDate(data.createdAt) }}</td> -->
-                    <!-- <td [nzAlign]="'center'">
-                    <nz-tag [nzColor]=" getTagDetail(data.product_type).color">
-                        {{ getTagDetail(data.product_type).title }}</nz-tag>
-                    </td> -->
-                    <!-- <td [nzAlign]="'center'">
-                    <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
-                </td> -->
+                    <td [nzAlign]="'center'">{{ index+1 }}</td>
+                    <td> {{ data?.name }}</td>
+                    <td [nzAlign]="'right'">{{ data?.amount }}</td>
+                    <td [nzAlign]="'center'"> {{ mapDate(data.createdAt) }}</td>
+                    <td [nzAlign]="'center'">{{ data?.user_created.username }}</td>
+                    <td>{{ data?.info }}</td>
                 </tr>
             </tbody>
         </nz-table>
-        <div style="padding:0px 20px 20px 20px; text-align: right;">
+        <div *ngIf="stockType === 'inventory'" style="padding:0px 20px 20px 20px; text-align: right;">
             <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
                 [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchStock()"
                 (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
@@ -69,5 +66,70 @@
                 {{ range[0] }}-{{ range[1] }} จากทั้งหมด {{ total }} รายการ
             </ng-template>
         </div>
+
     </div>
+
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="{{ getNameModal() }}สต๊อก " (nzOnCancel)="closeModal()"
+        (nzOnOk)="handleSubmitData()" [nzWidth]="stockType !== 'inventory' ? '600px' : '520px'">
+        <ng-container *nzModalContent>
+            <div *ngIf="stockType === 'inventory'">
+                <h4>ชื่อสต๊อก</h4>
+                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสต๊อกสินค้า" name="name"
+                    (change)="onChangeData($event)" [ngModel]="stockData.name" />
+
+                <h4 style="margin-top: 8px;">หมายเหตุ</h4>
+                <input nz-input class="wns-input" placeholder="**เว้นว่าง หากไม่ต้องการใส่หมายเหตุ หรือคำอธิบาย"
+                    name="info" (change)="onChangeData($event)" [ngModel]="stockData.info" />
+            </div>
+
+            <div *ngIf="stockType === 'import' && stockList.length > 0">
+                <button nz-button nzType="primary"
+                    style="margin-bottom: 15px; float: right; height: 40px; border-radius: 10px;"
+                    (click)="addImportItem()">
+                    <span nz-icon nzType="plus" nzTheme="outline"></span>
+                    เพิ่มรายการ
+                </button>
+
+                <nz-table #importItemTable [nzData]="importList" [nzPageSize]="8">
+                    <thead>
+                        <tr>
+                            <th [nzAlign]="'center'">#</th>
+                            <th nzWidth="50%">ชื่อสต็อก</th>
+                            <th [nzAlign]="'center'">จำนวน</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of importItemTable.data ; let index = index" class="editable-row">
+                            <td [nzAlign]="'center'">{{ index+1 + ((importItemTable.nzPageIndex-1) * 8) }}</td>
+                            <td>
+                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="เลือกสินค้าที่นำเข้า"
+                                    [(ngModel)]="data.stock_id" style="width:100%">
+                                    <nz-option *ngFor="let current of stockList" nzLabel="{{ current.name }}"
+                                        [nzDisabled]="!isNotSelected(current)" nzValue="{{ current._id }}"></nz-option>
+                                </nz-select>
+                            </td>
+                            <td [nzAlign]="'center'">
+                                <nz-input-number style="width:100%; text-align: center;" nzPlaceHolder="กรุณากรอกจำนวน"
+                                    [(ngModel)]="data.amount"></nz-input-number>
+                            </td>
+                            <td [nzAlign]="'center'">
+                                <button nz-button nzType="primary" style="margin-bottom: 5px;" nzDanger
+                                    (click)="removeImportItem(index)">
+                                    <span nz-icon nzType="delete" nzTheme="outline"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+
+
+            <div *ngIf="stockType === 'export'">
+                export
+            </div>
+        </ng-container>
+
+
+    </nz-modal>
 </div>

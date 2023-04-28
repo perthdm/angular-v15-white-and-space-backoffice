@@ -16,9 +16,8 @@ export class ProductComponent {
   switchValue = false;
   isLoading: boolean = true;
   isEdit: boolean = false;
-  isStock: boolean = false;
   isVisible: boolean = false;
-  isVisibleStockMnm: boolean = false;
+  avatarUrl?: string;
 
   page: number = 1;
   pageLimit: number = 10;
@@ -29,8 +28,9 @@ export class ProductComponent {
   productData: any = {};
   productDataType: string = '';
   productCount: any = {};
+  fileList: NzUploadFile[] | any = [];
 
-  fileList: NzUploadFile[] = [];
+  stockList: any = [];
 
   constructor(
     private stockService: StockService,
@@ -40,6 +40,7 @@ export class ProductComponent {
 
   ngOnInit() {
     this.fetchProduct();
+    this.fetchStock();
   }
 
   fetchProduct() {
@@ -71,6 +72,19 @@ export class ProductComponent {
       },
       (err) => {}
     );
+  }
+
+  fetchStock() {
+    let reqData = {
+      page: 1,
+      limit: 1000,
+      type: '',
+    };
+
+    this.stockService.getAllStock(reqData).subscribe((res) => {
+      let { items } = res;
+      this.stockList = items;
+    });
   }
 
   onChangePageLimit(nextLimit: number) {
@@ -108,17 +122,36 @@ export class ProductComponent {
   }
 
   handleOk(): void {
-    if (this.isStock) {
+    if (!this.isEdit) {
       let reqData = {
-        product_id: this.productData._id,
-        type: this.productDataType,
-        amount: Number(this.productData.amount),
+        product_id: this.productData.product_id,
+        name: this.productData.name,
+        product_type: this.productDataType,
+        description: '',
+        price: this.productData.price,
+        add_on_id: JSON.stringify([]),
+        stock_id: this.productData.stock_id,
       };
-      this.stockService.updateStock(reqData).subscribe(
+
+      console.log(reqData);
+
+      let data = new FormData();
+      Object.entries(reqData).forEach((item) => {
+        const [key, value] = item;
+        data.append(key, value);
+      });
+
+      if (this.fileList[0]) {
+        console.log(this.fileList[0]);
+
+        data.append('file', this.fileList[0]);
+      }
+
+      this.productService.addProduct(data).subscribe(
         (res) => {
           this.fetchProduct();
           this.resetData();
-          this.message.create('success', `แก้ไขสต็อคสำเร็จ`);
+          this.message.create('success', `เพิ่มสินค้าใหม่สำเร็จ`);
         },
         (err) => {
           this.message.create(
@@ -128,62 +161,34 @@ export class ProductComponent {
         }
       );
     } else {
-      if (!this.isEdit) {
-        let reqData = {
-          product_id: this.productData.product_id,
-          name: this.productData.name,
-          product_type: this.productDataType,
-          description: '',
-          price: this.productData.price,
-          add_on_id: [],
-          auto_stock: this.productData.auto_stock,
-        };
-
-        this.productService.addProduct(reqData).subscribe(
-          (res) => {
-            this.fetchProduct();
-            this.resetData();
-            this.message.create('success', `เพิ่มสินค้าใหม่สำเร็จ`);
-          },
-          (err) => {
-            this.message.create(
-              'error',
-              `Please try again ${err.error.message}::${err.error.statusCode}`
-            );
-          }
-        );
-      } else {
-        let reqData = {
-          id: this.productData._id,
-          name: this.productData.name,
-          product_type: this.productDataType,
-          price: this.productData.price,
-          product_id: this.productData.product_id,
-          auto_stock: this.productData.auto_stock,
-        };
-        this.productService.updateProduct(reqData).subscribe(
-          (res) => {
-            this.fetchProduct();
-            this.resetData();
-            this.message.create('success', `แก้ไขสินค้าสำเร็จ`);
-          },
-          (err) => {
-            this.message.create(
-              'error',
-              `Please try again ${err.error.message}::${err.error.statusCode}`
-            );
-          }
-        );
-      }
+      let reqData = {
+        id: this.productData._id,
+        name: this.productData.name,
+        product_type: this.productDataType,
+        price: this.productData.price,
+        product_id: this.productData.product_id,
+        auto_stock: this.productData.auto_stock,
+      };
+      this.productService.updateProduct(reqData).subscribe(
+        (res) => {
+          this.fetchProduct();
+          this.resetData();
+          this.message.create('success', `แก้ไขสินค้าสำเร็จ`);
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
     }
     this.isVisible = false;
-    this.isVisibleStockMnm = false;
   }
 
   handleCancel(): void {
     this.resetData();
     this.isVisible = false;
-    this.isVisibleStockMnm = false;
   }
 
   onChangeData(e: any) {
@@ -200,14 +205,6 @@ export class ProductComponent {
     this.productData = current;
     this.productDataType = current.product_type;
     this.isVisible = true;
-  }
-
-  editStock(current: any, event: MouseEvent) {
-    event.stopPropagation();
-    this.productData = current;
-    this.productDataType = current.product_type;
-    this.isVisibleStockMnm = true;
-    this.isStock = true;
   }
 
   getTagDetail(type: string) {
@@ -237,6 +234,14 @@ export class ProductComponent {
   mapDate(date: string) {
     return formatDateTime(date);
   }
+
+  getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   beforeUpload = (file: NzUploadFile): boolean => {
     this.fileList = [...this.fileList, file];

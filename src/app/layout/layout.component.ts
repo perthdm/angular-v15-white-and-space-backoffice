@@ -12,6 +12,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class LayoutComponent implements OnInit {
   isCollapsed = true;
   isCheckIn: boolean = false;
+  isFullAccess: boolean = false;
 
   constructor(
     private router: Router,
@@ -21,6 +22,10 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     this.fetchUserProfile();
+    let currentRole = localStorage.getItem('role');
+    if (currentRole === 'owner' || currentRole === 'manager') {
+      this.isFullAccess = true;
+    }
   }
 
   fetchUserProfile() {

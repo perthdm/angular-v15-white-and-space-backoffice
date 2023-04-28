@@ -17,3 +17,19 @@ export const formatDateTime = (time?: any, type?: string) => {
 const timeTwoDigit = (num: any) => {
   return (num < 10 ? '0' : '') + num;
 };
+
+export const getStorage = (key: string) => {
+  return localStorage.getItem(key);
+};
+
+export const setStorage = (key: string, value: string): void => {
+  localStorage.setItem(key, value);
+};
+
+export const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });

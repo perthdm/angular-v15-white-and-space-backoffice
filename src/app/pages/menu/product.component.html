@@ -35,11 +35,11 @@
                     <th>ชื่อสินค้า</th>
                     <th>ราคา</th>
                     <!-- <th [nzAlign]="'center'">สต็อก</th> -->
-                    <th [nzAlign]="'center'" nzWidth="100px">จำนวน</th>
                     <th [nzAlign]="'center'">ตัดสต็อกอัตโนมัติ</th>
+                    <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
                     <th [nzAlign]="'center'">สถานะ</th>
                     <!-- <th>สร้างเมื่อ</th> -->
-                    <th>เครื่องมือ</th>
+                    <!-- <th>เครื่องมือ</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -52,38 +52,32 @@
                     </td>
                     <td>{{ data.name }}</td>
                     <td>{{ data.price.toLocaleString() }}</td>
-                    <td [nzAlign]="'center'">
-                        <ng-container *ngIf="data.stock !== false; else zeroAmount">
-                            {{ data.amount }}
-                        </ng-container>
-                        <ng-template #zeroAmount>
-                            -
-                        </ng-template>
-                    </td>
-                    <td [nzAlign]="'center'">
 
+                    <td [nzAlign]="'center'">
                         <ng-container *ngIf="data.auto_stock !== false; else zeroAmount">
                             <span nz-icon nzType="check" nzTheme="outline"></span>
                         </ng-container>
-                        <ng-template #zeroAmount>
-                            -
-                        </ng-template>
+
                     </td>
+
+                    <td [nzAlign]="'center'">
+                        {{ data.stock ? data.stock.amount : '-'}}
+                    </td>
+
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
                     </td>
-                    <td>
-                        <button nz-button
-                            style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #F8F9FA;"
-                            (click)="editStock(data, $event)">
-                            ปรับสต็อก
-                        </button>
-                        <button nz-button
+                    <!-- <td>
+                        <button nz-button *ngIf=""
                             style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #fb4545;color:white;"
                             (click)="handleDelete(data, $event)">
                             <span nz-icon nzType="delete" nzTheme="fill"></span>
                         </button>
-                    </td>
+                    </td> -->
+
+                    <ng-template #zeroAmount>
+                        -
+                    </ng-template>
                 </tr>
             </tbody>
         </nz-table>
@@ -122,34 +116,25 @@
                     <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
                     <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
                 </nz-select>
-                <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
-                <div>
-                    <nz-switch [(ngModel)]="productData.auto_stock" style="margin-right: 1rem;"></nz-switch>
-                </div>
+
                 <h4 style="margin-top: 8px;">รูปภาพสินค้า</h4>
                 <nz-upload class="upload-style" [nzLimit]="1" nzListType="picture" [nzBeforeUpload]="beforeUpload"
                     [(nzFileList)]="fileList">
-                    <button nz-button nzType="primary" style="margin-bottom:1rem;" *ngIf="fileList.length === 0">
+                    <button nz-button nzType="primary" *ngIf="fileList.length === 0">
                         <span nz-icon nzType="upload"></span>
                         อัพโหลด
                     </button>
                 </nz-upload>
-            </ng-container>
-        </nz-modal>
-
-        <nz-modal [(nzVisible)]="isVisibleStockMnm" nzTitle="แก้ไขสต็อก" (nzOnCancel)="handleCancel()"
-            (nzOnOk)="handleOk()">
-            <ng-container *nzModalContent>
-                <h4 style="margin-top: 8px;">จำนวน</h4>
-                <input nz-input class="wns-input" placeholder="กรุณากรอกราคาสินค้า" (change)="onChangeData($event)"
-                    name="amount" type="number" />
-
-                <h4 style="margin-top: 8px;">ประเภท</h4>
-                <nz-select [(ngModel)]="productDataType" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
-                    class="select-style">
-                    <nz-option nzValue="in" nzLabel="นำเข้า"></nz-option>
-                    <nz-option nzValue="out" nzLabel="นำออก"></nz-option>
-                </nz-select>
+                <nz-divider></nz-divider>
+                <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
+                <div>
+                    <nz-switch [(ngModel)]="productData.auto_stock" style="margin-right: 1rem;"></nz-switch>
+                    <nz-select *ngIf="productData.auto_stock" [(ngModel)]="productData.stock_id"
+                        nzPlaceHolder="เลือกของในสต็อก" style="width: 180px" class="select-style">
+                        <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
+                            nzLabel="{{ current.name }} ({{ current.amount }})"></nz-option>
+                    </nz-select>
+                </div>
             </ng-container>
         </nz-modal>
     </div>

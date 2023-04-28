@@ -4,6 +4,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import Swal from 'sweetalert2';
 import { CART_ACTION, PAYMENT_TYPE } from 'src/utils/constatnt';
+import { getStorage } from 'src/utils/utils';
 
 interface Order {
   orderno: string;
@@ -30,14 +31,11 @@ export class ShopComponent {
 
   constructor(
     private productService: ProductService,
-    private orderService: OrderService,
-    private message: NzMessageService
+    private orderService: OrderService
   ) {}
 
   ngOnInit() {
     this.fetchProduct();
-    this.userFullName = localStorage.getItem('name');
-    this.userRole = localStorage.getItem('role');
   }
 
   fetchProduct() {
@@ -47,6 +45,7 @@ export class ShopComponent {
       type: this.categoryType,
       query: this.query,
     };
+
     this.productService.getAllProduct(pageConfig).subscribe(
       (res) => {
         let { items, summary } = res;
@@ -64,6 +63,8 @@ export class ShopComponent {
         this.categoryCount = nextSum;
         this.productList = items;
         this.productListPreview = items;
+        this.userFullName = getStorage('name');
+        this.userRole = getStorage('role');
       },
       (err) => {}
     );

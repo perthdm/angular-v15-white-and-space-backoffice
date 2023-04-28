@@ -116,3 +116,8 @@ button:focus-visible {
 .ant-menu-item:hover {
   background-color: #1f547e !important;
 }
+
+.ant-upload-list-item {
+  margin-top: -16px !important;
+  border-radius: 10px !important;
+}

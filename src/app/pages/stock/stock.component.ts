@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service';
 import { formatDateTime } from 'src/utils/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { STOCK_TYPE } from 'src/utils/constatnt';
 
 // interface Stock {
 //   id: string;
@@ -18,17 +19,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 export class StockComponent {
   stockList: any = [];
   stockData: any = {};
-  stockDataType: string = '';
   isEdit: boolean = false;
   isVisible: boolean = false;
-  isLoading: boolean = true;
-  total: number = 10;
+  stockType = 'inventory';
+
+  importList: any = [];
+
+  // == PAGINATION ==
   page: number = 1;
   pageLimit: number = 10;
-  dataCount: number = 10;
-  radioValue = 'all';
-  productType = 'in';
   query: string = '';
+  total: number = 10;
 
   constructor(
     private stockService: StockService,
@@ -41,13 +42,39 @@ export class StockComponent {
 
   showModal(): void {
     this.isVisible = true;
+    if (this.stockType === STOCK_TYPE.IMPORT)
+      this.importList.push({ stock_id: null, amount: null });
+  }
+
+  closeModal(): void {
+    this.isEdit = false;
+    this.isVisible = false;
+    this.resetData();
+  }
+
+  addImportItem() {
+    this.importList = [
+      ...this.importList,
+      {
+        stock_id: null,
+        amount: null,
+      },
+    ];
+  }
+
+  removeImportItem(index: number) {
+    let nextList = [...this.importList];
+    this.importList = nextList.filter((_, idx) => index !== idx);
+  }
+
+  handleChangeGroup() {
+    if (this.stockType !== STOCK_TYPE.ORDER) this.fetchStock();
   }
 
   resetData = () => {
     this.stockData = {};
-    this.stockDataType = '';
+    this.importList = [];
   };
-
 
   onChangePageLimit(nextLimit: number) {
     this.pageLimit = nextLimit;
@@ -82,7 +109,6 @@ export class StockComponent {
 
   editStock(current: any) {
     this.stockData = current;
-    this.stockDataType = current.product_type;
     this.isVisible = true;
     this.isEdit = true;
   }
@@ -91,19 +117,65 @@ export class StockComponent {
     let reqData = {
       page: this.page,
       limit: this.pageLimit,
-      type: this.productType,
       query: this.query,
     };
 
-    console.log(reqData);
-    this.stockService.getAllStock(reqData).subscribe(
-      (res) => {
-        let { total, page, last_page, items } = res;
-        this.stockList = items;
-        this.total = total;
-        this.isLoading = false;
-      },
-      (err) => {}
+    this.stockService.getAllStock(reqData).subscribe((res) => {
+      let { total, items } = res;
+      this.stockList = items;
+      this.total = total;
+    });
+  }
+
+  handleSubmitData() {
+    if (this.stockType === STOCK_TYPE.INVENTORY) {
+      this.stockService.addNewStock(this.stockData).subscribe(
+        (res) => {
+          this.message.create('success', `เพิ่มสต๊อกสินค้าสำเร็จ`);
+          this.fetchStock();
+          this.closeModal();
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
+    } else if (this.stockType === STOCK_TYPE.IMPORT) {
+      let reqData = [...this.importList].filter(
+        (item) => item.stock_id && item.amount
+      );
+
+      this.stockService.importItem(reqData).subscribe(
+        (res) => {
+          this.message.create('success', `เพิ่มสินค้าเข้าสต็อกสำเร็จ`);
+          this.closeModal();
+        },
+        (err) => {
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
+    }
+  }
+
+  getNameModal() {
+    switch (this.stockType) {
+      case STOCK_TYPE.INVENTORY:
+        return 'เพิ่ม';
+      case STOCK_TYPE.IMPORT:
+        return 'นำเข้า';
+      default:
+        return 'นำออก';
+    }
+  }
+
+  isNotSelected(value: any): boolean {
+    return (
+      this.importList.map((object: any) => object.stock_id).indexOf(value._id) === -1
     );
   }
 }

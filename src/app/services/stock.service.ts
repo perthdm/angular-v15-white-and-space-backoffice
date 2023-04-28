@@ -9,8 +9,9 @@ import { IPagination } from '../model/pagination.model';
 
 const ENDPOINT = {
   GET_ALL: ({ page, limit, type, query }: IPagination) =>
-    `${API_DOMAIN}/stock?page=${page}&limit=${limit}&type=${type}&query=${query}`,
-  UPDATE: `${API_DOMAIN}/stock`,
+    `${API_DOMAIN}/stock?page=${page}&limit=${limit}&query=${query}`,
+  ADD: `${API_DOMAIN}/stock`,
+  IMPORT_ITEM: `${API_DOMAIN}/lot`,
 };
 
 @Injectable()
@@ -26,8 +27,17 @@ export class StockService {
     });
   }
 
-  updateStock(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.UPDATE, data, {
+  addNewStock(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.ADD, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  importItem(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.IMPORT_ITEM, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
