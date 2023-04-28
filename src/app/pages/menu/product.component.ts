@@ -133,8 +133,6 @@ export class ProductComponent {
         stock_id: this.productData.stock_id,
       };
 
-      console.log(reqData);
-
       let data = new FormData();
       Object.entries(reqData).forEach((item) => {
         const [key, value] = item;
@@ -169,6 +167,7 @@ export class ProductComponent {
         product_id: this.productData.product_id,
         auto_stock: this.productData.auto_stock,
       };
+
       this.productService.updateProduct(reqData).subscribe(
         (res) => {
           this.fetchProduct();
