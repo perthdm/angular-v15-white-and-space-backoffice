@@ -24,11 +24,20 @@
                 <h3></h3>
             </div>
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <button *ngIf="stockType !== 'order'" nz-button nzType="primary"
-                    style="height: 40px; border-radius: 10px;" (click)="showModal()">
-                    <span nz-icon nzType="plus" nzTheme="outline"></span>
-                    {{ getNameModal() }}สต็อก
-                </button>
+                <nz-space [nzSize]="'small'" *ngIf="stockType === 'inventory'">
+                    <button *nzSpaceItem nz-button nzType="primary"
+                        style="height: 40px; border-radius: 10px; background-color: #04AA6D; border-color: #04AA6D;"
+                        (click)="showModal('import')">
+                        <span nz-icon nzType="download" nzTheme="outline" style="font-size:16px"></span>
+                        นำเข้าสินค้า
+                    </button>
+
+                    <button *nzSpaceItem nz-button nzType="primary" style="height: 40px; border-radius: 10px;"
+                        (click)="showModal()">
+                        <span nz-icon nzType="plus" nzTheme="outline" style="font-size:16px"></span>
+                        เพิ่มสต็อกสินค้า
+                    </button>
+                </nz-space>
             </div>
         </div>
 
@@ -42,7 +51,8 @@
                     <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
                     <th [nzAlign]="'center'">สร้างเมื่อ</th>
                     <th [nzAlign]="'center'">ผู้ทำรายการ</th>
-                    <th [nzAlign]="'center'">รายละเอียด</th>
+                    <th [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
+                    <th [nzAlign]="'center'" nzWidth="100px">รายละเอียด</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,8 +64,16 @@
                     <td [nzAlign]="'center'"> {{ mapDate(data.createdAt) }}</td>
                     <td [nzAlign]="'center'">{{ data?.user_created.username }}</td>
                     <td [nzAlign]="'center'">
+                        <button nz-button nzType="primary" nzDanger style="color:white; border-radius: 8px"
+                            (click)="handleSetExport($event,data)">
+                            <span nz-icon nzType="upload" nzTheme="outline" style="font-size: 18px;"></span>
+                            นำออก
+                        </button>
+                    </td>
+
+                    <td [nzAlign]="'center'">
                         <button nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;"
-                            (click)="handleCheckStock($event , data)">
+                            (click)="showModalStockDetail($event,data)">
                             <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
                         </button>
                     </td>
@@ -64,7 +82,7 @@
         </nz-table>
 
         <!-- [TABLE] : IMPORT, EXPORT, ORDER -->
-        <nz-table *ngIf="stockType !== 'inventory'" style="margin:20px 0px; min-height: 300px;" #importTrxTable
+        <nz-table *ngIf=" stockType !=='inventory'" style=" margin:20px 0px; min-height: 300px;" #importTrxTable
             [nzData]="importTrxList" [nzShowPagination]="false" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
@@ -103,23 +121,26 @@
         </div>
     </div>
 
+    <!-- [MODAL] : INVENTORY -->
     <nz-modal [(nzVisible)]="isShowModal" nzTitle="{{ getNameModal() }}สต๊อก " (nzOnCancel)="closeModal()"
-        (nzOnOk)="handleSubmitData()" [nzWidth]="stockType !== 'inventory' ? '600px' : '520px'">
+        (nzOnOk)="handleSubmitData()">
         <ng-container *nzModalContent>
+            <h4>ชื่อสต๊อก</h4>
+            <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสต๊อกสินค้า" name="name"
+                (change)="onChangeData($event)" [ngModel]="stockData.name" />
 
-            <!-- [TYPE] : INVENTORY  -->
-            <div *ngIf="stockType === 'inventory'">
-                <h4>ชื่อสต๊อก</h4>
-                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสต๊อกสินค้า" name="name"
-                    (change)="onChangeData($event)" [ngModel]="stockData.name" />
+            <h4 style="margin-top: 8px;">หมายเหตุ</h4>
+            <input nz-input class="wns-input" placeholder="**เว้นว่าง หากไม่ต้องการใส่หมายเหตุ หรือคำอธิบาย" name="info"
+                (change)="onChangeData($event)" [ngModel]="stockData.info" />
+        </ng-container>
+    </nz-modal>
 
-                <h4 style="margin-top: 8px;">หมายเหตุ</h4>
-                <input nz-input class="wns-input" placeholder="**เว้นว่าง หากไม่ต้องการใส่หมายเหตุ หรือคำอธิบาย"
-                    name="info" (change)="onChangeData($event)" [ngModel]="stockData.info" />
-            </div>
 
-            <!-- [TYPE] : IMPORT  -->
-            <div *ngIf="stockType === 'in' && stockList.length > 0">
+    <!-- [MODAL] : IMPORT -->
+    <nz-modal [(nzVisible)]="isShowModalImport" nzTitle="นำเข้าสินค้า" (nzOnCancel)="closeModalImport()"
+        (nzOnOk)="handleSubmitImport()" [nzWidth]="'620px'">
+        <ng-container *nzModalContent>
+            <div *ngIf="stockAllList.length > 0">
                 <button nz-button nzType="primary"
                     style="margin-bottom: 15px; float: right; height: 40px; border-radius: 10px;"
                     (click)="addImportItem()">
@@ -132,27 +153,28 @@
                         <tr>
                             <th [nzAlign]="'center'">#</th>
                             <th nzWidth="50%">ชื่อสต็อก</th>
-                            <th [nzAlign]="'center'">จำนวน</th>
-                            <th></th>
+                            <th>จำนวน</th>
+                            <th [nzAlign]="'center'">ลบ</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of importItemTable.data ; let index = index" class="editable-row">
                             <td [nzAlign]="'center'">{{ index+1 + ((importItemTable.nzPageIndex-1) * 8) }}</td>
                             <td>
-                                <nz-select nzShowSearch nzAllowClear nzPlaceHolder="เลือกสินค้าที่นำเข้า"
-                                    [(ngModel)]="data.stock_id" style="width:100%">
-                                    <nz-option *ngFor="let current of stockList" nzLabel="{{ current.name }}"
+                                <nz-select class="select-style" nzShowSearch nzAllowClear
+                                    nzPlaceHolder="เลือกสินค้าที่นำเข้า" [(ngModel)]="data.stock_id" style="width:100%">
+                                    <nz-option *ngFor="let current of stockAllList" nzLabel="{{ current.name }}"
                                         [nzDisabled]="!isNotSelected(current)" nzValue="{{ current._id }}"></nz-option>
                                 </nz-select>
                             </td>
                             <td [nzAlign]="'center'">
-                                <nz-input-number style="width:100%; text-align: center;" nzPlaceHolder="กรุณากรอกจำนวน"
+                                <nz-input-number class="wns-input custom-input-number"
+                                    style="width:100%; text-align: center;" nzPlaceHolder="กรุณากรอกจำนวน"
                                     [(ngModel)]="data.amount"></nz-input-number>
                             </td>
                             <td [nzAlign]="'center'">
-                                <button nz-button nzType="primary" style="margin-bottom: 5px;" nzDanger
-                                    (click)="removeImportItem(index)">
+                                <button nz-button nzType="primary" style="margin-bottom: 5px; border-radius: 8px;"
+                                    nzDanger (click)="removeImportItem(index)">
                                     <span nz-icon nzType="delete" nzTheme="outline"></span>
                                 </button>
                             </td>
@@ -160,15 +182,35 @@
                     </tbody>
                 </nz-table>
             </div>
-
-            <!-- [TYPE] : EXPORT  -->
-            <div *ngIf="stockType === 'export'">
-                export
-            </div>
         </ng-container>
     </nz-modal>
 
-    <!-- MODAL STOCK DETAIL -->
+
+    <!-- [MODAL] : EXPORT -->
+    <nz-modal [(nzVisible)]="isShowModalExport" nzTitle="นำเข้าสินค้า" (nzOnCancel)="closeModalExport()"
+        (nzOnOk)="handleSubmitExport()">
+        <ng-container *nzModalContent>
+            <h4>เลือกล็อตสินค้า</h4>
+            <nz-select class="select-style" nzShowSearch nzAllowClear nzPlaceHolder="เลือกสินค้าที่นำเข้า"
+                [(ngModel)]="stockData.lot_id" style="width:100%">
+                <nz-option *ngFor="let current of importList"
+                    nzLabel="{{ current.tracking }} | ({{current.amount-current.used_amount}}/{{current.amount}})"
+                    nzValue="{{ current._id }}"></nz-option>
+            </nz-select>
+
+            <h4 style="margin-top: 8px;">จำนวนที่นำออก</h4>
+            <nz-input-number class="wns-input custom-input-number" style="width:100%; text-align: center;"
+                nzPlaceHolder="กรุณากรอกจำนวน" [(ngModel)]="stockData.amount"></nz-input-number>
+
+
+            <h4 style="margin-top: 8px;">หมายเหตุ</h4>
+            <input nz-input class="wns-input" placeholder="**เว้นว่าง หากไม่ต้องการใส่หมายเหตุ หรือคำอธิบาย" name="info"
+                (change)="onChangeData($event)" [ngModel]="stockData.info" />
+
+        </ng-container>
+    </nz-modal>
+
+    <!-- [MODAL] : STOCK DETAIL -->
     <nz-modal [(nzVisible)]="isShowModalStockDetail" nzTitle="รายละเอียดสต็อก" [nzFooter]="null"
         (nzOnCancel)="closeModalDetail()">
         <ng-container *nzModalContent>
@@ -177,14 +219,14 @@
                     <tr>
                         <th [nzAlign]="'center'">#</th>
                         <th nzWidth="60%">Tag ID</th>
-                        <th [nzAlign]="'center'">จำนวน</th>
+                        <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let data of stockDetailTable.data ; let index = index" class="editable-row">
                         <td [nzAlign]="'center'">{{ index+1 + ((stockDetailTable.nzPageIndex-1) * 8) }}</td>
                         <td>{{ data.tracking }}</td>
-                        <td [nzAlign]="'center'">{{ data.amount }}</td>
+                        <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                     </tr>
                 </tbody>
             </nz-table>

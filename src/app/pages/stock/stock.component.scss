@@ -16,7 +16,6 @@
     border-radius: 12px;
     width: 150px;
     text-align: center;
-    
   }
   // .ant-radio-group-large .ant-radio-button-wrapper:last-child {
   //   margin-right: 0px !important;
@@ -26,4 +25,17 @@
   .ant-radio-button-wrapper:not(:first-child)::before {
     background-color: transparent;
   }
+}
+
+.select-style {
+  ::ng-deep .ant-select-selector {
+    border-radius: 10px !important;
+    height: 40px !important;
+    align-items: center !important;
+  }
+}
+
+.custom-input-number {
+  display: flex;
+  align-items: center;
 }

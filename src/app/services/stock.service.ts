@@ -22,6 +22,7 @@ const ENDPOINT = {
     GET_STOCK_DETAIL_BY_ID: (stockId: string) =>
       `${API_DOMAIN}/lot?stock_id=${stockId}`,
     SEARCH_TAG_ID: `${API_DOMAIN}/lot/search-product`,
+    EXPORT_ITEM: `${API_DOMAIN}/lot/export`,
   },
 };
 
@@ -61,6 +62,15 @@ export class StockService {
 
   importItem(data: any): Observable<any> {
     return this.http.post<any>(ENDPOINT.LOT.IMPORT_ITEM, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  exportItem(data: any): Observable<any> {
+    return this.http.post<any>(ENDPOINT.LOT.EXPORT_ITEM, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

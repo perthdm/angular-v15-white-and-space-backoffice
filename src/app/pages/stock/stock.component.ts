@@ -18,6 +18,7 @@ import { STOCK_TYPE } from 'src/utils/constatnt';
 })
 export class StockComponent {
   stockList: any = [];
+  stockAllList: any = [];
   importTrxList: any = [];
   stockData: any = {};
   stockType = 'inventory';
@@ -26,6 +27,8 @@ export class StockComponent {
   // == MODAL CTL ==
   isShowModal: boolean = false;
   isShowModalStockDetail: boolean = false;
+  isShowModalImport: boolean = false;
+  isShowModalExport: boolean = false;
 
   // == IMPROT ITEM ==
   importList: any = [];
@@ -49,17 +52,21 @@ export class StockComponent {
     this.fetchStock();
   }
 
-  fetchStock() {
+  fetchStock(directPage?: number | any, directLimit?: number | any) {
     let reqData = {
-      page: this.page,
-      limit: this.pageLimit,
+      page: directPage | this.page,
+      limit: directLimit | this.pageLimit,
       query: this.query,
     };
 
     this.stockService.getAllStock(reqData).subscribe((res) => {
       let { total, items } = res;
-      this.stockList = items;
-      this.total = total;
+      if (directLimit && directPage) {
+        this.stockAllList = items;
+      } else {
+        this.stockList = items;
+        this.total = total;
+      }
     });
   }
 
@@ -77,22 +84,41 @@ export class StockComponent {
     });
   }
 
-  showModal(): void {
-    this.isShowModal = true;
-    if (
-      this.stockType === STOCK_TYPE.IMPORT ||
-      this.stockType === STOCK_TYPE.EXPORT
-    ) {
+  showModal(modalName?: any): void {
+    if (!modalName) {
+      this.isShowModal = true;
+    } else if (modalName === 'import') {
       this.importList.push({ stock_id: null, amount: null });
-      this.page = 1;
-      this.pageLimit = 1000;
-      this.fetchStock();
+      this.fetchStock(1, 1000);
+      this.isShowModalImport = true;
     }
+  }
+
+  handleSetExport(event: any, current: any) {
+    event.stopPropagation();
+    console.log(current);
+    this.handleCheckStock(current?._id);
+    this.isShowModalExport = true;
   }
 
   closeModal(): void {
     this.isEdit = false;
     this.isShowModal = false;
+    this.resetData();
+  }
+
+  closeModalImport(): void {
+    this.isShowModalImport = false;
+    this.resetData();
+  }
+
+  closeModalExport(): void {
+    this.isShowModalExport = false;
+    this.resetData();
+  }
+
+  closeModalDetail() {
+    this.isShowModalStockDetail = false;
     this.resetData();
   }
 
@@ -126,6 +152,7 @@ export class StockComponent {
   resetData = () => {
     this.stockData = {};
     this.importList = [];
+    this.stockAllList = [];
   };
 
   onChangePageLimit(nextLimit: number) {
@@ -166,39 +193,60 @@ export class StockComponent {
   }
 
   handleSubmitData() {
-    if (this.stockType === STOCK_TYPE.INVENTORY) {
-      this.stockService.addNewStock(this.stockData).subscribe(
-        (res) => {
-          this.message.create('success', `เพิ่มสต๊อกสินค้าสำเร็จ`);
-          this.fetchStock();
-          this.closeModal();
-        },
-        (err) => {
-          this.message.create(
-            'error',
-            `Please try again ${err.error.message}::${err.error.statusCode}`
-          );
-        }
-      );
-    } else if (this.stockType === STOCK_TYPE.IMPORT) {
-      let reqData = [...this.importList].filter(
-        (item) => item.stock_id && item.amount
-      );
+    this.stockService.addNewStock(this.stockData).subscribe(
+      (res) => {
+        this.message.create('success', `เพิ่มสต๊อกสินค้าสำเร็จ`);
+        this.fetchStock();
+        this.closeModal();
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
+  }
 
-      this.stockService.importItem(reqData).subscribe(
-        (res) => {
-          this.message.create('success', `เพิ่มสินค้าเข้าสต็อกสำเร็จ`);
-          this.fetchLot();
-          this.closeModal();
-        },
-        (err) => {
-          this.message.create(
-            'error',
-            `Please try again ${err.error.message}::${err.error.statusCode}`
-          );
-        }
-      );
-    }
+  handleSubmitImport() {
+    let reqData = [...this.importList].filter(
+      (item) => item.stock_id && item.amount
+    );
+
+    this.stockService.importItem(reqData).subscribe(
+      (res) => {
+        this.message.create('success', `เพิ่มสินค้าเข้าสต็อกสำเร็จ`);
+        this.fetchStock();
+        this.closeModalImport();
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
+  }
+
+  handleSubmitExport() {
+    let reqData = {
+      lot_id: this.stockData.lot_id,
+      amount: this.stockData.amount,
+      info: this.stockData.info,
+    };
+    this.stockService.exportItem(reqData).subscribe(
+      (res) => {
+        this.message.create('success', `นำสินค้าออกจากสต็อกสำเร็จ`);
+        this.fetchStock();
+        this.closeModalExport();
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
   }
 
   getNameModal() {
@@ -220,17 +268,15 @@ export class StockComponent {
     );
   }
 
-  closeModalDetail() {
-    this.isShowModalStockDetail = false;
-    this.importList = [];
+  showModalStockDetail(event: any, current: any) {
+    event.stopPropagation();
+    this.handleCheckStock(current?._id);
+    this.isShowModalStockDetail = true;
   }
 
-  handleCheckStock(event: any, current: any) {
-    event.stopPropagation();
-    console.log(current);
-    this.stockService.getStockDetailById(current?._id).subscribe(
+  handleCheckStock(stockId: any) {
+    this.stockService.getStockDetailById(stockId).subscribe(
       (res) => {
-        this.isShowModalStockDetail = true;
         console.log(res);
         let { items, total } = res;
         this.importList = items;
