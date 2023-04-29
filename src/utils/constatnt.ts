@@ -11,7 +11,7 @@ export const CART_ACTION = {
 
 export const STOCK_TYPE = {
   INVENTORY : "inventory",
-  IMPORT : "import",
-  EXPORT : "export",
+  IMPORT : "in",
+  EXPORT : "out",
   ORDER : "order"
 }

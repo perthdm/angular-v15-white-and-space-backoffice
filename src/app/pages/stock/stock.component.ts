@@ -18,11 +18,16 @@ import { STOCK_TYPE } from 'src/utils/constatnt';
 })
 export class StockComponent {
   stockList: any = [];
+  importTrxList: any = [];
   stockData: any = {};
-  isEdit: boolean = false;
-  isVisible: boolean = false;
   stockType = 'inventory';
+  isEdit: boolean = false;
 
+  // == MODAL CTL ==
+  isShowModal: boolean = false;
+  isShowModalStockDetail: boolean = false;
+
+  // == IMPROT ITEM ==
   importList: any = [];
 
   // == PAGINATION ==
@@ -30,6 +35,10 @@ export class StockComponent {
   pageLimit: number = 10;
   query: string = '';
   total: number = 10;
+
+  // == SUB PAGINATION ==
+  pageDt: number = 1;
+  totalDt: number = 10;
 
   constructor(
     private stockService: StockService,
@@ -40,15 +49,50 @@ export class StockComponent {
     this.fetchStock();
   }
 
+  fetchStock() {
+    let reqData = {
+      page: this.page,
+      limit: this.pageLimit,
+      query: this.query,
+    };
+
+    this.stockService.getAllStock(reqData).subscribe((res) => {
+      let { total, items } = res;
+      this.stockList = items;
+      this.total = total;
+    });
+  }
+
+  fetchLot() {
+    let reqData = {
+      page: this.page,
+      limit: this.pageLimit,
+      type: this.stockType,
+    };
+
+    this.stockService.getAllLotByType(reqData).subscribe((res) => {
+      let { total, items } = res;
+      this.importTrxList = items;
+      this.total = total;
+    });
+  }
+
   showModal(): void {
-    this.isVisible = true;
-    if (this.stockType === STOCK_TYPE.IMPORT)
+    this.isShowModal = true;
+    if (
+      this.stockType === STOCK_TYPE.IMPORT ||
+      this.stockType === STOCK_TYPE.EXPORT
+    ) {
       this.importList.push({ stock_id: null, amount: null });
+      this.page = 1;
+      this.pageLimit = 1000;
+      this.fetchStock();
+    }
   }
 
   closeModal(): void {
     this.isEdit = false;
-    this.isVisible = false;
+    this.isShowModal = false;
     this.resetData();
   }
 
@@ -68,7 +112,15 @@ export class StockComponent {
   }
 
   handleChangeGroup() {
-    if (this.stockType !== STOCK_TYPE.ORDER) this.fetchStock();
+    this.page = 1;
+    this.pageLimit = 10;
+    this.total = 0;
+
+    if (this.stockType === STOCK_TYPE.INVENTORY) {
+      this.fetchStock();
+    } else {
+      this.fetchLot();
+    }
   }
 
   resetData = () => {
@@ -84,7 +136,7 @@ export class StockComponent {
   getTagDetail(type: string) {
     switch (type) {
       case 'in':
-        return { title: 'นำเข้า', color: 'green' };
+        return { title: 'นำเข้า', color: 'blue' };
       case 'out':
         return { title: 'นำออก', color: 'volcano' };
       case 'order':
@@ -109,22 +161,8 @@ export class StockComponent {
 
   editStock(current: any) {
     this.stockData = current;
-    this.isVisible = true;
+    this.isShowModal = true;
     this.isEdit = true;
-  }
-
-  fetchStock() {
-    let reqData = {
-      page: this.page,
-      limit: this.pageLimit,
-      query: this.query,
-    };
-
-    this.stockService.getAllStock(reqData).subscribe((res) => {
-      let { total, items } = res;
-      this.stockList = items;
-      this.total = total;
-    });
   }
 
   handleSubmitData() {
@@ -150,6 +188,7 @@ export class StockComponent {
       this.stockService.importItem(reqData).subscribe(
         (res) => {
           this.message.create('success', `เพิ่มสินค้าเข้าสต็อกสำเร็จ`);
+          this.fetchLot();
           this.closeModal();
         },
         (err) => {
@@ -175,7 +214,41 @@ export class StockComponent {
 
   isNotSelected(value: any): boolean {
     return (
-      this.importList.map((object: any) => object.stock_id).indexOf(value._id) === -1
+      this.importList
+        .map((object: any) => object.stock_id)
+        .indexOf(value._id) === -1
     );
+  }
+
+  closeModalDetail() {
+    this.isShowModalStockDetail = false;
+    this.importList = [];
+  }
+
+  handleCheckStock(event: any, current: any) {
+    event.stopPropagation();
+    console.log(current);
+    this.stockService.getStockDetailById(current?._id).subscribe(
+      (res) => {
+        this.isShowModalStockDetail = true;
+        console.log(res);
+        let { items, total } = res;
+        this.importList = items;
+        this.totalDt = total;
+      },
+      (err) =>
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        )
+    );
+  }
+
+  handleChangePage() {
+    if (this.stockType === 'inventory') {
+      this.fetchStock();
+    } else {
+      this.fetchLot();
+    }
   }
 }

@@ -31,8 +31,6 @@ export class ProductService {
   addProduct(data: any): Observable<any> {
     return this.http.post<any>(ENDPOINT.CREATE, data, {
       headers: new HttpHeaders({
-        // 'Content-Type': 'multipart/form-data',
-        // 'Accept': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
@@ -41,7 +39,6 @@ export class ProductService {
   updateProduct(data: any): Observable<any> {
     return this.http.patch<any>(ENDPOINT.UPDATE, data, {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });

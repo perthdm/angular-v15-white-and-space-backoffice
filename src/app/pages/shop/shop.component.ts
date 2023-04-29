@@ -5,6 +5,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import Swal from 'sweetalert2';
 import { CART_ACTION, PAYMENT_TYPE } from 'src/utils/constatnt';
 import { getStorage } from 'src/utils/utils';
+import { StockService } from 'src/app/services/stock.service';
 
 interface Order {
   orderno: string;
@@ -28,14 +29,53 @@ export class ShopComponent {
   userFullName: any = 'White And Space';
   userRole: any = '';
   categoryCount: any = {};
+  currentBarcode: string = '';
 
   constructor(
     private productService: ProductService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private stockService: StockService,
+    private message: NzMessageService
   ) {}
 
   ngOnInit() {
     this.fetchProduct();
+    window.addEventListener('keypress', this.handleBarcodeInput.bind(this));
+  }
+
+  handleBarcodeInput(event: KeyboardEvent) {
+    const input = event.key;
+
+    if (input === 'Enter') {
+      this.processBarcode(this.currentBarcode);
+      this.currentBarcode = '';
+    } else {
+      this.currentBarcode += input;
+    }
+  }
+
+  throwErrorMessage(message: string) {
+    this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
+  }
+
+  processBarcode(barcode: string) {
+    console.log(barcode);
+    this.stockService.searchTagId(barcode).subscribe(
+      (res) => {
+        if (res) {
+          res['tagId'] = barcode;
+          console.log(res);
+
+          this.updateCart(res, 'add');
+          this.message.create('success', `เพื่ม "${res.name}" ลงตระกร้าสำเร็จ`);
+        }
+      },
+      (err) => {
+        this.throwErrorMessage(
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
   }
 
   fetchProduct() {
@@ -92,8 +132,9 @@ export class ShopComponent {
       if (existingItem) {
         existingItem.amount++;
         existingItem.totalPrice += item.price;
+        existingItem.tagList = [...existingItem.tagList, item.tagId];
       } else {
-        const newItem = {
+        const newItem: any = {
           _id: item._id,
           name: item.name,
           amount: 1,
@@ -101,6 +142,10 @@ export class ShopComponent {
           product_type: item.product_type,
           totalPrice: item.price,
         };
+
+        if (item?.auto_stock) {
+          newItem['tagList'] = [item?.tagId];
+        }
         this.cart.push(newItem);
       }
 
@@ -110,6 +155,7 @@ export class ShopComponent {
         if (existingItem.amount >= 1) {
           existingItem.amount--;
           existingItem.totalPrice -= item.price;
+          existingItem.tagList.pop();
 
           if (existingItem.amount === 0) {
             this.cart = this.cart.filter(
@@ -117,7 +163,6 @@ export class ShopComponent {
             );
           }
         }
-
         this.totalPrice -= item.price;
       }
     }
@@ -154,7 +199,16 @@ export class ShopComponent {
   handleConfirmOrder(paymentType: string) {
     let b: any = [];
     this.cart.map((item: any) => {
-      b.push({ product_id: item._id, amount: item.amount });
+      console.log(item);
+      if (item.tagList && item.tagList.length > 0) {
+        b.push({
+          product_id: item._id,
+          amount: item.amount,
+          tracking_list: item.tagList,
+        });
+      } else {
+        b.push({ product_id: item._id, amount: item.amount });
+      }
     });
 
     Swal.fire({
@@ -193,5 +247,9 @@ export class ShopComponent {
         }
       }
     });
+  }
+
+  onKey(event: any) {
+    console.log(event.target.value);
   }
 }

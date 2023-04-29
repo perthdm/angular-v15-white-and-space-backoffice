@@ -1,21 +1,20 @@
-import { IAddOn } from './addon.model';
-
 export interface IProduct {
-  add_on: any;
+  _id: string;
+  add_on?: any;
   amount: number;
   auto_stock: boolean;
-  createdAt: string;
-  description: string;
+  description?: string;
   name: string;
   price: number;
   product_id: string;
   product_type: string;
   status: boolean;
-  stock: boolean;
+  stock?: any;
+  createdAt: string;
   updatedAt: string;
   user_created: object;
   user_updated: object;
-  _id: string;
+  image?: string;
 }
 
 export interface IProductPagination {

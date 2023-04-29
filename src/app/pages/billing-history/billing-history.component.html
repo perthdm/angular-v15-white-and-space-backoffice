@@ -37,7 +37,7 @@
                 <tr *ngFor="let bill of data.bills;">
                     <td [nzAlign]="'center'"> {{ mapDate(bill.createdAt , 'onlyTime') }} </td>
                     <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
-                    <td [nzAlign]="'center'"> อนุชิต มิตรสหาย (พ่อครัว) </td>
+                    <td [nzAlign]="'center'"> {{ bill?.user_created?.username }} </td>
                     <td></td>
                     <td [nzAlign]="'right'"> {{ bill.amount }} </td>
                     <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>

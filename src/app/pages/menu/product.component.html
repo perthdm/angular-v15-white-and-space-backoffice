@@ -26,20 +26,18 @@
     </div>
     <div class="app-content">
 
-        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="menuList" [nzShowPagination]="false"
+        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="producList" [nzShowPagination]="false"
             [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th [nzAlign]="'center'">รหัสสินค้า</th>
                     <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
                     <th>ชื่อสินค้า</th>
-                    <th>ราคา</th>
-                    <!-- <th [nzAlign]="'center'">สต็อก</th> -->
+                    <th [nzAlign]="'center'">ราคา (บาท)</th>
                     <th [nzAlign]="'center'">ตัดสต็อกอัตโนมัติ</th>
+                    <th [nzAlign]="'center'">สินค้าในคลัง</th>
                     <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
                     <th [nzAlign]="'center'">สถานะ</th>
-                    <!-- <th>สร้างเมื่อ</th> -->
-                    <!-- <th>เครื่องมือ</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -51,13 +49,16 @@
                             {{ getTagDetail(data.product_type).title }}</nz-tag>
                     </td>
                     <td>{{ data.name }}</td>
-                    <td>{{ data.price.toLocaleString() }}</td>
+                    <td [nzAlign]="'center'">{{ data.price.toLocaleString() }}</td>
 
                     <td [nzAlign]="'center'">
                         <ng-container *ngIf="data.auto_stock !== false; else zeroAmount">
-                            <span nz-icon nzType="check" nzTheme="outline"></span>
+                            <span nz-icon nzType="check" nzTheme="outline" style="color:#29f"></span>
                         </ng-container>
+                    </td>
 
+                    <td [nzAlign]="'center'">
+                        {{ data.stock ? data.stock.name : '-'}}
                     </td>
 
                     <td [nzAlign]="'center'">
@@ -93,12 +94,13 @@
             </ng-template>
         </div>
 
-        <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
-            (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+        <nz-modal [(nzVisible)]="isShowModal" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
+            (nzOnCancel)="handleCloseModal()" (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
                 <h4>รหัสสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.product_id"
-                    (change)="onChangeData($event)" name="product_id" maxlength="10" minlength="10" />
+                    (change)="onChangeData($event)" name="product_id" maxlength="10" minlength="10"
+                    [disabled]="isEdit" />
 
                 <h4 style="margin-top: 8px;">ชื่อสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
@@ -109,7 +111,7 @@
                     (change)="onChangeData($event)" name="price" type="number" />
 
                 <h4 style="margin-top: 8px;">ประเภท</h4>
-                <nz-select [(ngModel)]="productDataType" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
+                <nz-select [(ngModel)]="pdTypeSelected" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
                     class="select-style">
                     <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
                     <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
@@ -128,11 +130,12 @@
                 <nz-divider></nz-divider>
                 <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
                 <div>
-                    <nz-switch [(ngModel)]="productData.auto_stock" style="margin-right: 1rem;"></nz-switch>
-                    <nz-select *ngIf="productData.auto_stock" [(ngModel)]="productData.stock_id"
-                        nzPlaceHolder="เลือกของในสต็อก" style="width: 180px" class="select-style">
+                    <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem;"></nz-switch>
+                    <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
+                        [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
                         <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
-                            nzLabel="{{ current.name }} ({{ current.amount }})"></nz-option>
+                            nzLabel="{{ current.name }} ({{ current.amount }})">
+                        </nz-option>
                     </nz-select>
                 </div>
             </ng-container>

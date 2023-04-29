@@ -58,7 +58,10 @@ export class UserComponent {
         this.isLoading = false;
       },
       (err) => {
-        console.log(err);
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
       }
     );
   }

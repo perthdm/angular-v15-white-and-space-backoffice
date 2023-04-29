@@ -110,10 +110,11 @@
       brightness(103%) contrast(103%);
   }
 }
+
 .card-product {
   background: white;
   box-shadow: 1px 1px 4px 1px #ebebeb;
-  padding: 20px 10px !important;
+  padding: 15px 10px !important;
   // margin: 1rem;
   border-radius: 15px;
 
@@ -126,11 +127,18 @@
     font-family: 'Kanit';
     margin-top: .5rem;
     margin-bottom: .5 rem;
+    padding: 0px 5px;
   }
   .price-tag {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+    padding: 0px 5px;
     font-family: 'Kanit';
   }
+}
+
+.disable-card-product {
+  background-color: #e3e3e3 !important;
+  box-shadow: 1px 1px 4px 1px#c0bebe !important;
 }
 
 // .menu-footer {
