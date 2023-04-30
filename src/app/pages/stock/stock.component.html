@@ -210,6 +210,8 @@
         </ng-container>
     </nz-modal>
 
+
+
     <!-- [MODAL] : STOCK DETAIL -->
     <nz-modal [(nzVisible)]="isShowModalStockDetail" nzTitle="รายละเอียดสต็อก" [nzFooter]="null"
         (nzOnCancel)="closeModalDetail()">
@@ -218,8 +220,9 @@
                 <thead>
                     <tr>
                         <th [nzAlign]="'center'">#</th>
-                        <th nzWidth="60%">Tag ID</th>
+                        <th nzWidth="50%">Tag ID</th>
                         <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
+                        <th [nzAlign]="'center'">บาร์โค้ด</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -227,6 +230,11 @@
                         <td [nzAlign]="'center'">{{ index+1 + ((stockDetailTable.nzPageIndex-1) * 8) }}</td>
                         <td>{{ convertToTs(data.lot_number) }}</td>
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
+                        <td [nzAlign]="'center'">
+                            <button (click)="onUsed(data)" [style]="data.isPrint ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''"  nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
+                                <span nz-icon nzType="barcode" nzTheme="outline" style="font-size: 18px;"></span>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </nz-table>

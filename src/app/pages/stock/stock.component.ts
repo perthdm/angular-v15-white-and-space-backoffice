@@ -305,4 +305,8 @@ export class StockComponent {
   convertToTs(date: string): number {
     return +new Date(date);
   }
+
+  onUsed(data:any){
+    data.isPrint=true
+  }
 }
