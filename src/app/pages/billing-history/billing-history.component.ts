@@ -75,17 +75,18 @@ export class BillingHistoryComponent {
 
     this.orderService.getAllBill(reqConfig).subscribe((res) => {
       let { items } = res;
-      items.map((dt: IBillList) => {
-        let sum = 0;
+      if (items.length > 0) {
+        items.map((dt: IBillList) => {
+          let sum = 0;
 
-        dt.bills.map((bd: IBill) => {
-          sum += bd.price;
+          dt.bills.map((bd: IBill) => {
+            sum += bd.price;
+          });
+          dt.totalProfit = sum;
         });
-        dt.totalProfit = sum;
-      });
 
-      console.log(items);
-
+        console.log(items);
+      }
       this.billList = items;
     });
   }

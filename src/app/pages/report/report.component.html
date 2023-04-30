@@ -15,7 +15,7 @@
         </div>
 
         <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="dataList" [nzShowPagination]="false"
-            [nzFrontPagination]="false" [nzLoading]="isLoading">
+            [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
             <thead>
                 <tr>
                     <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
@@ -40,7 +40,7 @@
                     </td>
 
                 </tr>
-                <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
+                <tr *ngIf="dataList.length >0" style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                     <td [nzAlign]="'center'">รวม</td>
                     <td></td>
                     <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
