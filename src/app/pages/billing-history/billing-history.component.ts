@@ -3,6 +3,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { formatDateTime } from 'src/utils/utils';
 import * as moment from 'moment';
 import { PAYMENT_TYPE } from 'src/utils/constatnt';
+import Swal from 'sweetalert2';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 interface IBillList {
   date: string;
@@ -13,6 +15,7 @@ interface IBillList {
 }
 
 interface IBill {
+  _id: string;
   order_id: string;
   items: IBillDetail[];
   price: number;
@@ -59,7 +62,10 @@ export class BillingHistoryComponent {
   date = [new Date(), new Date()];
   dateFormat = 'dd-MM-YYYY';
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit() {
     this.fetchBill();
@@ -109,21 +115,51 @@ export class BillingHistoryComponent {
   getStatusDetail(type: string) {
     switch (type) {
       case 'close':
-        return { title: 'Close', color: '#f50' };
+        return { title: 'Close', color: 'magenta' };
+      case 'cancel':
+        return { title: 'Cancel', color: 'volcano' };
       default:
-        return { title: 'Open', color: '#87d068' };
+        return { title: 'Waiting', color: 'gold' };
     }
   }
 
   getPaymentsDetail(type: string) {
     switch (type) {
       case PAYMENT_TYPE.CASH:
-        return { title: 'Cash', color: 'green' };
+        return { title: 'Cash', color: '#04AA6D' };
       case PAYMENT_TYPE.MOBILE_BANKING:
-        return { title: 'Mobile Banking', color: 'blue' };
+        return { title: 'Mobile Banking', color: '#1890ff' };
       default:
         return { title: 'Unknown', color: 'default' };
     }
+  }
+
+  cancelOrder(event: any, id: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'ยกเลิกบิล!',
+      text: 'คุณต้องการที่จะยกเลิกบิลรายการนี้ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยันออเดอร์',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.orderService.cancelOrder(id).subscribe(
+          (res) => {
+            console.log(res);
+            this.message.create('success', `ยกเลิกบิลสำเร็จ`);
+            this.fetchBill();
+          },
+          (err) =>
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            )
+        );
+      }
+    });
   }
 
   mapDate(date: string, option?: string) {

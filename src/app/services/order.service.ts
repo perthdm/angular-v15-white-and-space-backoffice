@@ -10,6 +10,7 @@ const ENDPOINT = {
     `${API_DOMAIN}/order?start=${start}&end=${end}`,
   CASH_ORDER: `${API_DOMAIN}/order/employee-confirm-cash`,
   BANKING_ORDER: `${API_DOMAIN}/order/employee-confirm-banking`,
+  CANCEL_ORDER: `${API_DOMAIN}/order/cancel`,
 };
 
 @Injectable()
@@ -41,5 +42,18 @@ export class OrderService {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
+  }
+
+  cancelOrder(id: string): Observable<any> {
+    return this.http.put<any>(
+      ENDPOINT.CANCEL_ORDER,
+      { id },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
   }
 }

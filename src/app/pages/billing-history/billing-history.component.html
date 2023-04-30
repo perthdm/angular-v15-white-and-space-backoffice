@@ -18,14 +18,14 @@
             <thead>
                 <tr>
                     <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
-                    <th id="name" [nzAlign]="'center'">เลขที่บิล</th>
-                    <th id="name" [nzAlign]="'center'">ผู้ทำรายการ</th>
+                    <th id="billId" [nzAlign]="'center'">เลขที่บิล</th>
+                    <th id="contribute" [nzAlign]="'center'">ผู้ทำรายการ</th>
                     <th id="empty" nzWidth="30%"></th>
-                    <th id="checkIn" [nzAlign]="'right'">รายการ</th>
-                    <th id="checkIn" [nzAlign]="'right'">ยอดรวม</th>
-                    <th id="checkOut" [nzAlign]="'center'">ชำระโดย</th>
-                    <th id="checkOut" nzWidth="5%" [nzAlign]="'center'">สถานะ</th>
-                    <th id="tools" nzWidth="3%"></th>
+                    <th id="document" [nzAlign]="'right'">รายการ</th>
+                    <th id="sum" [nzAlign]="'right'">ยอดรวม</th>
+                    <th id="gateway" [nzAlign]="'center'">ชำระโดย</th>
+                    <th id="status" nzWidth="5%" [nzAlign]="'center'">สถานะ</th>
+                    <th id="cancel" nzWidth="3%"></th>
                 </tr>
             </thead>
             <tbody *ngFor="let data of basicTable.data ;let index = index">
@@ -34,7 +34,7 @@
                         {{data.date}}</td>
                     <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                 </tr>
-                <tr *ngFor="let bill of data.bills;">
+                <tr *ngFor="let bill of data.bills;" (click)="handleShowBillDetail(bill)" style="cursor: pointer;">
                     <td [nzAlign]="'center'"> {{ mapDate(bill.createdAt , 'onlyTime') }} </td>
                     <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                     <td [nzAlign]="'center'"> {{ bill?.user_created?.username }} </td>
@@ -42,18 +42,22 @@
                     <td [nzAlign]="'right'"> {{ bill.amount }} </td>
                     <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
                     <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color" style="margin-right:0px"> {{
-                            getPaymentsDetail(bill.payment).title }}
+                        <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color"
+                            style="margin-right:0px ; font-weight: bold;">
+                            {{ getPaymentsDetail(bill.payment).title }}
                         </nz-tag>
                     </td>
                     <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="getStatusDetail(bill.status).color" style="margin-right:0px">
+                        <nz-tag [nzColor]="getStatusDetail(bill.status).color"
+                            style="margin-right:0px; font-weight: bold;">
                             {{ getStatusDetail(bill.status).title }}
                         </nz-tag>
                     </td>
+
                     <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" nzShape="circle" (click)="handleShowBillDetail(bill)">
-                            <span nz-icon nzType="file-text" nzTheme="outline"></span>
+                        <button nz-button nzType="primary" nzDanger (click)="cancelOrder($event,bill._id)"
+                            style="padding:6px; border-radius: 10px; ">
+                            <span nz-icon nzType="stop" nzTheme="outline" style="font-size: 18px;"></span>
                         </button>
                     </td>
                 </tr>
