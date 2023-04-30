@@ -1,18 +1,20 @@
 import { Component } from '@angular/core';
 import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserService } from 'src/app/services/user.service';
 import { formatDateTime } from 'src/utils/utils';
+import Swal from 'sweetalert2';
 
 interface Attendance {
   date: string;
-  employee: StaffAttendance[];
+  items: StaffAttendance[];
 }
 
 interface StaffAttendance {
-  name: string;
+  user: { name: string };
   type: string;
-  checkIn: string;
-  checkOut: string | any;
+  check_in: string;
+  check_out: string | any;
 }
 
 @Component({
@@ -21,7 +23,7 @@ interface StaffAttendance {
   styleUrls: ['./attendance.component.scss'],
 })
 export class AttendanceComponent {
-  timeStampList: Attendance[] = [];
+  checkInList: Attendance[] = [];
   employeeList: string[] = [];
   isLoading: boolean = true;
   selectedValue = null;
@@ -32,83 +34,14 @@ export class AttendanceComponent {
   ];
   dateFormat = 'dd-MM-YYYY';
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private usService: UserService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit() {
-    let mockDate = formatDateTime(null, 'onlyTime');
     this.fetchCheckInHistory();
-    let nextList = [
-      {
-        date: formatDateTime('2020-04-01', 'onlyDate'),
-        employee: [
-          {
-            name: 'Jessica Lopes1',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-            totalHours: 0,
-            nHours: 0,
-            otHours: 0,
-          },
-          {
-            name: 'Jessica Lopes2',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-          },
-        ],
-      },
-      {
-        date: formatDateTime('2020-04-02', 'onlyDate'),
-        employee: [
-          {
-            name: 'Jessica Lopes3',
-            type: 'part-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-          },
-          {
-            name: 'Jessica Lopes4',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-          },
-          {
-            name: 'Jessica Lopes4',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-          },
-          {
-            name: 'Jessica Lopes4',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: mockDate,
-          },
-        ],
-      },
-      {
-        date: formatDateTime('2020-04-03', 'onlyDate'),
-        employee: [
-          {
-            name: 'Jessica Lopes3',
-            type: 'part-time',
-            checkIn: mockDate,
-            checkOut: null,
-          },
-          {
-            name: 'Jessica Lopes4',
-            type: 'full-time',
-            checkIn: mockDate,
-            checkOut: null,
-          },
-        ],
-      },
-    ];
-
-    this.employeeList = this.getAllNameOfEmployee(nextList);
-    this.timeStampList = nextList;
-    this.isLoading = false;
   }
 
   fetchCheckInHistory() {
@@ -120,25 +53,67 @@ export class AttendanceComponent {
     this.userService.getCheckInHistory(reqConfig).subscribe(
       (res) => {
         console.log(res);
+        let { items } = res;
+        this.checkInList = items;
+        this.employeeList = this.getAllNameOfEmployee(items);
+        this.isLoading = false;
       },
-      (err) => {}
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
     );
   }
 
   getAllNameOfEmployee(list: any): any {
     let temp: any = [];
-    list.map((item: any) => {
-      let { employee } = item;
-      employee.map((em: any) => {
-        if (!temp.includes(em.name)) {
-          temp.push(em.name);
+    console.log(list);
+
+    list.map((current: any) => {
+      let { items } = current;
+      items.map((em: any) => {
+        if (!temp.includes(em.user.name)) {
+          temp.push(em.user.name);
         }
       });
     });
     return temp;
   }
 
-  handleCheckOut(current: any) {
-    current.checkOut = formatDateTime(null, 'onlyTime');
+  handleCheckOut() {
+    Swal.fire({
+      title: 'คำเตือน!',
+      text: 'คุณต้องการที่จะ Check Out การทำงานในวันนี้ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยันออเดอร์',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.usService.employeeAttendance('checkOut').subscribe(
+          () => {
+            this.message.create('success', `คุณได้ทำการ Check Out สำเร็จ`);
+            this.fetchCheckInHistory();
+          },
+          (err) => {
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            );
+          }
+        );
+
+        // this.message.create(
+        //   'error',
+        //   `Please try again ${err.error.message}::${err.error.statusCode}`
+        // );
+      }
+    });
+  }
+
+  mapDate(date: string, option?: string) {
+    return formatDateTime(date, option);
   }
 }

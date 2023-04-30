@@ -59,8 +59,8 @@ export class UserService {
     });
   }
 
-  employeeCheckIn() {
-    let data = { action: 'Check In' };
+  employeeAttendance(type: string) {
+    let data = type === 'checkOut' ? {} : { action: 'Check In' };
     return this.http.put<any>(ENDPOINT.CHECK_IN, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

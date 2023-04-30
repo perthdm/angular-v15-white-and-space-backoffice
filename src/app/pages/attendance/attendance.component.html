@@ -21,17 +21,17 @@
             </div>
         </div>
 
-        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="timeStampList" [nzShowPagination]="false"
-            [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
+        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="checkInList" [nzShowPagination]="false"
+            [nzFrontPagination]="false" [nzLoading]="isLoading">
             <thead>
                 <tr>
                     <th id="date" [nzAlign]="'center'" rowspan="4">วัน/เดือน/ปี</th>
-                    <th id="name" [nzAlign]="'center'">ชื่อพนักงาน</th>
+                    <th id="name">ชื่อพนักงาน</th>
                     <th id="type" [nzAlign]="'center'">ประเภท</th>
-                    <th id="empty" nzWidth="30%"></th>
+                    <th id="empty" nzWidth="20%"></th>
                     <!-- <th id="empty" nzWidth="60%"></th> -->
-                    <th id="checkIn" [nzAlign]="'center'">เวลาเข้างาน</th>
-                    <th id="checkOut" [nzAlign]="'center'">เวลาออกงาน</th>
+                    <th id="checkIn" [nzAlign]="'center'">เข้างาน</th>
+                    <th id="checkOut" [nzAlign]="'center'">ออกงาน</th>
                     <th [nzAlign]="'center'">เวลาทั้งหมด</th>
                     <th [nzAlign]="'center'">ชม. ปกติ</th>
                     <th [nzAlign]="'center'">ชม. OT</th>
@@ -44,18 +44,19 @@
                         {{data.date}}</td>
                     <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                 </tr>
-                <tr *ngFor="let em of data.employee;">
+                <tr *ngFor="let em of data.items;">
                     <td></td>
-                    <td [nzAlign]="'center'">{{em.name}}</td>
+                    <td>{{em.user.name}}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="em.type === 'full-time' ?  'blue' : 'magenta'">{{em.type === 'full-time' ?
                             'ประจำ' : 'พาร์ทไทม์' }}</nz-tag>
                     </td>
                     <td></td>
-                    <td [nzAlign]="'center'">{{em.checkIn}}</td>
-                    <td [nzAlign]="'center'"> <span *ngIf="em.checkOut">{{ em.checkOut }}</span>
-                        <button style="height: 35px; border-radius: 10px;" *ngIf="!em.checkOut" nz-button
-                            nzType="primary" (click)="handleCheckOut(em)">
+                    <td [nzAlign]="'center'">{{ mapDate(em.check_in , 'onlyTime') }}</td>
+                    <td [nzAlign]="'center'">
+                        <span *ngIf="em.check_out">{{ mapDate(em.check_out, 'onlyTime') }}</span>
+                        <button style="height: 35px; border-radius: 10px;" *ngIf="!em.check_out" nz-button
+                            nzType="primary" (click)="handleCheckOut()">
                             Check Out
                         </button>
                     </td>

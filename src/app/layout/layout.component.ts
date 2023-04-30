@@ -37,7 +37,7 @@ export class LayoutComponent implements OnInit {
   }
 
   handleCheckIn() {
-    this.usService.employeeCheckIn().subscribe(
+    this.usService.employeeAttendance('checkIn').subscribe(
       (res) => {
         this.isCheckIn = false;
       },
