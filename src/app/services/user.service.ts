@@ -17,6 +17,7 @@ const ENDPOINT = {
   GET_CHECKIN_HISTORY_SELF: ({ start, end }: any) =>
     `${API_DOMAIN}/attendance/self?start=${start}&end=${end}`,
   GET_PROFILE: `${API_DOMAIN}/auth/profile`,
+  SET_MAN_DAY: `${API_DOMAIN}/attendance/set-pay`,
 };
 
 @Injectable()
@@ -59,8 +60,8 @@ export class UserService {
     });
   }
 
-  employeeAttendance(type: string) {
-    let data = type === 'checkOut' ? {} : { action: 'Check In' };
+  employeeAttendance(userId: string) {
+    let data = { user_id: userId };
     return this.http.put<any>(ENDPOINT.CHECK_IN, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -76,6 +77,15 @@ export class UserService {
         : ENDPOINT.GET_CHECKIN_HISTORY_SELF;
 
     return this.http.get<any>(urlEndpoint(dataConfig), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  setManDayHours(data: any) {
+    return this.http.post<any>(ENDPOINT.SET_MAN_DAY, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
