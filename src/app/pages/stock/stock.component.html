@@ -104,7 +104,7 @@
                         <nz-tag [nzColor]="getTagDetail(data.type).color"> {{ getTagDetail(data.type).title }} </nz-tag>
                     </td>
                     <td [nzAlign]="'center'"> {{ data?.user_created?.username }} </td>
-                    <td> {{ stockType === "order" ? data.order.order_id : data.lot.tracking }} </td>
+                    <td> </td>
                 </tr>
             </tbody>
         </nz-table>
@@ -220,7 +220,7 @@
                 <thead>
                     <tr>
                         <th [nzAlign]="'center'">#</th>
-                        <th nzWidth="50%">Tag ID</th>
+                        <th nzWidth="50%">Track ID</th>
                         <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
                         <th [nzAlign]="'center'">บาร์โค้ด</th>
                     </tr>
@@ -231,7 +231,9 @@
                         <td>{{ convertToTs(data.lot_number) }}</td>
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                         <td [nzAlign]="'center'">
-                            <button (click)="onUsed(data)" [style]="data.isPrint ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''"  nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
+                            <button (click)="onUsed(data)"
+                                [style]="data.isPrint ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''" nz-button
+                                nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
                                 <span nz-icon nzType="barcode" nzTheme="outline" style="font-size: 18px;"></span>
                             </button>
                         </td>

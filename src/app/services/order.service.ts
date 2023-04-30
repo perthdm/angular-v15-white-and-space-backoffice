@@ -45,15 +45,12 @@ export class OrderService {
   }
 
   cancelOrder(id: string): Observable<any> {
-    return this.http.put<any>(
-      ENDPOINT.CANCEL_ORDER,
-      { id },
-      {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        }),
-      }
-    );
+    let data = { id };
+    return this.http.put<any>(ENDPOINT.CANCEL_ORDER, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
   }
 }

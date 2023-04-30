@@ -59,7 +59,10 @@ export class BillingHistoryComponent {
   isShow: boolean = false;
 
   // === PAGINATION === //
-  date = [new Date(), new Date()];
+  dateRange: any = [
+    moment().startOf('day').toDate(),
+    moment().endOf('day').toDate(),
+  ];
   dateFormat = 'dd-MM-YYYY';
 
   constructor(
@@ -74,8 +77,8 @@ export class BillingHistoryComponent {
 
   fetchBill() {
     let reqConfig: any = {
-      start: this.date[0] ? moment(this.date[0]).startOf('day') : null,
-      end: this.date[1] ? moment(this.date[1]).endOf('day') : null,
+      start: this.dateRange[0] ? this.dateRange[0] : null,
+      end: this.dateRange[1] ? this.dateRange[1] : null,
     };
     console.log(reqConfig);
 
@@ -95,10 +98,6 @@ export class BillingHistoryComponent {
       }
       this.billList = items;
     });
-  }
-
-  onChange(result: Date[]): void {
-    console.log('onChange: ', result);
   }
 
   handleShowBillDetail(bill: IBill) {

@@ -26,8 +26,8 @@
     </div>
     <div class="app-content">
 
-        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="producList" [nzShowPagination]="false"
-            [nzPageSize]="pageLimit">
+        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="producList"
+            [nzShowPagination]="false" [nzPageSize]="pageLimit">
             <thead>
                 <tr>
                     <th [nzAlign]="'center'">รหัสสินค้า</th>
@@ -94,6 +94,7 @@
             </ng-template>
         </div>
 
+        <!-- [MODAL] : ADD , EDIT PRODUCT -->
         <nz-modal [(nzVisible)]="isShowModal" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
             (nzOnCancel)="handleCloseModal()" (nzOnOk)="handleOk()">
             <ng-container *nzModalContent>
@@ -127,16 +128,19 @@
                         อัพโหลด
                     </button>
                 </nz-upload>
-                <nz-divider></nz-divider>
-                <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
-                <div>
-                    <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem;"></nz-switch>
-                    <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
-                        [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
-                        <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
-                            nzLabel="{{ current.name }} ({{ current.amount }})">
-                        </nz-option>
-                    </nz-select>
+
+                <div *ngIf="!productData.stock_id">
+                    <nz-divider></nz-divider>
+                    <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
+                    <div>
+                        <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem;"></nz-switch>
+                        <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
+                            [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
+                            <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
+                                nzLabel="{{ current.name }} ({{ current.amount }})">
+                            </nz-option>
+                        </nz-select>
+                    </div>
                 </div>
             </ng-container>
         </nz-modal>

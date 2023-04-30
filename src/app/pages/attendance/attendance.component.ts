@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import * as moment from 'moment';
+import { UserService } from 'src/app/services/user.service';
 import { formatDateTime } from 'src/utils/utils';
 
 interface Attendance {
@@ -23,10 +25,18 @@ export class AttendanceComponent {
   employeeList: string[] = [];
   isLoading: boolean = true;
   selectedValue = null;
-  date = null;
+
+  dateRange: any = [
+    moment().startOf('week').toDate(),
+    moment().endOf('week').toDate(),
+  ];
+  dateFormat = 'dd-MM-YYYY';
+
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     let mockDate = formatDateTime(null, 'onlyTime');
+    this.fetchCheckInHistory();
     let nextList = [
       {
         date: formatDateTime('2020-04-01', 'onlyDate'),
@@ -101,6 +111,20 @@ export class AttendanceComponent {
     this.isLoading = false;
   }
 
+  fetchCheckInHistory() {
+    let reqConfig: any = {
+      start: this.dateRange[0] ? this.dateRange[0] : null,
+      end: this.dateRange[1] ? this.dateRange[1] : null,
+    };
+
+    this.userService.getCheckInHistory(reqConfig).subscribe(
+      (res) => {
+        console.log(res);
+      },
+      (err) => {}
+    );
+  }
+
   getAllNameOfEmployee(list: any): any {
     let temp: any = [];
     list.map((item: any) => {
@@ -112,10 +136,6 @@ export class AttendanceComponent {
       });
     });
     return temp;
-  }
-
-  onChange(result: Date): void {
-    console.log('onChange: ', result);
   }
 
   handleCheckOut(current: any) {
