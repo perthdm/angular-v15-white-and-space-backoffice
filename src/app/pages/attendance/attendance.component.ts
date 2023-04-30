@@ -8,8 +8,9 @@ interface Attendance {
 
 interface StaffAttendance {
   name: string;
+  type: string;
   checkIn: string;
-  checkOut: string;
+  checkOut: string | any;
 }
 
 @Component({
@@ -32,11 +33,16 @@ export class AttendanceComponent {
         employee: [
           {
             name: 'Jessica Lopes1',
+            type: 'full-time',
             checkIn: mockDate,
             checkOut: mockDate,
+            totalHours: 0,
+            nHours: 0,
+            otHours: 0,
           },
           {
             name: 'Jessica Lopes2',
+            type: 'full-time',
             checkIn: mockDate,
             checkOut: mockDate,
           },
@@ -47,21 +53,25 @@ export class AttendanceComponent {
         employee: [
           {
             name: 'Jessica Lopes3',
+            type: 'part-time',
             checkIn: mockDate,
             checkOut: mockDate,
           },
           {
             name: 'Jessica Lopes4',
+            type: 'full-time',
             checkIn: mockDate,
             checkOut: mockDate,
           },
           {
             name: 'Jessica Lopes4',
+            type: 'full-time',
             checkIn: mockDate,
             checkOut: mockDate,
           },
           {
             name: 'Jessica Lopes4',
+            type: 'full-time',
             checkIn: mockDate,
             checkOut: mockDate,
           },
@@ -72,13 +82,15 @@ export class AttendanceComponent {
         employee: [
           {
             name: 'Jessica Lopes3',
+            type: 'part-time',
             checkIn: mockDate,
-            checkOut: mockDate,
+            checkOut: null,
           },
           {
             name: 'Jessica Lopes4',
+            type: 'full-time',
             checkIn: mockDate,
-            checkOut: mockDate,
+            checkOut: null,
           },
         ],
       },
@@ -104,5 +116,9 @@ export class AttendanceComponent {
 
   onChange(result: Date): void {
     console.log('onChange: ', result);
+  }
+
+  handleCheckOut(current: any) {
+    current.checkOut = formatDateTime(null, 'onlyTime');
   }
 }

@@ -193,19 +193,41 @@ export class StockComponent {
   }
 
   handleSubmitData() {
-    this.stockService.addNewStock(this.stockData).subscribe(
-      (res) => {
-        this.message.create('success', `เพิ่มสต๊อกสินค้าสำเร็จ`);
-        this.fetchStock();
-        this.closeModal();
-      },
-      (err) => {
-        this.message.create(
-          'error',
-          `Please try again ${err.error.message}::${err.error.statusCode}`
-        );
-      }
-    );
+    // === ADD ===
+    if (!this.isEdit) {
+      this.stockService.addNewStock(this.stockData).subscribe(
+        (res) => {
+          this.message.create('success', `เพิ่มสต๊อกสินค้าสำเร็จ`);
+          this.fetchStock();
+          this.closeModal();
+        },
+        (err) => {
+          this.throwErrorMessage(
+            `${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
+    } else {
+      // === UPDATE ===
+      let reqData = {
+        stock_id: this.stockData._id,
+        name: this.stockData.name,
+        info: this.stockData.info,
+      };
+
+      this.stockService.updateStock(reqData).subscribe(
+        (res) => {
+          this.message.create('success', `แก้ไขสินค้าในสต็อกสำเร็จ`);
+          this.fetchStock();
+          this.closeModal();
+        },
+        (err) => {
+          this.throwErrorMessage(
+            `${err.error.message}::${err.error.statusCode}`
+          );
+        }
+      );
+    }
   }
 
   handleSubmitImport() {
@@ -219,12 +241,8 @@ export class StockComponent {
         this.fetchStock();
         this.closeModalImport();
       },
-      (err) => {
-        this.message.create(
-          'error',
-          `Please try again ${err.error.message}::${err.error.statusCode}`
-        );
-      }
+      (err) =>
+        this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
     );
   }
 
@@ -240,24 +258,9 @@ export class StockComponent {
         this.fetchStock();
         this.closeModalExport();
       },
-      (err) => {
-        this.message.create(
-          'error',
-          `Please try again ${err.error.message}::${err.error.statusCode}`
-        );
-      }
+      (err) =>
+        this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
     );
-  }
-
-  getNameModal() {
-    switch (this.stockType) {
-      case STOCK_TYPE.INVENTORY:
-        return 'เพิ่ม';
-      case STOCK_TYPE.IMPORT:
-        return 'นำเข้า';
-      default:
-        return 'นำออก';
-    }
   }
 
   isNotSelected(value: any): boolean {
@@ -283,10 +286,7 @@ export class StockComponent {
         this.totalDt = total;
       },
       (err) =>
-        this.message.create(
-          'error',
-          `Please try again ${err.error.message}::${err.error.statusCode}`
-        )
+        this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
     );
   }
 
@@ -296,5 +296,13 @@ export class StockComponent {
     } else {
       this.fetchLot();
     }
+  }
+
+  throwErrorMessage(message: string) {
+    this.message.create('error', `Please try again ${message}`);
+  }
+
+  convertToTs(date: string): number {
+    return +new Date(date);
   }
 }

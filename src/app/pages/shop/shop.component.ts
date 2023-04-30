@@ -45,7 +45,6 @@ export class ShopComponent {
 
   handleBarcodeInput(event: KeyboardEvent) {
     const input = event.key;
-
     if (input === 'Enter') {
       this.processBarcode(this.currentBarcode);
       this.currentBarcode = '';
@@ -60,22 +59,27 @@ export class ShopComponent {
 
   processBarcode(barcode: string) {
     console.log(barcode);
-    this.stockService.searchTagId(barcode).subscribe(
-      (res) => {
-        if (res) {
-          res['tagId'] = barcode;
-          console.log(res);
+    if (barcode) {
+      this.stockService.searchTagId(barcode).subscribe(
+        (res) => {
+          if (res) {
+            res['tagId'] = barcode;
+            console.log(res);
 
-          this.updateCart(res, 'add');
-          this.message.create('success', `เพื่ม "${res.name}" ลงตระกร้าสำเร็จ`);
+            this.updateCart(res, 'add');
+            this.message.create(
+              'success',
+              `เพื่ม "${res.name}" ลงตระกร้าสำเร็จ`
+            );
+          }
+        },
+        (err) => {
+          this.throwErrorMessage(
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          );
         }
-      },
-      (err) => {
-        this.throwErrorMessage(
-          `Please try again ${err.error.message}::${err.error.statusCode}`
-        );
-      }
-    );
+      );
+    }
   }
 
   fetchProduct() {
@@ -132,7 +136,9 @@ export class ShopComponent {
       if (existingItem) {
         existingItem.amount++;
         existingItem.totalPrice += item.price;
-        existingItem.tagList = [...existingItem.tagList, item.tagId];
+        if (item.auto_stock) {
+          existingItem.tagList = [...existingItem.tagList, item.tagId];
+        }
       } else {
         const newItem: any = {
           _id: item._id,

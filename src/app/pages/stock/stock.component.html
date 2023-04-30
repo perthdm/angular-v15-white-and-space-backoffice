@@ -122,8 +122,8 @@
     </div>
 
     <!-- [MODAL] : INVENTORY -->
-    <nz-modal [(nzVisible)]="isShowModal" nzTitle="{{ getNameModal() }}สต๊อก " (nzOnCancel)="closeModal()"
-        (nzOnOk)="handleSubmitData()">
+    <nz-modal [(nzVisible)]="isShowModal" nzTitle="{{!isEdit ? 'เพิ่มสต็อกสินค้า' : 'แก้ไขสต็อกสินค้า'}}"
+        (nzOnCancel)="closeModal()" (nzOnOk)="handleSubmitData()">
         <ng-container *nzModalContent>
             <h4>ชื่อสต๊อก</h4>
             <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสต๊อกสินค้า" name="name"
@@ -225,7 +225,7 @@
                 <tbody>
                     <tr *ngFor="let data of stockDetailTable.data ; let index = index" class="editable-row">
                         <td [nzAlign]="'center'">{{ index+1 + ((stockDetailTable.nzPageIndex-1) * 8) }}</td>
-                        <td>{{ data.tracking }}</td>
+                        <td>{{ convertToTs(data.lot_number) }}</td>
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                     </tr>
                 </tbody>

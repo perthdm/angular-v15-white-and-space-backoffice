@@ -12,6 +12,7 @@ const ENDPOINT = {
     GET_ALL: ({ page, limit, query }: IPagination) =>
       `${API_DOMAIN}/stock?page=${page}&limit=${limit}&query=${query}`,
     ADD: `${API_DOMAIN}/stock`,
+    UPDATE: `${API_DOMAIN}/stock`,
     GET_ALL_UNBINDING: `${API_DOMAIN}/stock/un-used`,
   },
 
@@ -41,6 +42,15 @@ export class StockService {
 
   addNewStock(data: any): Observable<any> {
     return this.http.post<any>(ENDPOINT.STOCK.ADD, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  updateStock(data: any): Observable<any> {
+    return this.http.patch<any>(ENDPOINT.STOCK.UPDATE, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
