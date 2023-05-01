@@ -14,8 +14,9 @@
                 <h3>รายละเอียดการเข้า-ออก</h3>
             </div>
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <nz-select *ngIf="isAccess" nzShowSearch nzAllowClear nzPlaceHolder="Select a person"
-                    [(ngModel)]="selectedValue" class="select-style">
+                <nz-select style="width: 200px; text-align: left;" *ngIf="isAccess" nzShowSearch nzAllowClear
+                    nzPlaceHolder="Select a person" [(ngModel)]="selectedValue" class="select-style"
+                    (ngModelChange)="handleFilter()">
                     <nz-option *ngFor="let item of employeeList" [nzLabel]="item" [nzValue]="item"></nz-option>
                 </nz-select>
             </div>
