@@ -28,6 +28,7 @@ import { StockService } from '../services/stock.service';
 import { OrderService } from '../services/order.service';
 import { CafeService } from '../services/cafe.service';
 import { ReportService } from '../services/report.service';
+import { NotFoundComponent } from '../pages/not-found/not-found.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { ReportService } from '../services/report.service';
     UserComponent,
     ProductComponent,
     SettingComponent,
+    NotFoundComponent,
   ],
 
   providers: [

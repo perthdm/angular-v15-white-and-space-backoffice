@@ -104,7 +104,7 @@
                         <nz-tag [nzColor]="getTagDetail(data.type).color"> {{ getTagDetail(data.type).title }} </nz-tag>
                     </td>
                     <td [nzAlign]="'center'"> {{ data?.user_created?.username }} </td>
-                    <td> </td>
+                    <td> {{ data?.tracking }}</td>
                 </tr>
             </tbody>
         </nz-table>

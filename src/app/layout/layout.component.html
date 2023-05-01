@@ -27,10 +27,12 @@
                     </li>
 
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/menu"> <span nz-icon nzType="golden" nzTheme="fill"></span><span
-                                class="menu-text">สินค้า / บริการ</span>
+                        <a routerLink="/product">
+                            <span nz-icon nzType="golden" nzTheme="fill"></span>
+                            <span class="menu-text">สินค้า / บริการ</span>
                         </a>
                     </li>
+
                     <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
                         <a routerLink="/stock">
                             <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
@@ -38,7 +40,14 @@
                         </a>
                     </li>
 
-                    <li nz-submenu nzTitle="ADMIN" nzIcon="user" *ngIf="isFullAccess">
+                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
+                        <a routerLink="/user">
+                            <span nz-icon nzType="user" nzTheme="outline"></span>
+                            <span class="menu-text">ผู้ใช้งาน</span>
+                        </a>
+                    </li>
+
+                    <!-- <li nz-submenu nzTitle="ADMIN" nzIcon="user" *ngIf="isFullAccess">
                         <ul>
                             <li nz-menu-item nzMatchRouter>
                                 <a routerLink="/user">ผู้ใช้งาน</a>
@@ -47,7 +56,7 @@
                                 <a routerLink="/setting">ตั้งค่าร้าน</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
 
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">

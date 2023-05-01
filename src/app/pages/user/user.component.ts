@@ -42,7 +42,6 @@ export class UserComponent {
       limit: this.pageLimit,
       query: this.query,
     };
-    console.log(pageConfig);
 
     this.userService.getAllUser(pageConfig).subscribe(
       (res) => {
@@ -51,8 +50,6 @@ export class UserComponent {
           us.createdAt = formatDateTime(us.createdAt);
           us.updatedAt = formatDateTime(us.updatedAt);
         });
-        console.log(items);
-
         this.dataList = items;
         this.total = total;
         this.isLoading = false;
@@ -120,7 +117,6 @@ export class UserComponent {
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.resetData();
     this.isVisible = false;
     this.isEdit = false;

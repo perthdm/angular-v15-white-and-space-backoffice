@@ -15,9 +15,46 @@
     </div>
   </div>
 
-  <div class="app-content">
-    <div nz-row style="padding: 0px 20px">
-      <h3>สรุปยอดระบบ</h3>
+    <div class="app-content">
+        <div nz-row style="padding:0px 20px">
+            <h3>สรุปยอดระบบ</h3>
+        </div>
+
+        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="dataList" [nzShowPagination]="false"
+            [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
+            <thead>
+                <tr>
+                    <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
+                    <!-- <th id="assignee" [nzAlign]="'center'">ผู้ที่รับผิดชอบ</th> -->
+                    <th id="empty" nzWidth="55%"></th>
+                    <th id="bill" [nzAlign]="'center'">จำนวนบิล</th>
+                    <th id="profit" [nzAlign]="'right'">ยอดขาย (บาท)</th>
+                    <th id="empty2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of basicTable.data ;let index = index ">
+                    <td [nzAlign]="'center'">{{ mapDateTime(data.date)}}</td>
+                    <!-- <td [nzAlign]="'center'">จักรพร เต่าบิน</td> -->
+                    <td></td>
+                    <td [nzAlign]="'center'">{{data.totalBill}}</td>
+                    <td [nzAlign]="'right'">{{data.totalProfit.toLocaleString()}}</td>
+                    <td [nzAlign]="'center'">
+                        <button nz-button nzType="primary" nzShape="circle">
+                            <span nz-icon nzType="search" nzTheme="outline"></span>
+                        </button>
+                    </td>
+
+                </tr>
+                <tr *ngIf="dataList.length >0" style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
+                    <td [nzAlign]="'center'">รวม</td>
+                    <td></td>
+                    <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
+                    <td [nzAlign]="'right'">{{ summaryData.totalProfit.toLocaleString() }}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </nz-table>
     </div>
 
     <nz-table
