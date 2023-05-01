@@ -56,7 +56,7 @@
                     <td [nzAlign]="'center'">
                         <span *ngIf="em.check_out">{{ mapDate(em.check_out, 'onlyTime') }}</span>
                         <button style="height: 35px; border-radius: 10px;" *ngIf="!em.check_out" nz-button
-                            nzType="primary" (click)="handleCheckOut(em.user._id)">
+                            nzType="primary" (click)="handleCheckOut(em.user._id, em._id)">
                             Check Out
                         </button>
                     </td>

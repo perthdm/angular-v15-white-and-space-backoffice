@@ -23,6 +23,7 @@ export class LayoutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fetchCheckInStatus();
     this.fetchUserProfile();
     let currentRole = localStorage.getItem('role');
     if (currentRole === 'owner' || currentRole === 'manager') {
@@ -30,20 +31,24 @@ export class LayoutComponent implements OnInit {
     }
   }
 
+  fetchCheckInStatus() {
+    this.usService.getCheckInStatus().subscribe((res) => {
+      let { check_in } = res;
+      if (!check_in) this.isShowModalCheckIn = true;
+    });
+  }
+
   fetchUserProfile() {
     this.usService.getProfile().subscribe((res) => {
-      let { name, is_check_in, _id } = res;
+      let { name, _id } = res;
       this.userId = _id;
-      if (!is_check_in) {
-        this.isShowModalCheckIn = true;
-      }
       localStorage.setItem('name', name);
     });
   }
 
   handleCheckIn() {
     if (this.userId) {
-      this.usService.employeeAttendance(this.userId).subscribe(
+      this.usService.checkIn(this.userId).subscribe(
         (res) => {
           this.isShowModalCheckIn = false;
           Swal.fire('Success', 'คุณได้เช็คอินเข้างานแล้ว', 'success');

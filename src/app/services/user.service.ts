@@ -18,6 +18,12 @@ const ENDPOINT = {
     `${API_DOMAIN}/attendance/self?start=${start}&end=${end}`,
   GET_PROFILE: `${API_DOMAIN}/auth/profile`,
   SET_MAN_DAY: `${API_DOMAIN}/attendance/set-pay`,
+
+  ATTENDANCE: {
+    GET_CHECK_IN_STATUS: `${API_DOMAIN}/attendance/check-in`,
+    CHECK_IN: `${API_DOMAIN}/attendance/check-in`,
+    CHECK_OUT: `${API_DOMAIN}/attendance/check-out`,
+  },
 };
 
 @Injectable()
@@ -60,15 +66,15 @@ export class UserService {
     });
   }
 
-  employeeAttendance(userId: string) {
-    let data = { user_id: userId };
-    return this.http.put<any>(ENDPOINT.CHECK_IN, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }),
-    });
-  }
+  // employeeAttendance(userId: string) {
+  //   let data = { user_id: userId };
+  //   return this.http.put<any>(ENDPOINT.ATTENDANCE.CHECK_IN, data, {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //     }),
+  //   });
+  // }
 
   getCheckInHistory(dataConfig: any) {
     let urlEndpoint =
@@ -91,5 +97,46 @@ export class UserService {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
+  }
+
+  // === ATTENDANCE ===
+  getCheckInStatus() {
+    return this.http.get<any>(ENDPOINT.ATTENDANCE.GET_CHECK_IN_STATUS, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  checkIn(user_id: string) {
+    return this.http.post<any>(
+      ENDPOINT.ATTENDANCE.CHECK_IN,
+      {
+        user_id,
+      },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
+  }
+
+  checkOut(user_id: string, attendanceId?: string) {
+    return this.http.post<any>(
+      ENDPOINT.ATTENDANCE.CHECK_OUT,
+      {
+        user_id,
+        attendance_id: attendanceId,
+      },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
   }
 }

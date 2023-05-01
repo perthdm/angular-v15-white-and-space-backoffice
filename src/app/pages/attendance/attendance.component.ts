@@ -161,7 +161,7 @@ export class AttendanceComponent {
     }
   }
 
-  handleCheckOut(userId: string) {
+  handleCheckOut(userId: string, attendanceId?: string) {
     Swal.fire({
       title: 'คำเตือน!',
       text: 'คุณต้องการที่จะ Check Out การทำงานในวันนี้ใช่หรือไม่ ?',
@@ -171,7 +171,7 @@ export class AttendanceComponent {
       cancelButtonText: 'ยกเลิก',
     }).then((result) => {
       if (result.value && userId) {
-        this.usService.employeeAttendance(userId).subscribe(
+        this.usService.checkOut(userId, attendanceId).subscribe(
           () => {
             this.message.create('success', `คุณได้ทำการ Check Out สำเร็จ`);
             this.fetchCheckInHistory();
