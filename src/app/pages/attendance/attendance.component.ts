@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { UserService } from 'src/app/services/user.service';
-import { formatDateTime, getStorage } from 'src/utils/utils';
+import { formatDateTime, getStorage, getDefaultValue } from 'src/utils/utils';
 import Swal from 'sweetalert2';
 
 interface Attendance {
@@ -16,13 +16,6 @@ interface StaffAttendance {
   check_in: string;
   check_out: string | any;
   worked_time: number;
-}
-
-interface IManDay {
-  nHours: any;
-  otHours: any;
-  nPerHours: any;
-  otPerHours: any;
 }
 
 @Component({
@@ -39,13 +32,6 @@ export class AttendanceComponent {
   currentData: any = {};
   isAccess: boolean =
     getStorage('role') === 'owner' || getStorage('role') === 'manager';
-
-  manDayData: IManDay = {
-    nHours: null,
-    otHours: null,
-    nPerHours: null,
-    otPerHours: null,
-  };
 
   dateRange: any = [
     moment().startOf('week').toDate(),
@@ -73,12 +59,10 @@ export class AttendanceComponent {
       (res) => {
         let { items } = res;
 
-        if (this.isAccess) {
-          this.checkInList = items;
-          this.employeeList = this.getAllNameOfEmployee(items);
-        } else {
-          this.checkInList.items = items;
-        }
+        this.checkInList = items;
+        this.employeeList = this.isAccess
+          ? this.getAllNameOfEmployee(items)
+          : [];
 
         this.isLoading = false;
       },
@@ -109,8 +93,8 @@ export class AttendanceComponent {
     let { name, value } = event.target;
     value = value.replace(/\D|\+|-/g, '');
 
-    this.manDayData = {
-      ...this.manDayData,
+    this.currentData = {
+      ...this.currentData,
       [name]: +value,
     };
   }
@@ -121,22 +105,16 @@ export class AttendanceComponent {
   }
 
   resetData() {
-    this.manDayData = {
-      nHours: null,
-      otHours: null,
-      nPerHours: null,
-      otPerHours: null,
-    };
     this.currentData = {};
   }
 
   handleSubmitData(): any {
-    let usedHours = +this.manDayData.nHours + +this.manDayData.otHours;
+    let usedHours = +this.currentData.nHours + +this.currentData.otHours;
     let totalHours = +this.currentData.worked_time.toFixed(0);
     console.log('SUM ==>', usedHours);
     console.log('HAVE : ', totalHours);
 
-    if (usedHours !== totalHours) {
+    if (usedHours != totalHours) {
       return this.message.create(
         'error',
         `กรุณาจัดสรรชั่วโมงการทำงานให้ครบ ${this.currentData.worked_time.toFixed(
@@ -146,11 +124,11 @@ export class AttendanceComponent {
     }
 
     let reqData = {
-      id: this.currentData.user._id,
-      normal_hours: this.manDayData.nHours,
-      normal_per_hours: this.manDayData.nPerHours,
-      ot_hours: this.manDayData.otPerHours,
-      ot_per_hours: this.manDayData.otPerHours,
+      id: this.currentData._id,
+      normal_hours: this.currentData.nHours,
+      normal_per_hours: this.currentData.nPerHours,
+      ot_hours: this.currentData.otHours,
+      ot_per_hours: this.currentData.otPerHours,
     };
 
     this.userService.setManDayHours(reqData).subscribe(
@@ -162,7 +140,7 @@ export class AttendanceComponent {
       (err) => {
         this.message.create(
           'error',
-          `กรุณาลองอีกครั้ง *ชั่วโมงในการทำงานจะต้องมีมากกว่า 0 ชั่วโมง*`
+          `Please try again ${err.error.message}::${err.error.statusCode}`
         );
       }
     );
@@ -173,6 +151,7 @@ export class AttendanceComponent {
 
     if (totalHours > 0) {
       this.currentData = rowData;
+
       this.isVisible = true;
     } else {
       this.message.create(
@@ -210,5 +189,21 @@ export class AttendanceComponent {
 
   mapDate(date: string, option?: string) {
     return formatDateTime(date, option);
+  }
+
+  checkManaged(em: any): boolean {
+    if (this.isAccess) {
+      if (em.check_out) {
+        if (em.check_out && em?.worked_time?.toFixed(0) == 0) {
+          return false;
+        } else {
+          return em.pay ? false : true;
+        }
+      } else {
+        return false;
+      }
+    }
+
+    return false;
   }
 }

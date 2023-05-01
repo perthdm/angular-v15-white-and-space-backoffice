@@ -14,8 +14,8 @@
                 <h3>รายละเอียดการเข้า-ออก</h3>
             </div>
             <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
-                <nz-select *ngIf="isAccess" nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="selectedValue"
-                    class="select-style">
+                <nz-select *ngIf="isAccess" nzShowSearch nzAllowClear nzPlaceHolder="Select a person"
+                    [(ngModel)]="selectedValue" class="select-style">
                     <nz-option *ngFor="let item of employeeList" [nzLabel]="item" [nzValue]="item"></nz-option>
                 </nz-select>
             </div>
@@ -28,7 +28,7 @@
                     <th id="date" [nzAlign]="'center'" rowspan="4">วัน/เดือน/ปี</th>
                     <th id="name">ชื่อพนักงาน</th>
                     <th id="type" [nzAlign]="'center'">ประเภท</th>
-                    <th id="empty" nzWidth="20%"></th>
+                    <th id="empty" nzWidth="15%"></th>
                     <!-- <th id="empty" nzWidth="60%"></th> -->
                     <th id="checkIn" [nzAlign]="'center'">เข้างาน</th>
                     <th id="checkOut" [nzAlign]="'center'">ออกงาน</th>
@@ -60,13 +60,15 @@
                             Check Out
                         </button>
                     </td>
-                    <td [nzAlign]="'center'"> {{ em.worked_time?.toFixed(0) }} </td>
-                    <td [nzAlign]="'center'"> 0 </td>
-                    <td [nzAlign]="'center'"> 0 </td>
+                    <td [nzAlign]="'center'"> {{ em?.worked_time?.toFixed(0) }} </td>
+                    <td [nzAlign]="'center'"> {{ em?.normal_hours ? em?.normal_hours : 0 }} </td>
+                    <td [nzAlign]="'center'"> {{ em?.ot_hours ? em?.ot_hours : 0 }} </td>
                     <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" style="border-radius: 10px;" (click)="handleManageHours(em)">
+                        <button *ngIf="checkManaged(em); else payAmount" nz-button nzType="primary"
+                            style="border-radius: 10px;" (click)="handleManageHours(em)">
                             <span nz-icon nzType="form" nzTheme="outline"></span>
                         </button>
+                        <ng-template #payAmount>{{ em.pay ? em.pay.toLocaleString() : 0 }} ฿</ng-template>
                     </td>
                 </tr>
             </tbody>
@@ -90,24 +92,24 @@
                 <div nz-col class="gutter-row" [nzSpan]="12">
                     <h4>เวลาทำงาน - ปกติ</h4>
                     <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="nHours"
-                        (change)="onChangeData($event)" [ngModel]="manDayData.nHours" style="width:100%" />
+                        (change)="onChangeData($event)" [ngModel]="currentData.nHours" style="width:100%" />
                 </div>
                 <div nz-col class="gutter-row" [nzSpan]="12">
                     <h4>ค่าแรงปกติ / ชั่วโมง (บาท)</h4>
                     <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="nPerHours"
-                        (change)="onChangeData($event)" [ngModel]="manDayData.nPerHours" style="width:100%" />
+                        (change)="onChangeData($event)" [ngModel]="currentData.nPerHours" style="width:100%" />
                 </div>
 
 
                 <div nz-col class="gutter-row" [nzSpan]="12">
                     <h4>เวลาทำงาน - OT</h4>
                     <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="otHours"
-                        (change)="onChangeData($event)" [ngModel]="manDayData.otHours" style="width:100%" />
+                        (change)="onChangeData($event)" [ngModel]="currentData.otHours" style="width:100%" />
                 </div>
                 <div nz-col class="gutter-row" [nzSpan]="12">
                     <h4>ค่าแรง OT / ชั่วโมง (บาท)</h4>
                     <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="otPerHours"
-                        (change)="onChangeData($event)" [ngModel]="manDayData.otPerHours" style="width:100%" />
+                        (change)="onChangeData($event)" [ngModel]="currentData.otPerHours" style="width:100%" />
                 </div>
             </div>
         </ng-container>

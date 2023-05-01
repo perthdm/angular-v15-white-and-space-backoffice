@@ -33,3 +33,12 @@ export const getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
+
+export const getDefaultValue = (value: any) => {
+  let val = parseFloat(value).toFixed(2);
+  let temp = val.split('.');
+  let itg = parseInt(temp[0]).toLocaleString();
+  let digit = temp[1];
+
+  return value ? `${itg}.${digit}` : '0.00';
+};
