@@ -2,6 +2,8 @@ import { NgIfContext } from '@angular/common';
 import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { IProduct } from 'src/app/model/product.model';
 import { ReportService } from 'src/app/services/report.service';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
@@ -27,37 +29,42 @@ export class DashboardComponent {
   constructor(private reportService: ReportService) {}
 
   ngOnInit() {
-    // this.dataList = [
-    //   {
-    //     key: 'PD0001',
-    //     name: 'กระเทียมพริกไทย',
-    //     prize: 200,
-    //     amount: 14,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0002',
-    //     name: 'ใบกระเพรา',
-    //     prize: 40,
-    //     amount: 2,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0003',
-    //     name: 'น้ำเชื่อม',
-    //     prize: 80,
-    //     amount: 12,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0004',
-    //     name: 'หลอด',
-    //     prize: 50,
-    //     amount: 36,
-    //     type: 'ของใช้งาน',
-    //   },
-    // ];
     this.fetchDashboardData();
+    this.RenderChart();
+  }
+
+  RenderChart() {
+    const myChart = new Chart('barchart', {
+      type: 'line',
+      data: {
+        labels: [
+          'วันที่1',
+          'วันที่2',
+          'วันที่3',
+          'วันที่4',
+          'วันที่5',
+          'วันที่6',
+          'วันที่7',
+        ],
+        datasets: [
+          {
+            label: 'ยอด 7 วัน',
+            data: [7995, 2144, 9974, 6974, 1402, 2456, 1111],
+            backgroundColor: ['rgba(54,162,235,0.9)'],
+            borderColor: ['rgba(54,162,235,0.9)'],
+            borderWidth: 5,
+            tension:0.2,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 
   fetchDashboardData() {
@@ -67,14 +74,25 @@ export class DashboardComponent {
     };
     this.reportService.getOverviewReport(pageConfig).subscribe(
       (res) => {
-        let { daily_profit, order_total, product_min, weekly_profit } = res;
+        let {
+          daily_profit,
+          order_total,
+          stock_min,
+          weekly_profit,
+          cash_drawer,
+          cash_profit,
+        } = res;
         this.cardData = {
           dailyProfit: daily_profit,
           dailyBill: order_total,
           weeklyProfit: weekly_profit,
+          cashDrawer: cash_drawer,
+          cashProfit: cash_profit,
+          cashTransfer: daily_profit - cash_profit,
+          cashDrawerLast: cash_drawer + cash_profit,
+          cashGoal:100000,
         };
-
-        this.dataList = product_min;
+        this.dataList = stock_min.items;
       },
       (err) => {}
     );

@@ -1,141 +1,174 @@
 <div class="inner-content">
-    <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">Dashboard</h3>
-    <div nz-row [nzGutter]="[16,16]">
-        <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="18">
-            <div nz-row [nzGutter]="[16,16]">
-
-                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
-                    <div class="inner-box card-dashboard">
-                        <div class="card-icon" style="background-color: #fff3b9;">
-                            <span nz-icon nzType="dollar-circle" nzTheme="outline" style="color:#e4ca6e"></span>
-                        </div>
-                        <span class="card-title">Daily Profit</span>
-                        <div class="card-sub-title">{{ cardData.dailyProfit.toLocaleString() }} ฿</div>
-                        <div class="card-info">
-                            <span style="color:#f46666 ; font-weight: bold;">-0.7%</span>
-                            <span style="color:#b0b6bc ; font-size:14px;"> *Going down*</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
-                    <div class="inner-box card-dashboard">
-                        <div class="card-icon">
-                            <span nz-icon nzType="bar-chart" nzTheme="outline"></span>
-                        </div>
-                        <span class="card-title">Daily Bill</span>
-                        <div class="card-sub-title">{{ cardData.dailyBill.toLocaleString() }} </div>
-                        <div class="card-info">
-                            <span style="color:#289fa1 ; font-weight: bold;">+3.7%</span>
-                            <span style="color:#b0b6bc ; font-size:14px;"> Looks pretty good</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
-                    <div class="inner-box card-dashboard">
-                        <div class="card-icon" style="background-color: #f2effb;">
-                            <span nz-icon nzType="history" nzTheme="outline" style="color:#8e77e1"></span>
-                        </div>
-                        <span class="card-title">Profit Average (7 Days)</span>
-                        <div class="card-sub-title">{{ cardData.weeklyProfit.toLocaleString() }} ฿</div>
-                        <div class="card-info">
-                            <span style="color:#289fa1 ; font-weight: bold;">+3.7%</span>
-                            <span style="color:#b0b6bc ; font-size:14px; ;"> Looks pretty good</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div nz-col class="gutter-row" [nzXs]="24">
-                    <div class="inner-box card-dashboard" style="min-height: 220px;">
-                        <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Balance</span>
-                    </div>
-                </div>
+  <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: bold">
+    Dashboard
+  </h3>
+  <div nz-row [nzGutter]="[16, 16]">
+    <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="18">
+      <div nz-row [nzGutter]="[16, 16]">
+        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+          <div class="inner-box card-dashboard">
+            <div class="card-icon" style="background-color: #fff3b9">
+              <span
+                nz-icon
+                nzType="dollar-circle"
+                nzTheme="outline"
+                style="color: #e4ca6e"
+              ></span>
+            </div>
+            <span class="card-title">Daily Profit</span>
+            <div class="card-sub-title">
+              {{ cardData.dailyProfit.toLocaleString() }} ฿
             </div>
 
-        </div>
-
-        <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="6">
-            <div class="inner-box card-dashboard" style="min-height: 385px;">
-                <span style="color:#0b072f;font-weight: bold; font-size: 18px;">Statistics</span>
-                <div style="display: flex; justify-content: center; align-items: center; height: 70%;">
-                    <nz-progress nzType="dashboard" [nzPercent]="90"
-                        [nzStrokeColor]="{ '0%': '#8268e0' , '50%': '#108ee9', '100%': '#52b1ff' }" [nzStrokeWidth]="7"
-                        [nzWidth]="160" [nzGapPosition]="'bottom'">
-                    </nz-progress>
-
-
-                </div>
-                <nz-divider style="margin:0px 0px 12px 0px"></nz-divider>
-                <div nz-row style="text-align: center;">
-
-                    <div nz-col [nzXs]="12" style="border-right: 1px solid #f2f2f2; min-height: 50px;">
-                        <span style="color:#9c9fa9 ; font-weight: 500; ">In progress</span>
-                        <h2>44,676</h2>
-                    </div>
-                    <div nz-col [nzXs]="12" style="min-height: 50px;">
-                        <span style="color:#9c9fa9 ; font-weight: 500; ">Completed</span>
-                        <h2>192,399</h2>
-                    </div>
-                </div>
+            <div class="card-info">
+              <span style="color: #f46666; font-weight: bold">-0.7%</span>
+              <span style="color: #b0b6bc; font-size: 14px"> *Going down*</span>
             </div>
+          </div>
         </div>
 
-        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="18">
-            <div class="inner-box" style="min-height: 385px; border: 1px solid #eceef1;
-    border-radius: 10px;
-    padding: 1.25rem;
-    background-color: #fff;">
-                <span style="color:#0b072f;font-weight: bold; font-size: 18px;">สินค้าใกล้หมด</span>
-                <div *ngIf="dataList.length ; else emptyComponent" style="margin-top:10px">
-                    <div nz-row [nzGutter]="[0,24]">
-                        <div nz-col class="gutter-row" [nzXs]="24">
-                            <div class="ws-card-plain" style="height: 40px; background-color: #46a8fa; color:white">
-                                <div class="item">รหัสสินค้า</div>
-                                <div class="item">ชื่อสินค้า</div>
-                                <div class="item">ราคา</div>
-                                <div class="item">จำนวนที่เหลือ</div>
-                                <div class="item">ประเภท</div>
-                                <div class="item">รายละเอียด</div>
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div nz-row [nzGutter]="[0,18]" *ngFor="let data of dataList">
-                        <div nz-col class="gutter-row" [nzXs]="24">
-                            <div class="ws-card-plain">
-                                <div class="item">{{data._id}}</div>
-                                <div class="item">{{data.name}}</div>
-                                <div class="item">{{data.price}} บาท</div>
-                                <div class="item"> ?? </div>
-                                <div class="item">
-                                    <!-- <nz-tag *ngIf="data.type == 'ของใช้งาน'"
-                                        [nzColor]="'volcano'">{{data.type}}</nz-tag>
-                                    <nz-tag *ngIf="data.type == 'วัตถุดิบ'"
-                                        [nzColor]="'geekblue'">{{data.type}}</nz-tag> -->
-                                </div>
-                                <div class="item">
-                                    <nz-space>
-                                        <button nz-button nzType="default"
-                                            style="color:#fff; border-color:#eaab36; background-color: #eaab36 ;height: 35px;">
-                                            แก้ไข
-                                        </button>
-                                        <button nz-button nzType="primary" style="height: 35px;">
-                                            ยืนยัน
-                                        </button>
-                                    </nz-space>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <ng-template #emptyComponent>
-                    <nz-empty></nz-empty>
-                </ng-template>
+        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+          <div class="inner-box card-dashboard">
+            <div class="card-icon">
+              <span nz-icon nzType="bar-chart" nzTheme="outline"></span>
             </div>
+            <span class="card-title">Daily Bill</span>
+            <div class="card-sub-title">
+              {{ cardData.dailyBill.toLocaleString() }}
+            </div>
+          </div>
         </div>
+
+        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
+          <div class="inner-box card-dashboard">
+            <div class="card-icon" style="background-color: #f2effb">
+              <span
+                nz-icon
+                nzType="lock"
+                nzTheme="outline"
+                style="color: #8e77e1"
+              ></span>
+            </div>
+            <span class="card-title">Cash Drawer</span>
+            <div class="card-sub-title">
+              {{ cardData.cashDrawerLast.toLocaleString() }} ฿
+            </div>
+            <div class="card-sub">
+              <span class="card-title" style="font-size: 14px"
+                >เงินเริ่มต้น </span
+              >{{ cardData.cashDrawer.toLocaleString() }} ฿
+            </div>
+          </div>
+        </div>
+
+        <div nz-col class="gutter-row" [nzXs]="16">
+          <div
+            class="inner-box card-dashboard"
+            style="min-height: 385px; height: auto; width: auto"
+          >
+            <span style="color: #0b072f; font-weight: bold; font-size: 18px"
+              >Profit Garph</span
+            >
+            <div>
+              <canvas id="barchart" style="height: 450px; width: auto"></canvas>
+            </div>
+          </div>
+          <div></div>
+        </div>
+
+        <div nz-col class="gutter-row" [nzXs]="8" [nzMd]="8">
+          <div
+            class="inner-box"
+            style="
+              height: 100%;
+              min-height: 385px;
+              border: 1px solid #eceef1;
+              border-radius: 10px;
+              padding: 1.25rem;
+              background-color: #fff;
+            "
+          >
+            <span style="color: #0b072f; font-weight: bold; font-size: 18px"
+              >สินค้าใกล้หมด</span
+            >
+            <nz-table
+              #remindTable
+              [nzData]="dataList"
+              [nzPageSize]="8"
+              [nzShowPagination]="false"
+              style="margin-top: 10px"
+            >
+              <thead>
+                <tr>
+                  <th id='index' [nzAlign]="'center'">#</th>
+                  <th id="pdName">ชื่อ</th>
+                  <th id="amount" [nzAlign]="'center'">จำนวน</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of remindTable.data; let index = index">
+                  <td [nzAlign]="'center'">
+                    {{ index + 1 + (remindTable.nzPageIndex - 1) * 8 }}
+                  </td>
+                  <td>{{ data.name }}</td>
+                  <td [nzAlign]="'center'">{{ data.amount }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+
+            <ng-template #emptyComponent>
+              <nz-empty></nz-empty>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="6">
+      <div class="inner-box card-dashboard" style="min-height: 385px">
+        <span style="color: #0b072f; font-weight: bold; font-size: 18px"
+          >Goal</span
+        >
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70%;
+          "
+        >
+          <nz-progress
+            nzType="dashboard"
+            [nzPercent]="
+              ((cardData.dailyProfit * 100) / cardData.cashGoal).toFixed(2)
+            "
+            [nzStrokeColor]="{
+              '0%': '#8268e0',
+              '50%': '#108ee9',
+              '100%': '#52b1ff'
+            }"
+            [nzStrokeWidth]="7"
+            [nzWidth]="160"
+            [nzGapPosition]="'bottom'"
+          >
+          </nz-progress>
+        </div>
+        <nz-divider style="margin: 0px 0px 12px 0px"></nz-divider>
+        <div nz-row style="text-align: center">
+          <div
+            nz-col
+            [nzXs]="12"
+            style="border-right: 1px solid #f2f2f2; min-height: 50px"
+          >
+            <span style="color: #9c9fa9; font-weight: 500">ยอดปัจจุบัน</span>
+            <h2>{{ cardData.dailyProfit.toLocaleString() }} ฿</h2>
+          </div>
+          <div nz-col [nzXs]="12" style="min-height: 50px">
+            <span style="color: #9c9fa9; font-weight: 500">เป้าหมาย</span>
+            <h2>{{ cardData.cashGoal.toLocaleString() }} ฿</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

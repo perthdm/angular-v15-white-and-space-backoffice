@@ -100,7 +100,7 @@ export class ProductComponent {
     this.switchValue = false;
   };
 
-  handleCloseModal() {
+  async handleCloseModal() {
     this.isShowModal = false;
     this.isEdit = false;
     this.resetData();
