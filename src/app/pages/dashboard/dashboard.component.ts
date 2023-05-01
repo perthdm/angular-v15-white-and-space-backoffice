@@ -12,6 +12,7 @@ Chart.register(...registerables);
 })
 export class DashboardComponent {
   dataList: IProduct[] = [];
+  dateList: any = [];
 
   emptyRef?: ElementRef<HTMLElement>;
 
@@ -30,41 +31,6 @@ export class DashboardComponent {
 
   ngOnInit() {
     this.fetchDashboardData();
-    this.RenderChart();
-  }
-
-  RenderChart() {
-    const myChart = new Chart('barchart', {
-      type: 'line',
-      data: {
-        labels: [
-          'วันที่1',
-          'วันที่2',
-          'วันที่3',
-          'วันที่4',
-          'วันที่5',
-          'วันที่6',
-          'วันที่7',
-        ],
-        datasets: [
-          {
-            label: 'ยอด 7 วัน',
-            data: [7995, 2144, 9974, 6974, 1402, 2456, 1111],
-            backgroundColor: ['rgba(54,162,235,0.9)'],
-            borderColor: ['rgba(54,162,235,0.9)'],
-            borderWidth: 5,
-            tension:0.2,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
   }
 
   fetchDashboardData() {
@@ -81,6 +47,7 @@ export class DashboardComponent {
           weekly_profit,
           cash_drawer,
           cash_profit,
+          report_weekly,
         } = res;
         this.cardData = {
           dailyProfit: daily_profit,
@@ -90,11 +57,46 @@ export class DashboardComponent {
           cashProfit: cash_profit,
           cashTransfer: daily_profit - cash_profit,
           cashDrawerLast: cash_drawer + cash_profit,
-          cashGoal:100000,
+          cashGoal: 100000,
         };
+
         this.dataList = stock_min.items;
+        let tempDate: any = [];
+        let sumData: any = [];
+        report_weekly.map((item: any) => {
+          tempDate.push(item.date);
+          sumData.push(item.profit);
+        });
+
+        this.RenderChart(tempDate, sumData);
       },
       (err) => {}
     );
+  }
+
+  RenderChart(tempDate: any, sumData: any) {
+    const myChart = new Chart('barchart', {
+      type: 'line',
+      data: {
+        labels: tempDate,
+        datasets: [
+          {
+            label: 'ยอด 7 วัน',
+            data: sumData,
+            backgroundColor: ['rgba(54,162,235,0.9)'],
+            borderColor: ['rgba(54,162,235,0.9)'],
+            borderWidth: 5,
+            tension: 0.2,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 }

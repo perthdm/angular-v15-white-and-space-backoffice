@@ -53,10 +53,9 @@
             <div class="card-sub-title">
               {{ cardData.cashDrawerLast.toLocaleString() }} ฿
             </div>
-            <div class="card-sub">
-              <span class="card-title" style="font-size: 14px"
-                >เงินเริ่มต้น </span
-              >{{ cardData.cashDrawer.toLocaleString() }} ฿
+            <div class="card-info">
+              <span style="color: #b0b6bc; font-size: 14px"> เงินเริ่มต้น </span>
+              <span style="color: #2375d3; font-weight: bold">{{cardData.cashDrawer.toLocaleString()}}</span>
             </div>
           </div>
         </div>
@@ -67,7 +66,7 @@
             style="min-height: 385px; height: auto; width: auto"
           >
             <span style="color: #0b072f; font-weight: bold; font-size: 18px"
-              >Profit Garph</span
+              >Profit Graph</span
             >
             <div>
               <canvas id="barchart" style="height: 450px; width: auto"></canvas>
@@ -100,7 +99,7 @@
             >
               <thead>
                 <tr>
-                  <th id='index' [nzAlign]="'center'">#</th>
+                  <th id="index" [nzAlign]="'center'">#</th>
                   <th id="pdName">ชื่อ</th>
                   <th id="amount" [nzAlign]="'center'">จำนวน</th>
                 </tr>
@@ -126,6 +125,14 @@
 
     <div nz-col class="gutter-row" [nzXs]="12" [nzMd]="6">
       <div class="inner-box card-dashboard" style="min-height: 385px">
+        <div class="card-icon" style="background-color: #effbf2">
+          <span
+            nz-icon
+            nzType="save"
+            nzTheme="outline"
+            style="color: #3cec7f"
+          ></span>
+        </div>
         <span style="color: #0b072f; font-weight: bold; font-size: 18px"
           >Goal</span
         >
