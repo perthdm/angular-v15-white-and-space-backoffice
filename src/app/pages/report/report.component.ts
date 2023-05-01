@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { getISOWeek } from 'date-fns';
 import * as moment from 'moment';
 import { ReportService } from 'src/app/services/report.service';
+import { formatDateTime } from 'src/utils/utils';
 
 @Component({
   selector: 'app-report',
@@ -36,8 +37,6 @@ export class ReportComponent {
 
     this.reportService.getMonthlyReport(reqConfig).subscribe(
       (res) => {
-        console.log(res);
-
         let { items, summary } = res;
         this.dataList = items;
         this.summaryData = summary;
@@ -45,4 +44,8 @@ export class ReportComponent {
       (err) => {}
     );
   };
+
+  mapDateTime(date: string) {
+    return formatDateTime(date, 'onlyDate');
+  }
 }

@@ -111,8 +111,8 @@ export class AttendanceComponent {
   handleSubmitData(): any {
     let usedHours = +this.currentData.nHours + +this.currentData.otHours;
     let totalHours = +this.currentData.worked_time.toFixed(0);
-    console.log('SUM ==>', usedHours);
-    console.log('HAVE : ', totalHours);
+    // console.log('SUM ==>', usedHours);
+    // console.log('HAVE : ', totalHours);
 
     if (usedHours != totalHours) {
       return this.message.create(

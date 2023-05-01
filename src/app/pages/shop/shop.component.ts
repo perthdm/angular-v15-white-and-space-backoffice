@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -43,29 +43,28 @@ export class ShopComponent {
     window.addEventListener('keypress', this.handleBarcodeInput.bind(this));
   }
 
+  throwErrorMessage(message: string) {
+    this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
+  }
+
   handleBarcodeInput(event: KeyboardEvent) {
     const input = event.key;
+
     if (input === 'Enter') {
       this.processBarcode(this.currentBarcode);
+
       this.currentBarcode = '';
     } else {
       this.currentBarcode += input;
     }
   }
 
-  throwErrorMessage(message: string) {
-    this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
-  }
-
   processBarcode(barcode: string) {
-    console.log(barcode);
     if (barcode) {
       this.stockService.searchTagId(barcode).subscribe(
         (res) => {
           if (res) {
             res['tagId'] = barcode;
-            console.log(res);
-
             this.updateCart(res, 'add');
             this.message.create(
               'success',
@@ -205,7 +204,6 @@ export class ShopComponent {
   handleConfirmOrder(paymentType: string) {
     let b: any = [];
     this.cart.map((item: any) => {
-      console.log(item);
       if (item.tagList && item.tagList.length > 0) {
         b.push({
           product_id: item._id,
@@ -253,9 +251,5 @@ export class ShopComponent {
         }
       }
     });
-  }
-
-  onKey(event: any) {
-    console.log(event.target.value);
   }
 }

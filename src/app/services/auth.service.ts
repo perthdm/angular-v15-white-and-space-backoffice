@@ -43,8 +43,6 @@ export class AuthGuardService implements CanActivate {
     }
 
     // if (url === '/login' || url === '/') {
-    //   console.log('OK');
-
     //   if (token) {
     //     this.router.navigate(['/dashboard']);
     //   }

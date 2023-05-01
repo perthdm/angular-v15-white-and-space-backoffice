@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let data of basicTable.data ;let index = index ">
-                    <td [nzAlign]="'center'">{{data.date}}</td>
+                    <td [nzAlign]="'center'">{{ mapDateTime(data.date)}}</td>
                     <!-- <td [nzAlign]="'center'">จักรพร เต่าบิน</td> -->
                     <td></td>
                     <td [nzAlign]="'center'">{{data.totalBill}}</td>

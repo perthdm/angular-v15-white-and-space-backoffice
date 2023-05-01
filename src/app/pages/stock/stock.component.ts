@@ -96,7 +96,6 @@ export class StockComponent {
 
   handleSetExport(event: any, current: any) {
     event.stopPropagation();
-    console.log(current);
     this.handleCheckStock(current?._id);
     this.isShowModalExport = true;
   }
@@ -280,7 +279,6 @@ export class StockComponent {
   handleCheckStock(stockId: any) {
     this.stockService.getStockDetailById(stockId).subscribe(
       (res) => {
-        console.log(res);
         let { items, total } = res;
         this.importList = items;
         this.totalDt = total;
@@ -306,7 +304,7 @@ export class StockComponent {
     return +new Date(date);
   }
 
-  onUsed(data:any){
-    data.isPrint=true
+  onUsed(data: any) {
+    data.isPrint = true;
   }
 }
