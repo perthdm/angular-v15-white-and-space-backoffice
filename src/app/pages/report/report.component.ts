@@ -45,7 +45,7 @@ export class ReportComponent {
     );
   };
 
-  mapDateTime(date: string) {
-    return formatDateTime(date, 'onlyDate');
+  mapDate(date: string, option: string) {
+    return formatDateTime(date, option);
   }
 }

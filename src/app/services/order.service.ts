@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
+import { API_URL } from 'src/utils/utils';
 
 // import { map } from 'rxjs/operators';
 
 const ENDPOINT = {
   GET_ALL: ({ start, end }: any) =>
-    `${API_DOMAIN}/order?start=${start}&end=${end}`,
-  CASH_ORDER: `${API_DOMAIN}/order/employee-confirm-cash`,
-  BANKING_ORDER: `${API_DOMAIN}/order/employee-confirm-banking`,
-  CANCEL_ORDER: `${API_DOMAIN}/order/cancel`,
+    `${API_URL}/order?start=${start}&end=${end}`,
+  CASH_ORDER: `${API_URL}/order/employee-confirm-cash`,
+  BANKING_ORDER: `${API_URL}/order/employee-confirm-banking`,
+  CANCEL_ORDER: `${API_URL}/order/cancel`,
 };
 
 @Injectable()

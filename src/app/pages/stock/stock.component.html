@@ -234,7 +234,7 @@
                 <tbody>
                     <tr *ngFor="let data of stockDetailTable.data ; let index = index" class="editable-row">
                         <td [nzAlign]="'center'">{{ index+1 + ((stockDetailTable.nzPageIndex-1) * 8) }}</td>
-                        <td>{{ convertToTs(data.lot_number) }}</td>
+                        <td>{{ data.lot_number }}</td>
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                         <td [nzAlign]="'center'">
                             <button (click)="printBarcode(data)"

@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN, getStorage } from 'src/utils/utils';
+import { API_URL, getStorage } from 'src/utils/utils';
 import { IUser, IUserPagination } from '../model/user.model';
 import { IPagination } from '../model/pagination.model';
 // import { map } from 'rxjs/operators';
 
 const ENDPOINT = {
   GET_ALL: ({ page, limit, query }: IPagination) =>
-    `${API_DOMAIN}/user?page=${page}&limit=${limit}&query=${query}`,
-  ADD: `${API_DOMAIN}/user`,
-  UPDATE: `${API_DOMAIN}/user`,
-  CHECK_IN: `${API_DOMAIN}/attendance`,
+    `${API_URL}/user?page=${page}&limit=${limit}&query=${query}`,
+  ADD: `${API_URL}/user`,
+  UPDATE: `${API_URL}/user`,
+  CHECK_IN: `${API_URL}/attendance`,
   GET_CHECKIN_HITSORY: ({ start, end }: any) =>
-    `${API_DOMAIN}/attendance?start=${start}&end=${end}`,
+    `${API_URL}/attendance?start=${start}&end=${end}`,
   GET_CHECKIN_HISTORY_SELF: ({ start, end }: any) =>
-    `${API_DOMAIN}/attendance/self?start=${start}&end=${end}`,
-  GET_PROFILE: `${API_DOMAIN}/auth/profile`,
-  SET_MAN_DAY: `${API_DOMAIN}/attendance/set-pay`,
+    `${API_URL}/attendance/self?start=${start}&end=${end}`,
+  GET_PROFILE: `${API_URL}/auth/profile`,
+  SET_MAN_DAY: `${API_URL}/attendance/set-pay`,
 
   ATTENDANCE: {
-    GET_CHECK_IN_STATUS: `${API_DOMAIN}/attendance/check-in`,
-    CHECK_IN: `${API_DOMAIN}/attendance/check-in`,
-    CHECK_OUT: `${API_DOMAIN}/attendance/check-out`,
+    GET_CHECK_IN_STATUS: `${API_URL}/attendance/check-in`,
+    CHECK_IN: `${API_URL}/attendance/check-in`,
+    CHECK_OUT: `${API_URL}/attendance/check-out`,
   },
 };
 

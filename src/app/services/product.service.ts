@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
+import { API_URL } from 'src/utils/utils';
 import { IProductPagination } from '../model/product.model';
 import { IPagination } from '../model/pagination.model';
 
@@ -9,10 +9,10 @@ import { IPagination } from '../model/pagination.model';
 
 const ENDPOINT = {
   GET_ALL: ({ page, limit, type, query }: IPagination) =>
-    `${API_DOMAIN}/product?page=${page}&limit=${limit}&type=${type}&query=${query}`,
-  CREATE: `${API_DOMAIN}/product`,
-  UPDATE: `${API_DOMAIN}/product`,
-  DELETE: (productId: string) => `${API_DOMAIN}/product/${productId}`,
+    `${API_URL}/product?page=${page}&limit=${limit}&type=${type}&query=${query}`,
+  CREATE: `${API_URL}/product`,
+  UPDATE: `${API_URL}/product`,
+  DELETE: (productId: string) => `${API_URL}/product/${productId}`,
 };
 
 @Injectable()

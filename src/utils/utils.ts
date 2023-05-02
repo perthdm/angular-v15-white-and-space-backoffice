@@ -1,8 +1,7 @@
-let isDev = true;
+import { ENV } from 'src/environments/environment';
 
-export const API_DOMAIN = isDev
-  ? 'https://api.whiteandspace.com'
-  : 'http://192.168.1.163:3000';
+export const API_URL = ENV.apiUrl;
+export const IS_PROD = ENV.production;
 
 export const formatDateTime = (time?: any, type?: string) => {
   let d = time ? new Date(time) : new Date();
@@ -46,3 +45,5 @@ export const getDefaultValue = (value: any) => {
 
   return value ? `${itg}.${digit}` : '0.00';
 };
+
+// 'http://192.168.1.163:3000';

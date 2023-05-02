@@ -1,17 +1,17 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-// import { map } from 'rxjs/operators';
+import { ENV } from 'src/environments/environment';
+import { API_URL } from 'src/utils/utils';
 
 const ENDPOINT = {
-  SIGN_IN: `${API_DOMAIN}/auth/login`,
+  SIGN_IN: `${API_URL}/auth/login`,
 };
 
 @Injectable()

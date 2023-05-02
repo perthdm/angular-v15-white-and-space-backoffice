@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
+import { API_URL } from 'src/utils/utils';
 import { IStockPagination } from '../model/stock.model';
 import { IPagination } from '../model/pagination.model';
 
@@ -10,22 +10,22 @@ import { IPagination } from '../model/pagination.model';
 const ENDPOINT = {
   STOCK: {
     GET_ALL: ({ page, limit, query }: IPagination) =>
-      `${API_DOMAIN}/stock?page=${page}&limit=${limit}&query=${query}`,
-    ADD: `${API_DOMAIN}/stock`,
-    UPDATE: `${API_DOMAIN}/stock`,
-    GET_ALL_UNBINDING: `${API_DOMAIN}/stock/un-used`,
+      `${API_URL}/stock?page=${page}&limit=${limit}&query=${query}`,
+    ADD: `${API_URL}/stock`,
+    UPDATE: `${API_URL}/stock`,
+    GET_ALL_UNBINDING: `${API_URL}/stock/un-used`,
   },
 
   LOT: {
     GET_ALL_TRX: ({ page, limit, type }: IPagination) =>
-      `${API_DOMAIN}/lot/transaction?page=${page}&limit=${limit}&type=${type}`,
-    IMPORT_ITEM: `${API_DOMAIN}/lot`,
+      `${API_URL}/lot/transaction?page=${page}&limit=${limit}&type=${type}`,
+    IMPORT_ITEM: `${API_URL}/lot`,
     GET_STOCK_DETAIL_BY_ID: (stockId: string) =>
-      `${API_DOMAIN}/lot?stock_id=${stockId}`,
-    SEARCH_TAG_ID: `${API_DOMAIN}/lot/search-product`,
-    EXPORT_ITEM: `${API_DOMAIN}/lot/export`,
+      `${API_URL}/lot?stock_id=${stockId}`,
+    SEARCH_TAG_ID: `${API_URL}/lot/search-product`,
+    EXPORT_ITEM: `${API_URL}/lot/export`,
 
-    PUT_IDLOT: `${API_DOMAIN}/lot/tracking-generator`,
+    PUT_IDLOT: `${API_URL}/lot/tracking-generator`,
   },
 };
 

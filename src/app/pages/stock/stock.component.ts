@@ -300,10 +300,6 @@ export class StockComponent {
     this.message.create('error', `Please try again ${message}`);
   }
 
-  convertToTs(date: string): number {
-    return +new Date(date);
-  }
-
   printBarcode(data: any) {
     console.log(data);
 

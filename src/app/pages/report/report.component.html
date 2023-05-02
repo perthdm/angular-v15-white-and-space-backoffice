@@ -6,12 +6,8 @@
       </h3>
     </div>
     <div nz-col [nzSpan]="16">
-      <nz-range-picker
-        [nzFormat]="dateFormat"
-        class="custom-right-picker"
-        (ngModelChange)="fetchReport()"
-        [(ngModel)]="dateRange"
-      ></nz-range-picker>
+      <nz-range-picker [nzFormat]="dateFormat" class="custom-right-picker" (ngModelChange)="fetchReport()"
+        [(ngModel)]="dateRange"></nz-range-picker>
     </div>
   </div>
 
@@ -20,16 +16,8 @@
       <h3>สรุปยอดระบบ</h3>
     </div>
 
-    <nz-table
-      style="margin: 20px 0px"
-      #basicTable
-      nzBordered
-      [nzData]="dataList"
-      [nzShowPagination]="false"
-      [nzFrontPagination]="false"
-      [nzLoading]="isLoading"
-      [nzSize]="'middle'"
-    >
+    <nz-table style="margin: 20px 0px" #basicTable nzBordered [nzData]="dataList" [nzShowPagination]="false"
+      [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
       <thead>
         <tr>
           <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
@@ -42,21 +30,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let index = index">
-          <td [nzAlign]="'center'">{{ mapDateTime(data.date) }}</td>
+          <td [nzAlign]="'center'">{{ mapDate(data.date, 'onlyDate') }}</td>
           <!-- <td [nzAlign]="'center'">จักรพร เต่าบิน</td> -->
           <td></td>
           <td [nzAlign]="'center'">{{ data.totalBill }}</td>
-          <td [nzAlign]="'right'">{{ data.totalProfit.toLocaleString() }}</td>
+          <td [nzAlign]="'right'">{{ data.totalProfit.toLocaleString()}}</td>
           <td [nzAlign]="'center'">
             <button nz-button nzType="primary" nzShape="circle">
               <span nz-icon nzType="search" nzTheme="outline"></span>
             </button>
           </td>
         </tr>
-        <tr
-          *ngIf="dataList.length > 0"
-          style="font-size: 16px; font-weight: 500; background-color: #fbfbfb"
-        >
+        <tr *ngIf="dataList.length > 0" style="font-size: 16px; font-weight: 500; background-color: #fbfbfb">
           <td [nzAlign]="'center'">รวม</td>
           <td></td>
           <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
