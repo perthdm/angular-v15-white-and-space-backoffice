@@ -21,7 +21,7 @@
 
 .order-detail {
   height: 460px;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 1px solid #f3f3f3;
   border-radius: 10px;
 }
@@ -98,7 +98,7 @@ nz-radio-group{
   width: max-content;    
 }
 .radio-style {
-  overflow-y: scroll;
+  overflow-y: hidden;
   .ant-radio-group-large .ant-radio-button-wrapper {
     box-shadow: 2px 2px 2px 1px #f1f1f1;
     height: 40px;
