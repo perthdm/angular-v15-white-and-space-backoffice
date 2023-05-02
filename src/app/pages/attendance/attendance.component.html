@@ -24,99 +24,101 @@
         <div nz-row>
             <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 6rem);">
 
-        <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="checkInList" [nzShowPagination]="false"
-            [nzFrontPagination]="false" [nzLoading]="isLoading">
-            <thead>
-                <tr>
-                    <th id="date" [nzAlign]="'center'" rowspan="4">วัน/เดือน/ปี</th>
-                    <th id="name">ชื่อพนักงาน</th>
-                    <th id="type" [nzAlign]="'center'">ประเภท</th>
-                    <th id="empty" nzWidth="15%"></th>
-                    <!-- <th id="empty" nzWidth="60%"></th> -->
-                    <th id="checkIn" [nzAlign]="'center'">เข้างาน</th>
-                    <th id="checkOut" [nzAlign]="'center'">ออกงาน</th>
-                    <th [nzAlign]="'center'">ทั้งหมด (ชม.)</th>
-                    <th [nzAlign]="'center'">ปกติ (ชม.)</th>
-                    <th [nzAlign]="'center'">OT (ชม.)</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody *ngFor="let data of basicTable.data ;let index = index">
-                <tr style="background-color: #4479a4;">
-                    <td class="td-no-hover" [nzAlign]="'center'" style="color:white ; padding:4px ; font-weight: bold;">
-                        {{data.date}}</td>
-                    <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
-                </tr>
-                <tr *ngFor="let em of data.items;">
-                    <td></td>
-                    <td>{{em.user.name}}</td>
-                    <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="em.type === 'full-time' ?  'blue' : 'magenta'">{{em.type === 'full-time' ?
-                            'ประจำ' : 'พาร์ทไทม์' }}</nz-tag>
-                    </td>
-                    <td></td>
-                    <td [nzAlign]="'center'">{{ mapDate(em.check_in , 'onlyTime') }}</td>
-                    <td [nzAlign]="'center'">
-                        <span *ngIf="em.check_out">{{ mapDate(em.check_out, 'onlyTime') }}</span>
-                        <button style="height: 35px; border-radius: 10px;" *ngIf="!em.check_out" nz-button
-                            nzType="primary" (click)="handleCheckOut(em.user._id, em._id)">
-                            Check Out
-                        </button>
-                    </td>
-                    <td [nzAlign]="'center'"> {{ em?.worked_time?.toFixed(0) }} </td>
-                    <td [nzAlign]="'center'"> {{ em?.normal_hours ? em?.normal_hours : 0 }} </td>
-                    <td [nzAlign]="'center'"> {{ em?.ot_hours ? em?.ot_hours : 0 }} </td>
-                    <td [nzAlign]="'center'">
-                        <button *ngIf="checkManaged(em); else payAmount" nz-button nzType="primary"
-                            style="border-radius: 10px;" (click)="handleManageHours(em)">
-                            <span nz-icon nzType="form" nzTheme="outline"></span>
-                        </button>
-                        <ng-template #payAmount>{{ em.pay ? em.pay.toLocaleString() : 0 }} ฿</ng-template>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
-    </div>
-
-
-    <nz-modal [(nzVisible)]="isVisible" nzTitle="จัดสรรเวลาทำงาน" (nzOnCancel)="handleClose()"
-        (nzOnOk)="handleSubmitData()">
-
-        <ng-container *nzModalContent>
-            <nz-tag [nzColor]="'blue'" style="font-size: 14px;">
-                เวลาทำงานวันนี้ :
-                {{ currentData?.worked_time?.toFixed(0) }}
-                ชั่วโมง
-            </nz-tag>
-
-            <nz-divider></nz-divider>
-
-            <div nz-row [nzGutter]="[32,16]">
-                <div nz-col class="gutter-row" [nzSpan]="12">
-                    <h4>เวลาทำงาน - ปกติ</h4>
-                    <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="nHours"
-                        (change)="onChangeData($event)" [ngModel]="currentData.nHours" style="width:100%" />
-                </div>
-                <div nz-col class="gutter-row" [nzSpan]="12">
-                    <h4>ค่าแรงปกติ / ชั่วโมง (บาท)</h4>
-                    <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="nPerHours"
-                        (change)="onChangeData($event)" [ngModel]="currentData.nPerHours" style="width:100%" />
-                </div>
-
-
-                <div nz-col class="gutter-row" [nzSpan]="12">
-                    <h4>เวลาทำงาน - OT</h4>
-                    <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="otHours"
-                        (change)="onChangeData($event)" [ngModel]="currentData.otHours" style="width:100%" />
-                </div>
-                <div nz-col class="gutter-row" [nzSpan]="12">
-                    <h4>ค่าแรง OT / ชั่วโมง (บาท)</h4>
-                    <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="otPerHours"
-                        (change)="onChangeData($event)" [ngModel]="currentData.otPerHours" style="width:100%" />
-                </div>
+                <nz-table style="margin:20px 0px ;" #basicTable nzBordered [nzData]="checkInList"
+                    [nzShowPagination]="false" [nzFrontPagination]="false" [nzLoading]="isLoading">
+                    <thead>
+                        <tr>
+                            <th id="date" nzWidth="100px" [nzAlign]="'center'">วัน/เดือน/ปี</th>
+                            <th id="name" nzWidth="250px">ชื่อพนักงาน</th>
+                            <th id="type" [nzAlign]="'center'">ประเภท</th>
+                            <th id="empty" nzWidth="200px"></th>
+                            <!-- <th id="empty" nzWidth="60%"></th> -->
+                            <th id="checkIn" [nzAlign]="'center'">เข้างาน</th>
+                            <th id="checkOut" [nzAlign]="'center'">ออกงาน</th>
+                            <th [nzAlign]="'center'">ทั้งหมด (ชม.)</th>
+                            <th [nzAlign]="'center'">ปกติ (ชม.)</th>
+                            <th [nzAlign]="'center'">OT (ชม.)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let data of basicTable.data ;let index = index">
+                        <tr style="background-color: #4479a4; ">
+                            <td class="td-no-hover" [nzAlign]="'center'"
+                                style="color:white ; padding:4px ; font-weight: bold;">
+                                {{data.date}}</td>
+                            <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
+                        </tr>
+                        <tr *ngFor="let em of data.items;">
+                            <td></td>
+                            <td>{{em.user.name}}</td>
+                            <td [nzAlign]="'center'">
+                                <nz-tag [nzColor]="em.type === 'full-time' ?  'blue' : 'magenta'">{{em.type ===
+                                    'full-time' ?
+                                    'ประจำ' : 'พาร์ทไทม์' }}</nz-tag>
+                            </td>
+                            <td></td>
+                            <td [nzAlign]="'center'">{{ mapDate(em.check_in , 'onlyTime') }}</td>
+                            <td [nzAlign]="'center'">
+                                <span *ngIf="em.check_out">{{ mapDate(em.check_out, 'onlyTime') }}</span>
+                                <button style="height: 35px; border-radius: 10px;" *ngIf="!em.check_out" nz-button
+                                    nzType="primary" (click)="handleCheckOut(em.user._id, em._id)">
+                                    Check Out
+                                </button>
+                            </td>
+                            <td [nzAlign]="'center'"> {{ em?.worked_time?.toFixed(0) }} </td>
+                            <td [nzAlign]="'center'"> {{ em?.normal_hours ? em?.normal_hours : 0 }} </td>
+                            <td [nzAlign]="'center'"> {{ em?.ot_hours ? em?.ot_hours : 0 }} </td>
+                            <td [nzAlign]="'center'">
+                                <button *ngIf="checkManaged(em); else payAmount" nz-button nzType="primary"
+                                    style="border-radius: 10px;" (click)="handleManageHours(em)">
+                                    <span nz-icon nzType="form" nzTheme="outline"></span>
+                                </button>
+                                <ng-template #payAmount>{{ em.pay ? em.pay.toLocaleString() : 0 }} ฿</ng-template>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
             </div>
-        </ng-container>
 
 
-    </nz-modal>
-</div>
+            <nz-modal [(nzVisible)]="isVisible" nzTitle="จัดสรรเวลาทำงาน" (nzOnCancel)="handleClose()"
+                (nzOnOk)="handleSubmitData()">
+
+                <ng-container *nzModalContent>
+                    <nz-tag [nzColor]="'blue'" style="font-size: 14px;">
+                        เวลาทำงานวันนี้ :
+                        {{ currentData?.worked_time?.toFixed(0) }}
+                        ชั่วโมง
+                    </nz-tag>
+
+                    <nz-divider></nz-divider>
+
+                    <div nz-row [nzGutter]="[32,16]">
+                        <div nz-col class="gutter-row" [nzSpan]="12">
+                            <h4>เวลาทำงาน - ปกติ</h4>
+                            <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="nHours"
+                                (change)="onChangeData($event)" [ngModel]="currentData.nHours" style="width:100%" />
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="12">
+                            <h4>ค่าแรงปกติ / ชั่วโมง (บาท)</h4>
+                            <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="nPerHours"
+                                (change)="onChangeData($event)" [ngModel]="currentData.nPerHours" style="width:100%" />
+                        </div>
+
+
+                        <div nz-col class="gutter-row" [nzSpan]="12">
+                            <h4>เวลาทำงาน - OT</h4>
+                            <input nz-input class="wns-input" placeholder="กรอกจำนวนชั่วโมง (ปกติ)" name="otHours"
+                                (change)="onChangeData($event)" [ngModel]="currentData.otHours" style="width:100%" />
+                        </div>
+                        <div nz-col class="gutter-row" [nzSpan]="12">
+                            <h4>ค่าแรง OT / ชั่วโมง (บาท)</h4>
+                            <input nz-input class="wns-input" placeholder="กรุณากรอกจำนวน" name="otPerHours"
+                                (change)="onChangeData($event)" [ngModel]="currentData.otPerHours" style="width:100%" />
+                        </div>
+                    </div>
+                </ng-container>
+
+
+            </nz-modal>
+        </div>
