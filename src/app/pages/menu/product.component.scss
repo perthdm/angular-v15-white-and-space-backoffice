@@ -4,8 +4,12 @@
   border-radius: 12px;
   position: absolute;
 }
-
+nz-radio-group{
+  width: max-content;    
+}
 .radio-style {
+  width: 98vw;
+  overflow-y: scroll;
   .ant-radio-group-large .ant-radio-button-wrapper {
     box-shadow: 2px 2px 2px 1px #f1f1f1;
     height: 40px;
@@ -33,5 +37,10 @@
     border-radius: 12px !important;
     height: 40px !important;
     align-items: center !important;
+  }
+}
+@media (max-width:950px) {
+  .d-none-950{
+    display: none !important;
   }
 }

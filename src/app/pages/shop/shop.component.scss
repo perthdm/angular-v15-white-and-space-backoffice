@@ -6,6 +6,18 @@
   background: white;
   box-shadow: 1px 0px 3px 2px #fafafa;
 }
+.left-side-wrapper{
+  padding: 40px 30px;
+  width:calc(100% - 450px);
+}
+@media (max-width:850px){
+  .menu-right-wrapper{
+    display: none !important;
+  }
+  .left-side-wrapper{
+    width: 100% !important;
+  }
+}
 
 .order-detail {
   height: 460px;

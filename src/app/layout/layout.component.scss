@@ -21,6 +21,21 @@ nz-header {
   padding: 0;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  width: 100vw;
+  overflow-y: scroll;
+  ul{
+    height: 64px;
+    overflow-x: hidden;
+    // width: max-content;
+    overflow-y: auto;
+  }
+}
+@media (max-width:1216px){
+  .app-header{
+    ul{
+      width: max-content;
+    }
+  }
 }
 
 .ant-layout {
