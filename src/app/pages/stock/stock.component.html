@@ -7,7 +7,7 @@
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
         </div>
 
-        <div class="radio-style">
+        <div class="radio-style" style="max-width: calc(100vw - 58px);">
             <nz-radio-group [(ngModel)]="stockType" nzButtonStyle="solid" nzSize="large"
                 (ngModelChange)="handleChangeGroup()" style="width: 100%;">
                 <label nz-radio-button nzValue="inventory"> คลังสินค้า </label>
@@ -23,7 +23,7 @@
             <div nz-col [nzSpan]="8">
                 <h3></h3>
             </div>
-            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+            <div nz-col [nzSpan]="24" nzShape="round" style="text-align: right;">
                 <nz-space [nzSize]="'small'" *ngIf="stockType === 'inventory'">
                     <button *nzSpaceItem nz-button nzType="primary"
                         style="height: 40px; border-radius: 10px; background-color: #04AA6D; border-color: #04AA6D;"
@@ -42,44 +42,51 @@
         </div>
 
         <!-- [TABLE] : STOCK -->
-        <nz-table *ngIf="stockType === 'inventory'" style="margin:20px 0px; min-height: 300px;" #basicTable
-            [nzData]="stockList" [nzShowPagination]="false" [nzPageSize]="pageLimit">
-            <thead>
-                <tr>
-                    <th [nzAlign]="'center'">#</th>
-                    <th>ชื่อสินค้า</th>
-                    <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
-                    <th [nzAlign]="'center'">สร้างเมื่อ</th>
-                    <th [nzAlign]="'center'">ผู้ทำรายการ</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">รายละเอียด</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
-                    (click)="editStock(data)">
-                    <td [nzAlign]="'center'">{{ index+1 }}</td>
-                    <td> {{ data?.name }}</td>
-                    <td [nzAlign]="'center'">{{ data?.amount }}</td>
-                    <td [nzAlign]="'center'"> {{ mapDate(data.createdAt) }}</td>
-                    <td [nzAlign]="'center'">{{ data?.user_created.username }}</td>
-                    <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" nzDanger style="color:white; border-radius: 8px"
-                            (click)="handleSetExport($event,data)">
-                            <span nz-icon nzType="upload" nzTheme="outline" style="font-size: 18px;"></span>
-                            นำออก
-                        </button>
-                    </td>
 
-                    <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;"
-                            (click)="showModalStockDetail($event,data)">
-                            <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
+        <div nz-row>
+            <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 58px);">
+                <nz-table *ngIf="stockType === 'inventory'" style="margin:20px 0px; min-height: 300px;" #basicTable
+                    [nzData]="stockList" [nzShowPagination]="false" [nzPageSize]="pageLimit"
+                    [nzScroll]="{ x: '1200px' }">
+                    <thead>
+                        <tr>
+                            <th [nzAlign]="'center'">#</th>
+                            <th>ชื่อสินค้า</th>
+                            <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
+                            <th [nzAlign]="'center'">สร้างเมื่อ</th>
+                            <th [nzAlign]="'center'">ผู้ทำรายการ</th>
+                            <th [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
+                            <th [nzAlign]="'center'" nzWidth="100px">รายละเอียด</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
+                            (click)="editStock(data)">
+                            <td [nzAlign]="'center'">{{ index+1 }}</td>
+                            <td> {{ data?.name }}</td>
+                            <td [nzAlign]="'center'">{{ data?.amount }}</td>
+                            <td [nzAlign]="'center'"> {{ mapDate(data.createdAt) }}</td>
+                            <td [nzAlign]="'center'">{{ data?.user_created.username }}</td>
+                            <td [nzAlign]="'center'">
+                                <button nz-button nzType="primary" nzDanger style="color:white; border-radius: 8px"
+                                    (click)="handleSetExport($event,data)">
+                                    <span nz-icon nzType="upload" nzTheme="outline" style="font-size: 18px;"></span>
+                                    นำออก
+                                </button>
+                            </td>
+
+                            <td [nzAlign]="'center'">
+                                <button nz-button nzType="primary"
+                                    style="color:white; border-radius: 8px ; padding: 6px 10px;"
+                                    (click)="showModalStockDetail($event,data)">
+                                    <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
 
         <!-- [TABLE] : IMPORT, EXPORT, ORDER -->
         <nz-table *ngIf=" stockType !=='inventory'" style=" margin:20px 0px; min-height: 300px;" #importTrxTable

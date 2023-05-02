@@ -7,7 +7,7 @@
             <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
         </div>
     </div>
-    <div class="radio-style">
+    <div class="radio-style" style="max-width: calc(100vw - 6rem);">
         <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
             (ngModelChange)="fetchProduct()">
             <label nz-radio-button nzValue="">

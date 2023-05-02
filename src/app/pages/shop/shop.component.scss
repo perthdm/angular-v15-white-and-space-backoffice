@@ -94,22 +94,21 @@
   float: right;
   border-radius: 12px;
 }
-
+nz-radio-group{
+  width: max-content;    
+}
 .radio-style {
+  overflow-y: scroll;
   .ant-radio-group-large .ant-radio-button-wrapper {
     box-shadow: 2px 2px 2px 1px #f1f1f1;
-    height: 50px;
+    height: 40px;
     font-size: 16px;
-    line-height: 48px;
+    line-height: 38px;
     border: 0px;
-    margin-right: 20px;
-    border-radius: 10px;
-    // width: 150px;
+    margin-right: 10px;
+    border-radius: 12px;
+    width: 150px;
     text-align: center;
-    margin-bottom: 15px;
-  }
-  .ant-radio-group-large .ant-radio-button-wrapper:last-child {
-    margin-right: 0px !important;
   }
 
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before,
