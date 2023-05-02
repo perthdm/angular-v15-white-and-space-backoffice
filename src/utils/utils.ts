@@ -1,4 +1,8 @@
-export const API_DOMAIN = 'https://api.whiteandspace.com';
+let isDev = true;
+
+export const API_DOMAIN = isDev
+  ? 'https://api.whiteandspace.com'
+  : 'http://192.168.1.163:3000';
 
 export const formatDateTime = (time?: any, type?: string) => {
   let d = time ? new Date(time) : new Date();

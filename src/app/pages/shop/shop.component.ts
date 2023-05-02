@@ -146,6 +146,7 @@ export class ShopComponent {
           price: item.price,
           product_type: item.product_type,
           totalPrice: item.price,
+          image: item.image,
         };
 
         if (item?.auto_stock) {
@@ -156,16 +157,21 @@ export class ShopComponent {
 
       this.totalPrice += item.price;
     } else if (type == CART_ACTION.DEL) {
+      console.log(existingItem);
+
       if (existingItem) {
         if (existingItem.amount >= 1) {
           existingItem.amount--;
           existingItem.totalPrice -= item.price;
-          existingItem.tagList.pop();
 
           if (existingItem.amount === 0) {
             this.cart = this.cart.filter(
               (current: any) => current._id !== item._id
             );
+          }
+
+          if (item.auto_stock) {
+            existingItem.tagList.pop();
           }
         }
         this.totalPrice -= item.price;

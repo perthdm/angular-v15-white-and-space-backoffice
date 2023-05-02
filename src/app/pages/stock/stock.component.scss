@@ -8,8 +8,10 @@
 nz-radio-group{
   width: max-content !important;    
 }
-.radio-style{
-  display: none;
+@media(max-width:576px){
+  .radio-style{
+    display: none;
+  }
 }
 .radio-style {
   overflow-y: hidden;
