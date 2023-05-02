@@ -24,6 +24,8 @@ const ENDPOINT = {
       `${API_DOMAIN}/lot?stock_id=${stockId}`,
     SEARCH_TAG_ID: `${API_DOMAIN}/lot/search-product`,
     EXPORT_ITEM: `${API_DOMAIN}/lot/export`,
+
+    PUT_IDLOT: `${API_DOMAIN}/lot/tracking-generator`,
   },
 };
 
@@ -109,6 +111,16 @@ export class StockService {
   searchTagId(tagId: string) {
     let data = { tracking: tagId };
     return this.http.post<any>(ENDPOINT.LOT.SEARCH_TAG_ID, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  printBarcodeByLotId(lotId: string) {
+    const data = { id: lotId };
+    return this.http.put<any>(ENDPOINT.LOT.PUT_IDLOT, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

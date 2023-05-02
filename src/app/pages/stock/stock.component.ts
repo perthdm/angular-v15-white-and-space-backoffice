@@ -304,7 +304,15 @@ export class StockComponent {
     return +new Date(date);
   }
 
-  onUsed(data: any) {
-    data.isPrint = true;
+  printBarcode(data: any) {
+    console.log(data);
+
+    this.stockService.printBarcodeByLotId(data._id).subscribe(
+      () => {
+        this.message.create('success', `สั่งพิมพ์บาร์โค้ดสำเร็จ`);
+      },
+      (err) =>
+        this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
+    );
   }
 }
