@@ -1,9 +1,9 @@
 <div class="inner-content">
     <div nz-row>
-        <div nz-col [nzSpan]="8">
+        <div nz-col [nzSpan]="12">
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">พนักงานร้าน</h3>
         </div>
-        <div nz-col [nzSpan]="16">
+        <div nz-col [nzSpan]="12">
             <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox>
         </div>
     </div>
@@ -20,46 +20,52 @@
                 </button>
             </div>
         </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 6rem);">
+                <nz-table style="margin:20px 0px;" #userTable [nzData]="dataList" [nzShowPagination]="false"
+                    [nzLoading]="isLoading" [nzPageSize]="pageLimit" 
+                    [nzScroll]="{ x: '1200px' }"
+                    >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ชื่อผู้ใช้งาน</th>
+                            <th nzWidth="150px">ชื่อ-นามสกุล</th>
+                            <th [nzAlign]="'center'">เพศ</th>
+                            <th [nzAlign]="'center'">ตำแหน่ง</th>
+                            <th [nzAlign]="'right'">เงินเดือน</th>
+                            <th>สร้างเมื่อ</th>
+                            <th [nzAlign]="'center'">สถานะ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of userTable.data ;let index = index" style="cursor:pointer"
+                            (click)="handleEditUser(data)">
+                            <td>{{ pageLimit*(page-1)+(index+1) }}</td>
+                            <td>{{ data.username}}</td>
+                            <td>{{ data.name}}</td>
+                            <td [nzAlign]="'center'">
+                                <img *ngIf="data.gender === 'male'" src="../../../assets/img/male.png" alt="item"
+                                    width="30px" />
+                                <img *ngIf="data.gender === 'female'" src="../../../assets/img/female.png" alt="item"
+                                    width="30px" />
+                                <img *ngIf="data.gender === 'etc'" src="../../../assets/img/equality.png" alt="item"
+                                    width="30px" />
 
-        <nz-table style="margin:20px 0px;" #userTable [nzData]="dataList" [nzShowPagination]="false"
-            [nzLoading]="isLoading" [nzPageSize]="pageLimit">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>ชื่อผู้ใช้งาน</th>
-                    <th>ชื่อ-นามสกุล</th>
-                    <th [nzAlign]="'center'">เพศ</th>
-                    <th [nzAlign]="'center'">ตำแหน่ง</th>
-                    <th [nzAlign]="'right'">เงินเดือน</th>
-                    <th>สร้างเมื่อ</th>
-                    <th [nzAlign]="'center'">สถานะ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of userTable.data ;let index = index" style="cursor:pointer"
-                    (click)="handleEditUser(data)">
-                    <td>{{ pageLimit*(page-1)+(index+1) }}</td>
-                    <td>{{ data.username}}</td>
-                    <td>{{ data.name}}</td>
-                    <td [nzAlign]="'center'">
-                        <img *ngIf="data.gender === 'male'" src="../../../assets/img/male.png" alt="item"
-                            width="30px" />
-                        <img *ngIf="data.gender === 'female'" src="../../../assets/img/female.png" alt="item"
-                            width="30px" />
-                        <img *ngIf="data.gender === 'etc'" src="../../../assets/img/equality.png" alt="item"
-                            width="30px" />
+                            </td>
+                            <td [nzAlign]="'center'">{{ data.role}}</td>
 
-                    </td>
-                    <td [nzAlign]="'center'">{{ data.role}}</td>
+                            <td [nzAlign]="'right'">{{ data.salary.toLocaleString() }}</td>
+                            <td>{{ data.createdAt }}</td>
+                            <td [nzAlign]="'center'">
+                                <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
+                            </td>
+                        </tr>
+                    </tbody>
+                </nz-table>
+            </div>
+        </div>
 
-                    <td [nzAlign]="'right'">{{ data.salary.toLocaleString() }}</td>
-                    <td>{{ data.createdAt }}</td>
-                    <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
-                    </td>
-                </tr>
-            </tbody>
-        </nz-table>
 
         <div style="padding:0px 20px 20px 20px; text-align: right;">
             <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"

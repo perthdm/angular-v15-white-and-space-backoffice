@@ -8,8 +8,7 @@ nz-radio-group{
   width: max-content;    
 }
 .radio-style {
-  width: 98vw;
-  overflow-y: scroll;
+  overflow-y: hidden;
   .ant-radio-group-large .ant-radio-button-wrapper {
     box-shadow: 2px 2px 2px 1px #f1f1f1;
     height: 40px;
@@ -20,11 +19,7 @@ nz-radio-group{
     border-radius: 12px;
     width: 150px;
     text-align: center;
-    //   margin-bottom: 15px;
   }
-  // .ant-radio-group-large .ant-radio-button-wrapper:last-child {
-  //   margin-right: 0px !important;
-  // }
 
   .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before,
   .ant-radio-button-wrapper:not(:first-child)::before {

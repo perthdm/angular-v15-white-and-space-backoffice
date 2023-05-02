@@ -10,10 +10,10 @@
 
     <div class="app-content">
         <div nz-row style="padding:0px 20px">
-            <div nz-col [nzSpan]="8">
+            <div nz-col [nzSpan]="24" [nzMd]="8">
                 <h3>รายละเอียดการเข้า-ออก</h3>
             </div>
-            <div nz-col [nzSpan]="16" nzShape="round" style="text-align: right;">
+            <div nz-col [nzSpan]="24" [nzMd]="16" nzShape="round" style="text-align: right;">
                 <nz-select style="width: 200px; text-align: left;" *ngIf="isAccess" nzShowSearch nzAllowClear
                     nzPlaceHolder="Select a person" [(ngModel)]="selectedValue" class="select-style"
                     (ngModelChange)="handleFilter()">
@@ -21,6 +21,8 @@
                 </nz-select>
             </div>
         </div>
+        <div nz-row>
+            <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 6rem);">
 
         <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="checkInList" [nzShowPagination]="false"
             [nzFrontPagination]="false" [nzLoading]="isLoading">
