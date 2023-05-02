@@ -31,7 +31,15 @@ nz-header {
   }
 }
 @media (max-width:1216px){
-  .app-header{
+  .app-header-max{
+    ul{
+      width: max-content;
+    }
+  }
+}
+
+@media (max-width:750px){
+  .app-header-750{
     ul{
       width: max-content;
     }

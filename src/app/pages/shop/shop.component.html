@@ -46,22 +46,62 @@
                     <div class="card-product" [class.disable-card-product]="item.auto_stock"
                         (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
                         <div style="position: relative;">
-                            <!-- <img *ngIf="item.product_type === 'food'"
-                                src="https://ak-d.tripcdn.com/images/1i6232215bc32lxpc2B9D_R_400_10000_R5_Q90.jpg_.webp?proc=source/trip"
-                                width="100%" style="border-radius: 10px;" alt="food-item">
 
-                            <img *ngIf="item.product_type === 'desert'"
-                                src="https://www.mezzo.co/pub/media/catalog/product/cache/926507dc7f93631a094422215b778fe0/1/_/1.chocolate_cake_1000px_1.jpg"
-                                width="100%" style="border-radius: 10px;" alt="desert-item">
+                            <img src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png" width="100%"
+                                style="border-radius: 10px;" alt="product-item" style="border: 1px solid #efefef">
 
-                            <img *ngIf="item.product_type === 'beverage'"
-                                src="https://img.freepik.com/premium-photo/cup-coffee-textured-grey-background-lifestyle-photo-with-natural-light-minimalistic-style-with-cup-coffee-milk-foam_4740-5149.jpg?w=2000"
-                                width="100%" style="border-radius: 10px;" alt="beverage-item">
+                            <nz-tag style="position: absolute; top: 8px ; right : 0px"
+                                [nzColor]="getTagDetail(item.product_type).color">
+                                {{ getTagDetail(item.product_type).title }}
+                            </nz-tag>
+                        </div>
+                        <div class="product-name">
+                            {{ item.name }}
+                        </div>
+                        <div class="price-tag">
+                            ฿ {{ item.price }}
+                            <span
+                                style="border: 1px solid red;color :red; font-size: 12px; padding :0px 5px ; background-color: #f9f9fb;"
+                                *ngIf="item.auto_stock">
+                                Scan only
+                            </span>
+                        </div>
 
-                            <img *ngIf="item.product_type === 'etc'"
-                                src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png" width="100%"
-                                style="border-radius: 10px;" alt="etc-item"> -->
 
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
+                    <div class="card-product" [class.disable-card-product]="item.auto_stock"
+                        (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
+                        <div style="position: relative;">
+
+                            <img src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png" width="100%"
+                                style="border-radius: 10px;" alt="product-item" style="border: 1px solid #efefef">
+
+                            <nz-tag style="position: absolute; top: 8px ; right : 0px"
+                                [nzColor]="getTagDetail(item.product_type).color">
+                                {{ getTagDetail(item.product_type).title }}
+                            </nz-tag>
+                        </div>
+                        <div class="product-name">
+                            {{ item.name }}
+                        </div>
+                        <div class="price-tag">
+                            ฿ {{ item.price }}
+                            <span
+                                style="border: 1px solid red;color :red; font-size: 12px; padding :0px 5px ; background-color: #f9f9fb;"
+                                *ngIf="item.auto_stock">
+                                Scan only
+                            </span>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
+                    <div class="card-product" [class.disable-card-product]="item.auto_stock"
+                        (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
+                        <div style="position: relative;">
 
                             <img src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png" width="100%"
                                 style="border-radius: 10px;" alt="product-item" style="border: 1px solid #efefef">
