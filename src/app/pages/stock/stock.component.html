@@ -231,8 +231,8 @@
                         <td>{{ convertToTs(data.lot_number) }}</td>
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                         <td [nzAlign]="'center'">
-                            <button (click)="onUsed(data)"
-                                [style]="data.isPrint ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''" nz-button
+                            <button (click)="printBarcode(data)"
+                                [style]="data.is_print ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''" nz-button
                                 nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
                                 <span nz-icon nzType="barcode" nzTheme="outline" style="font-size: 18px;"></span>
                             </button>
