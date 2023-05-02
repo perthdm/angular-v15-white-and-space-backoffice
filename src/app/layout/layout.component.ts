@@ -33,8 +33,12 @@ export class LayoutComponent implements OnInit {
 
   fetchCheckInStatus() {
     this.usService.getCheckInStatus().subscribe((res) => {
-      let { check_in } = res;
-      if (!check_in) this.isShowModalCheckIn = true;
+      if (res) {
+        let { check_in } = res;
+        if (!check_in) this.isShowModalCheckIn = true;
+      } else {
+        this.isShowModalCheckIn = true;
+      }
     });
   }
 

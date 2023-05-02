@@ -5,12 +5,12 @@ import { UserService } from 'src/app/services/user.service';
 import { formatDateTime, getStorage, getDefaultValue } from 'src/utils/utils';
 import Swal from 'sweetalert2';
 
-interface Attendance {
+interface IAttendance {
   date: string;
-  items: StaffAttendance[];
+  items: IStaffAttendance[];
 }
 
-interface StaffAttendance {
+interface IStaffAttendance {
   user: { _id: string; name: string; username: string };
   type: string;
   check_in: string;
@@ -24,7 +24,9 @@ interface StaffAttendance {
   styleUrls: ['./attendance.component.scss'],
 })
 export class AttendanceComponent {
-  checkInList: Attendance[] | any = [];
+  checkInList: IAttendance[] | any = [];
+  checkInListTemp: IAttendance[] | any = [];
+
   employeeList: string[] = [];
   selectedValue = null;
   isLoading: boolean = true;
@@ -60,6 +62,7 @@ export class AttendanceComponent {
         let { items } = res;
 
         this.checkInList = items;
+        this.checkInListTemp = items;
         this.employeeList = this.isAccess
           ? this.getAllNameOfEmployee(items)
           : [];
@@ -111,8 +114,8 @@ export class AttendanceComponent {
   handleSubmitData(): any {
     let usedHours = +this.currentData.nHours + +this.currentData.otHours;
     let totalHours = +this.currentData.worked_time.toFixed(0);
-    console.log('SUM ==>', usedHours);
-    console.log('HAVE : ', totalHours);
+    // console.log('SUM ==>', usedHours);
+    // console.log('HAVE : ', totalHours);
 
     if (usedHours != totalHours) {
       return this.message.create(
@@ -146,7 +149,7 @@ export class AttendanceComponent {
     );
   }
 
-  handleManageHours(rowData: StaffAttendance) {
+  handleManageHours(rowData: IStaffAttendance) {
     let totalHours: any = rowData.worked_time.toFixed(0);
 
     if (totalHours > 0) {
@@ -205,5 +208,27 @@ export class AttendanceComponent {
     }
 
     return false;
+  }
+
+  handleFilter(): any {
+    let temp = this.checkInListTemp.map((obj: IAttendance) =>
+      Object.assign({}, obj)
+    );
+
+    if (!this.selectedValue) {
+      return (this.checkInList = temp);
+    }
+
+    let nextList = temp.filter((dateList: IAttendance) => {
+      let { items } = dateList;
+      let a = items.filter(
+        (staff: IStaffAttendance) => staff.user.name == this.selectedValue
+      );
+      if (a.length > 0) {
+        return (dateList.items = a);
+      }
+      return;
+    });
+    this.checkInList = nextList;
   }
 }

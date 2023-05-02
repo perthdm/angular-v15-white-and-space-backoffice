@@ -11,6 +11,8 @@ import { AttendanceComponent } from '../pages/attendance/attendance.component';
 import { AuthGuardService } from '../services/auth.service';
 import { UserComponent } from '../pages/user/user.component';
 import { ProductComponent } from '../pages/menu/product.component';
+import { AuthRoleService } from '../services/auth-role.service';
+import { NotFoundComponent } from '../pages/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -25,10 +27,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthRoleService],
+        data: {
+          roles: ['owner', 'manager'],
+        },
       },
       {
         path: 'report',
         component: ReportComponent,
+        canActivate: [AuthRoleService],
+        data: {
+          roles: ['owner', 'manager'],
+        },
       },
       {
         path: 'billing-history',
@@ -41,20 +51,37 @@ const routes: Routes = [
       {
         path: 'user',
         component: UserComponent,
+        canActivate: [AuthRoleService],
+        data: {
+          roles: ['owner', 'manager'],
+        },
       },
       {
-        path: 'menu',
+        path: 'product',
         component: ProductComponent,
+        // canActivate: [AuthRoleService],
+        // data: {
+        //   roles: ['owner', 'manager'],
+        // },
       },
       {
         path: 'stock',
         component: StockComponent,
+        canActivate: [AuthRoleService],
+        data: {
+          roles: ['owner', 'manager'],
+        },
       },
 
       {
         path: 'setting',
         component: SettingComponent,
+        canActivate: [AuthRoleService],
+        data: {
+          roles: ['owner', 'manager'],
+        },
       },
+      { path: '**', component: NotFoundComponent },
     ],
   },
 ];
@@ -62,5 +89,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [AuthRoleService],
 })
 export class LayoutRoutingModule {}

@@ -80,7 +80,6 @@ export class BillingHistoryComponent {
       start: this.dateRange[0] ? this.dateRange[0] : null,
       end: this.dateRange[1] ? this.dateRange[1] : null,
     };
-    console.log(reqConfig);
 
     this.orderService.getAllBill(reqConfig).subscribe((res) => {
       let { items } = res;
@@ -93,8 +92,6 @@ export class BillingHistoryComponent {
           });
           dt.totalProfit = sum;
         });
-
-        console.log(items);
       }
       this.billList = items;
     });
@@ -103,11 +100,9 @@ export class BillingHistoryComponent {
   handleShowBillDetail(bill: IBill) {
     this.isShow = true;
     this.currentBill = bill;
-    console.log(this.currentBill);
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isShow = false;
   }
 
@@ -147,7 +142,6 @@ export class BillingHistoryComponent {
       if (result.value) {
         this.orderService.cancelOrder(id).subscribe(
           (res) => {
-            console.log(res);
             this.message.create('success', `ยกเลิกบิลสำเร็จ`);
             this.fetchBill();
           },

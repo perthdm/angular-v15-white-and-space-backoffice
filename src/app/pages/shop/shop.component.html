@@ -40,12 +40,13 @@
                 </nz-radio-group>
             </div>
 
+
             <div nz-row [nzGutter]="[20,20]">
                 <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
                     <div class="card-product" [class.disable-card-product]="item.auto_stock"
                         (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
                         <div style="position: relative;">
-                            <img *ngIf="item.product_type === 'food'"
+                            <!-- <img *ngIf="item.product_type === 'food'"
                                 src="https://ak-d.tripcdn.com/images/1i6232215bc32lxpc2B9D_R_400_10000_R5_Q90.jpg_.webp?proc=source/trip"
                                 width="100%" style="border-radius: 10px;" alt="food-item">
 
@@ -59,8 +60,11 @@
 
                             <img *ngIf="item.product_type === 'etc'"
                                 src="https://th-live.slatic.net/p/c27e47a7eca44ce87c30174ecf858594.png" width="100%"
-                                style="border-radius: 10px;" alt="etc-item">
+                                style="border-radius: 10px;" alt="etc-item"> -->
 
+
+                            <img src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png" width="100%"
+                                style="border-radius: 10px;" alt="product-item" style="border: 1px solid #efefef">
 
                             <nz-tag style="position: absolute; top: 8px ; right : 0px"
                                 [nzColor]="getTagDetail(item.product_type).color">
@@ -236,5 +240,4 @@
         <div *nzModalFooter>
         </div>
     </nz-modal> -->
-
 </div>

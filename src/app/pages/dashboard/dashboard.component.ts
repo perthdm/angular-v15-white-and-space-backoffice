@@ -2,6 +2,8 @@ import { NgIfContext } from '@angular/common';
 import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { IProduct } from 'src/app/model/product.model';
 import { ReportService } from 'src/app/services/report.service';
+import { Chart, registerables } from 'chart.js';
+Chart.register(...registerables);
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +12,7 @@ import { ReportService } from 'src/app/services/report.service';
 })
 export class DashboardComponent {
   dataList: IProduct[] = [];
+  dateList: any = [];
 
   emptyRef?: ElementRef<HTMLElement>;
 
@@ -27,36 +30,6 @@ export class DashboardComponent {
   constructor(private reportService: ReportService) {}
 
   ngOnInit() {
-    // this.dataList = [
-    //   {
-    //     key: 'PD0001',
-    //     name: 'กระเทียมพริกไทย',
-    //     prize: 200,
-    //     amount: 14,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0002',
-    //     name: 'ใบกระเพรา',
-    //     prize: 40,
-    //     amount: 2,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0003',
-    //     name: 'น้ำเชื่อม',
-    //     prize: 80,
-    //     amount: 12,
-    //     type: 'วัตถุดิบ',
-    //   },
-    //   {
-    //     key: 'PD0004',
-    //     name: 'หลอด',
-    //     prize: 50,
-    //     amount: 36,
-    //     type: 'ของใช้งาน',
-    //   },
-    // ];
     this.fetchDashboardData();
   }
 
@@ -67,16 +40,63 @@ export class DashboardComponent {
     };
     this.reportService.getOverviewReport(pageConfig).subscribe(
       (res) => {
-        let { daily_profit, order_total, product_min, weekly_profit } = res;
+        let {
+          daily_profit,
+          order_total,
+          stock_min,
+          weekly_profit,
+          cash_drawer,
+          cash_profit,
+          report_weekly,
+        } = res;
         this.cardData = {
           dailyProfit: daily_profit,
           dailyBill: order_total,
           weeklyProfit: weekly_profit,
+          cashDrawer: cash_drawer,
+          cashProfit: cash_profit,
+          cashTransfer: daily_profit - cash_profit,
+          cashDrawerLast: cash_drawer + cash_profit,
+          cashGoal: 100000,
         };
 
-        this.dataList = product_min;
+        this.dataList = stock_min.items;
+        let tempDate: any = [];
+        let sumData: any = [];
+        report_weekly.map((item: any) => {
+          tempDate.push(item.date);
+          sumData.push(item.profit);
+        });
+
+        this.RenderChart(tempDate, sumData);
       },
       (err) => {}
     );
+  }
+
+  RenderChart(tempDate: any, sumData: any) {
+    const myChart = new Chart('barchart', {
+      type: 'line',
+      data: {
+        labels: tempDate,
+        datasets: [
+          {
+            label: 'ยอด 7 วัน',
+            data: sumData,
+            backgroundColor: ['rgba(54,162,235,0.9)'],
+            borderColor: ['rgba(54,162,235,0.9)'],
+            borderWidth: 5,
+            tension: 0.2,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+        },
+      },
+    });
   }
 }
