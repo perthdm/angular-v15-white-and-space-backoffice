@@ -46,17 +46,16 @@
         <div nz-row>
             <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 58px);">
                 <nz-table *ngIf="stockType === 'inventory'" style="margin:20px 0px; min-height: 300px;" #basicTable
-                    [nzData]="stockList" [nzShowPagination]="false" [nzPageSize]="pageLimit"
-                    [nzScroll]="{ x: '1200px' }">
+                    [nzData]="stockList" [nzShowPagination]="false" [nzPageSize]="pageLimit">
                     <thead>
                         <tr>
-                            <th [nzAlign]="'center'">#</th>
+                            <th [nzAlign]="'center'" nzWidth="100px">#</th>
                             <th>ชื่อสินค้า</th>
                             <th [nzAlign]="'center'">จำนวนคงเหลือ</th>
                             <th [nzAlign]="'center'">สร้างเมื่อ</th>
                             <th [nzAlign]="'center'">ผู้ทำรายการ</th>
-                            <th [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
-                            <th [nzAlign]="'center'" nzWidth="100px">รายละเอียด</th>
+                            <th [nzAlign]="'center'">เครื่องมือ</th>
+                            <th [nzAlign]="'center'">รายละเอียด</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -239,8 +238,8 @@
                         <td [nzAlign]="'center'">{{ data.amount - data.used_amount}}/{{ data.amount }}</td>
                         <td [nzAlign]="'center'">
                             <button (click)="printBarcode(data)"
-                                [style]="data.is_print ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''" nz-button
-                                nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
+                                [style]="data.is_print ? 'background: #04AA6D; border: 1px solid #04AA6D;': ''"
+                                nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;">
                                 <span nz-icon nzType="barcode" nzTheme="outline" style="font-size: 18px;"></span>
                             </button>
                         </td>
