@@ -89,7 +89,7 @@
               "browserTarget": "white-n-space-backofflice:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "dev"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
