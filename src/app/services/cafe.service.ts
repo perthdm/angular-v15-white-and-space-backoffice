@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
+import { API_URL } from 'src/utils/utils';
 
 const ENDPOINT = {
-  GET: `${API_DOMAIN}/cafe`,
-  UPDATE: `${API_DOMAIN}/cafe`,
+  GET: `${API_URL}/cafe`,
+  UPDATE: `${API_URL}/cafe`,
 };
 
 @Injectable()

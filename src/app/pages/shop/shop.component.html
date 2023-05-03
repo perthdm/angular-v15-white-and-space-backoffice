@@ -42,7 +42,7 @@
             </div>
 
 
-            <div nz-row [nzGutter]="[20,20]">
+            <div nz-row [nzGutter]="[20,20]" style="margin-top: 30px;">
                 <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
                     <div class="card-product" [class.disable-card-product]="item.auto_stock"
                         (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
@@ -54,7 +54,7 @@
                                 style="border-radius: 10px;" alt="product-item" style="border: 1px solid #efefef">
 
                             <!-- LOCAL IMAGE : HAVE IMAGE -->
-                            <!-- <img *ngIf="item.image" src="http://192.168.1.163:3000/images/product/{{ item?.image }}"
+                            <!-- <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
                                 width="100%" style="border-radius: 10px;" alt="product-item"
                                 style="border: 1px solid #efefef"> -->
 
@@ -118,9 +118,8 @@
                                         alt="cart-item-show" style="border: 1px solid #efefef">
 
                                     <!-- LOCAL IMAGE : HAVE IMAGE -->
-                                    <!-- <img *ngIf="item.image"
-                                        src="http://192.168.1.163:3000/images/product/{{ item?.image }}"
-                                        alt="cart-item-show" style="border: 1px solid #efefef"> -->
+                                    <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
+                                        alt="cart-item-show" style="border: 1px solid #efefef">
 
                                     <!-- PUBLIC IMAGE : NO IMAGE-->
                                     <img *ngIf="!item.image"

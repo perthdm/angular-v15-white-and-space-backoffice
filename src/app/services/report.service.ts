@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { API_DOMAIN } from 'src/utils/utils';
 import { IPagination } from '../model/pagination.model';
-
-// import { map } from 'rxjs/operators';
+import { API_URL } from 'src/utils/utils';
 
 const ENDPOINT = {
   GET_FULL_REPORT: ({ start, end }: any) =>
-    `${API_DOMAIN}/order/summary?start=${start}&end=${end}`,
+    `${API_URL}/order/summary?start=${start}&end=${end}`,
   GET_OVERVIEW_REPORT: ({ page, limit }: IPagination) =>
-    `${API_DOMAIN}/report?page=${page}&limit=${limit}`,
+    `${API_URL}/report?page=${page}&limit=${limit}`,
 };
 
 @Injectable()

@@ -2,17 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee, EmployeePagination } from 'src/app/model/employee.model';
-import { API_DOMAIN } from 'src/utils/utils';
+import { API_URL } from 'src/utils/utils';
 import { IPagination } from '../model/pagination.model';
 
 // import { map } from 'rxjs/operators';
 
 const ENDPOINT = {
   GET_ALL: ({ page, limit, query }: IPagination) =>
-    `${API_DOMAIN}/employee?page=${page}&limit=${limit}&query=${query}`,
-  CREATE: `${API_DOMAIN}/employee`,
-  DELETE: (employeeId: string) => `${API_DOMAIN}/employee/${employeeId}`,
-  UPDATE: `${API_DOMAIN}/employee`,
+    `${API_URL}/employee?page=${page}&limit=${limit}&query=${query}`,
+  CREATE: `${API_URL}/employee`,
+  DELETE: (employeeId: string) => `${API_URL}/employee/${employeeId}`,
+  UPDATE: `${API_URL}/employee`,
 };
 
 @Injectable()
