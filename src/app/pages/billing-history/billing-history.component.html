@@ -36,7 +36,7 @@
                         <tr style="background-color: #4479a4;">
                             <td class="td-no-hover" [nzAlign]="'center'"
                                 style="color:white ; padding:4px ; font-weight: bold;">
-                                {{ data.date }}</td>
+                                {{ mapDate(data.date , 'date') }}</td>
                             <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                         </tr>
                         <tr *ngFor="let bill of data.bills;" (click)="handleShowBillDetail(bill)"
