@@ -191,3 +191,58 @@ nz-radio-group{
     padding: 10px;
   }
 }
+
+.keypad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  // width: 200px;
+  // height: 200px;
+  background-color: #eee;
+  padding: 10px;
+}
+.number-keypad{
+  background-color: rgb(218, 218, 218);
+  padding: 20px;
+  margin-top: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 42px;
+  font-weight: bold;
+}
+.digit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 20px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.digit:hover {
+  background-color: #ddd;
+}
+.submit-btn {
+  display: flex;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 70px;
+  background-color: #1890ff;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 20px;
+  box-shadow: 0px 2px 2px #1890ff;
+}
+
+.submit-btn:hover {
+  background-color: #40A9FF;
+}

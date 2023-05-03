@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -30,14 +30,55 @@ export class ShopComponent {
   userRole: any = '';
   categoryCount: any = {};
   currentBarcode: string = '';
-
+  isShowModal: boolean = false;
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
     private stockService: StockService,
     private message: NzMessageService
   ) {}
+  sumValue = 0;
+  value = 0;
+  stashItem: any = [];
+  currentValue = '';
 
+  digits = [
+    { value: '1', text: '1' },
+    { value: '2', text: '2' },
+    { value: '3', text: '3' },
+    { value: '4', text: '4' },
+    { value: '5', text: '5' },
+    { value: '6', text: '6' },
+    { value: '7', text: '7' },
+    { value: '8', text: '8' },
+    { value: '9', text: '9' },
+    // { value: '0', text: '0' },
+    // { value: '100', text: '100' },
+    // { value: '500', text: '500' },
+    // { value: '1000', text: '1000' },
+  ];
+
+  onDigitClick(digitValue: string) {
+    if (digitValue == '100' || digitValue == '500' || digitValue == '1000') {
+      this.sumValue = parseInt(digitValue);
+      this.value = this.value + this.sumValue;
+    } else {
+      this.currentValue = digitValue;
+      this.value = parseInt(this.value + this.currentValue);
+    }
+  }
+
+  onClearClick() {
+    this.currentValue = '';
+    this.value = 0;
+  }
+  onBackspaceClick() {
+    this.currentValue = this.currentValue.slice(0, -1);
+    if (isNaN(parseInt(this.currentValue))) {
+      this.currentValue = '0';
+    }
+    this.value = parseInt(this.currentValue);
+  }
   ngOnInit() {
     this.fetchProduct();
     window.addEventListener('keypress', this.handleBarcodeInput.bind(this));
@@ -183,15 +224,24 @@ export class ShopComponent {
   //   this.isVisible = true;
   // }
 
-  // handleOk(): void {
-  //   console.log('Button ok clicked!');
-  //   this.isVisible = false;
-  // }
+  handleOk(): void {
+    this.orderService.checkOutCashOrder(this.stashItem).subscribe(
+      (res) => {
+        Swal.fire(
+          'ทำรายการสำเร็จ !',
+          'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+          'success'
+        );
+        this.handleClearOrder();
+      },
+      (err) => {}
+    );
+    this.isShowModal = false;
+  }
 
-  // handleCancel(): void {
-  //   console.log('Button cancel clicked!');
-  //   this.isVisible = false;
-  // }
+  handleCancel(): void {
+    this.isShowModal = false;
+  }
 
   filterByType() {
     let nextList = [...this.productList];
@@ -205,6 +255,7 @@ export class ShopComponent {
   handleClearOrder() {
     this.cart = [];
     this.totalPrice = 0;
+    this.stashItem = [];
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -231,17 +282,19 @@ export class ShopComponent {
     }).then((result) => {
       if (result.value) {
         if (paymentType === PAYMENT_TYPE.CASH) {
-          this.orderService.checkOutCashOrder(b).subscribe(
-            (res) => {
-              Swal.fire(
-                'ทำรายการสำเร็จ !',
-                'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-                'success'
-              );
-              this.handleClearOrder();
-            },
-            (err) => {}
-          );
+          this.isShowModal = true;
+          this.stashItem = b
+          // this.orderService.checkOutCashOrder(b).subscribe(
+          //   (res) => {
+          //     Swal.fire(
+          //       'ทำรายการสำเร็จ !',
+          //       'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+          //       'success'
+          //     );
+          //     this.handleClearOrder();
+          //   },
+          //   (err) => {}
+          // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
           this.orderService.checkOutBankingOrder(b).subscribe(
             (res) => {
