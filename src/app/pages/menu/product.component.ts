@@ -4,7 +4,7 @@ import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { IProduct } from 'src/app/model/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
-import { formatDateTime } from 'src/utils/utils';
+import { formatDateTime, getStorage } from 'src/utils/utils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -38,6 +38,8 @@ export class ProductComponent {
   fileList: NzUploadFile[] | any = [];
   avatarUrl?: string;
   productStatus = false;
+
+  isAccess = getStorage('role') === 'owner' ? true : false;
 
   constructor(
     private stockService: StockService,
@@ -100,6 +102,7 @@ export class ProductComponent {
     this.productData = {};
     this.pdTypeSelected = '';
     this.switchValue = false;
+    this.fileList = [];
   };
 
   async handleCloseModal() {
@@ -189,6 +192,10 @@ export class ProductComponent {
         data.append(key, value);
       });
 
+      if (this.fileList[0]) {
+        data.append('file', this.fileList[0]);
+      }
+
       this.productService.updateProduct(data).subscribe(
         (res) => {
           this.fetchProduct();
@@ -217,6 +224,8 @@ export class ProductComponent {
 
   editProduct(current: any) {
     this.productData = current;
+    console.log(current);
+
     this.pdTypeSelected = current.product_type;
     this.switchValue = current.auto_stock;
 

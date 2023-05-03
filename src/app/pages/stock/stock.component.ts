@@ -3,6 +3,7 @@ import { StockService } from 'src/app/services/stock.service';
 import { formatDateTime } from 'src/utils/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { STOCK_TYPE } from 'src/utils/constatnt';
+import { TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
 
 // interface Stock {
 //   id: string;
@@ -19,7 +20,7 @@ import { STOCK_TYPE } from 'src/utils/constatnt';
 export class StockComponent {
   stockList: any = [];
   stockAllList: any = [];
-  importTrxList: any = [];
+  lotTrxList: any = [];
   stockData: any = {};
   stockType = 'inventory';
   isEdit: boolean = false;
@@ -29,19 +30,22 @@ export class StockComponent {
   isShowModalStockDetail: boolean = false;
   isShowModalImport: boolean = false;
   isShowModalExport: boolean = false;
+  isShowModalExportDetail: boolean = false;
 
   // == IMPROT ITEM ==
   importList: any = [];
+
+  // === EXPORT ITEM LIST ===
+  trackingList: any = [];
+  exportItemSelected: any = [];
+
+  $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
 
   // == PAGINATION ==
   page: number = 1;
   pageLimit: number = 10;
   query: string = '';
   total: number = 10;
-
-  // == SUB PAGINATION ==
-  pageDt: number = 1;
-  totalDt: number = 10;
 
   constructor(
     private stockService: StockService,
@@ -79,7 +83,7 @@ export class StockComponent {
 
     this.stockService.getAllLotByType(reqData).subscribe((res) => {
       let { total, items } = res;
-      this.importTrxList = items;
+      this.lotTrxList = items;
       this.total = total;
     });
   }
@@ -113,12 +117,18 @@ export class StockComponent {
 
   closeModalExport(): void {
     this.isShowModalExport = false;
+
     this.resetData();
   }
 
   closeModalDetail() {
     this.isShowModalStockDetail = false;
     this.resetData();
+  }
+
+  closeModalExportDetail() {
+    this.isShowModalExportDetail = false;
+    this.exportItemSelected = [];
   }
 
   addImportItem() {
@@ -140,7 +150,7 @@ export class StockComponent {
     this.page = 1;
     this.pageLimit = 10;
     this.total = 0;
-
+    this.resetData();
     if (this.stockType === STOCK_TYPE.INVENTORY) {
       this.fetchStock();
     } else {
@@ -152,6 +162,9 @@ export class StockComponent {
     this.stockData = {};
     this.importList = [];
     this.stockAllList = [];
+    this.trackingList = [];
+    this.lotTrxList = [];
+    this.exportItemSelected = [];
   };
 
   onChangePageLimit(nextLimit: number) {
@@ -164,9 +177,9 @@ export class StockComponent {
       case 'in':
         return { title: 'นำเข้า', color: 'blue' };
       case 'out':
-        return { title: 'นำออก', color: 'volcano' };
+        return { title: 'นำออก', color: 'magenta' };
       case 'order':
-        return { title: 'ออเดอร์', color: 'magenta' };
+        return { title: 'ออเดอร์', color: 'purple' };
       default:
         return { title: '-', color: 'red' };
     }
@@ -246,11 +259,17 @@ export class StockComponent {
   }
 
   handleSubmitExport() {
-    let reqData = {
+    let reqData: any = {
       lot_id: this.stockData.lot_id,
-      amount: this.stockData.amount,
       info: this.stockData.info,
     };
+
+    if (this.exportItemSelected.length > 0) {
+      reqData['tracking_list'] = this.exportItemSelected;
+    } else {
+      reqData['amount'] = this.stockData.amount;
+    }
+
     this.stockService.exportItem(reqData).subscribe(
       (res) => {
         this.message.create('success', `นำสินค้าออกจากสต็อกสำเร็จ`);
@@ -276,12 +295,17 @@ export class StockComponent {
     this.isShowModalStockDetail = true;
   }
 
+  showModalExportDetail(event: any, current: any) {
+    event.stopPropagation();
+    this.exportItemSelected = current?.tracking;
+    this.isShowModalExportDetail = true;
+  }
+
   handleCheckStock(stockId: any) {
     this.stockService.getStockDetailById(stockId).subscribe(
       (res) => {
-        let { items, total } = res;
+        let { items } = res;
         this.importList = items;
-        this.totalDt = total;
       },
       (err) =>
         this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
@@ -311,4 +335,29 @@ export class StockComponent {
         this.throwErrorMessage(`${err.error.message}::${err.error.statusCode}`)
     );
   }
+
+  handleRenderTracking(event: any) {
+    this.trackingList = [];
+    this.exportItemSelected = [];
+    console.log(this.importList);
+
+    let temp = this.importList.map((obj: any) => Object.assign({}, obj));
+    const existingItem = temp.find((current: any) => current._id === event);
+
+    if (existingItem && existingItem?.tracking.length != 0) {
+      console.log(existingItem?.tracking);
+      this.trackingList = existingItem?.tracking;
+      // existingItem?.tracking.map((item: any) => {
+      //   this.trackingList.push({ key: item, title: item });
+      // });
+    }
+  }
+
+  // select(ret: {}): void {
+  //   console.log('nzSelectChange', ret);
+  // }
+
+  // change(ret: {}): void {
+  //   console.log('nzChange', ret);
+  // }
 }

@@ -22,6 +22,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzTransferModule } from 'ng-zorro-antd/transfer';
 @NgModule({
   imports: [],
   exports: [
@@ -49,6 +50,7 @@ import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
     NzUploadModule,
     NzSwitchModule,
     NzInputNumberModule,
+    NzTransferModule,
   ],
   declarations: [],
 })

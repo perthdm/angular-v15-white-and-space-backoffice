@@ -4,7 +4,8 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">ประวัติการขาย</h3>
         </div>
         <div nz-col [nzSpan]="24" [nzMd]="16">
-            <nz-range-picker [(ngModel)]="dateRange" [nzFormat]="dateFormat" (ngModelChange)="fetchBill()">
+            <nz-range-picker *ngIf="isAccess" [(ngModel)]="dateRange" [nzFormat]="dateFormat"
+                (ngModelChange)="fetchBill()">
             </nz-range-picker>
         </div>
     </div>
@@ -17,7 +18,7 @@
             <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 6rem);">
 
                 <nz-table style="margin:20px 0px;" #basicTable nzBordered [nzData]="billList" [nzShowPagination]="false"
-                    [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'">
+                    [nzFrontPagination]="false" [nzLoading]="isLoading" [nzSize]="'middle'" [nzPageSize]="20">
                     <thead>
                         <tr>
                             <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
@@ -35,7 +36,7 @@
                         <tr style="background-color: #4479a4;">
                             <td class="td-no-hover" [nzAlign]="'center'"
                                 style="color:white ; padding:4px ; font-weight: bold;">
-                                {{ mapDate(data.date,'onlyDate')}}</td>
+                                {{ data.date }}</td>
                             <td class="td-no-hover" [nzAlign]="'center'" [colSpan]="24"></td>
                         </tr>
                         <tr *ngFor="let bill of data.bills;" (click)="handleShowBillDetail(bill)"

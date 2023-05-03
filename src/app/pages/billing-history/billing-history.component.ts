@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { formatDateTime } from 'src/utils/utils';
+import { formatDateTime, getStorage } from 'src/utils/utils';
 import * as moment from 'moment';
 import { PAYMENT_TYPE } from 'src/utils/constatnt';
 import Swal from 'sweetalert2';
@@ -57,6 +57,7 @@ export class BillingHistoryComponent {
   currentBill: any = {};
   isLoading: boolean = true;
   isShow: boolean = false;
+  isAccess: boolean = getStorage('role') === 'owner' ? true : false;
 
   // === PAGINATION === //
   dateRange: any = [

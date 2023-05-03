@@ -11,7 +11,7 @@
                     </ng-template>
                 </div>
             </div> -->
-            <div class="radio-style" style="margin-bottom: 10px;"
+            <div class="radio-style" style="margin-bottom: 20px;"
                 style="max-width: calc(100vw - 58px);margin-bottom: 10px;">
                 <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
                     (ngModelChange)="filterByType()">
@@ -42,7 +42,7 @@
             </div>
 
 
-            <div nz-row [nzGutter]="[20,20]" style="margin-top: 30px;">
+            <div nz-row [nzGutter]="[20,20]" style="margin-top: 20px;">
                 <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
                     <div class="card-product" [class.disable-card-product]="item.auto_stock"
                         (click)="!item.auto_stock ? updateCart(item, 'add') : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า') ">
@@ -101,7 +101,6 @@
                         <span class="text-muted">Cashier ({{ userRole.toUpperCase() }}) </span>
                     </div>
                 </div>
-
             </div>
 
             <div style="padding:15px;">
@@ -118,8 +117,8 @@
                                         alt="cart-item-show" style="border: 1px solid #efefef">
 
                                     <!-- LOCAL IMAGE : HAVE IMAGE -->
-                                    <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
-                                        alt="cart-item-show" style="border: 1px solid #efefef">
+                                    <!-- <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
+                                        alt="cart-item-show" style="border: 1px solid #efefef"> -->
 
                                     <!-- PUBLIC IMAGE : NO IMAGE-->
                                     <img *ngIf="!item.image"

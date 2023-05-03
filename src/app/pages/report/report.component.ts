@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { getISOWeek } from 'date-fns';
 import * as moment from 'moment';
 import { ReportService } from 'src/app/services/report.service';
-import { formatDateTime } from 'src/utils/utils';
+import { formatDateTime, getStorage } from 'src/utils/utils';
 
 @Component({
   selector: 'app-report',
@@ -13,14 +13,16 @@ export class ReportComponent {
   dataList: any = [];
   summaryData: any = { totalProfit: 0, totalBill: 0 };
   dateRange: any = [
-    moment().startOf('month').toDate(),
-    moment().endOf('month').toDate(),
+    moment().startOf('day').toDate(),
+    moment().endOf('day').toDate(),
   ];
   dateFormat = 'dd-MM-YYYY';
 
   isLoading: boolean = true;
   totalBill: number = 0;
   totalProfit: number = 0;
+
+  isAccess: boolean = getStorage('role') === 'owner' ? true : false;
 
   constructor(private reportService: ReportService) {}
 
