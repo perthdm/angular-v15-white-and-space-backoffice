@@ -1,7 +1,7 @@
 let isDev = true;
 
 export const API_DOMAIN = isDev
-  ? 'https://api.whiteandspace.com'
+  ? 'http://localhost:3000'
   : 'http://192.168.1.163:3000';
 
 export const formatDateTime = (time?: any, type?: string) => {

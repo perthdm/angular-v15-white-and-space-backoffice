@@ -5,6 +5,7 @@ import { IProduct } from 'src/app/model/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { StockService } from 'src/app/services/stock.service';
 import { formatDateTime } from 'src/utils/utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product',
@@ -36,6 +37,7 @@ export class ProductComponent {
   switchValue = false;
   fileList: NzUploadFile[] | any = [];
   avatarUrl?: string;
+  productStatus = false;
 
   constructor(
     private stockService: StockService,
@@ -221,10 +223,11 @@ export class ProductComponent {
     if (this.productData?.stock?._id) {
       this.productData['stock_id'] = this.productData?.stock?._id;
     }
-
     this.isEdit = true;
     this.showModal();
   }
+
+  
 
   getTagDetail(type: string) {
     switch (type) {
@@ -266,4 +269,30 @@ export class ProductComponent {
     this.fileList = [...this.fileList, file];
     return false;
   };
+
+  changeStatus(event: any, data: any) {
+    event.stopPropagation();
+    Swal.fire({
+      title: 'เปลี่ยนสถานะ!',
+      text: 'คุณต้องการเปลี่ยนสถานะสินค้าชิ้นนี้หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยัน',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.productService.updateStatusProduct(data._id).subscribe(
+          (res) => {
+            this.message.create('success', `เปลี่ยนสถานะสำเร็จ`);
+            this.fetchProduct();
+          },
+          (err) =>
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            )
+        );
+      }
+    });
+  }
 }

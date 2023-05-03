@@ -1,74 +1,114 @@
 <div class="inner-content">
-    <div nz-row>
-        <div nz-col [nzSpan]="8">
-            <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">สินค้า / บริการ</h3>
-        </div>
-        <div nz-col [nzSpan]="16">
-            <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
-        </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="8">
+      <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: bold">
+        สินค้า / บริการ
+      </h3>
     </div>
-    <div class="radio-style" style="max-width: calc(100vw - 6rem);">
-        <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
-            (ngModelChange)="fetchProduct()">
-            <label nz-radio-button nzValue="">
-                ทั้งหมด <span>({{ productCount.total }})</span>
-            </label>
-            <label nz-radio-button nzValue="food">อาหาร <span>({{ productCount.food }})</span></label>
-            <label nz-radio-button nzValue="desert"> ของหวาน <span>({{ productCount.desert }})</span></label>
-            <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>({{ productCount.beverage }})</span></label>
-            <label nz-radio-button nzValue="etc">อื่นๆ <span>({{ productCount.etc }})</span></label>
-        </nz-radio-group>
-        <button nz-button nzType="primary" style="height: 40px; border-radius: 10px; margin-right: 10px;"
-            (click)="showModal()" class="d-none-950">
-            <span nz-icon nzType="plus" nzTheme="outline"></span>
-            เพิ่มรายการ
-        </button>
+    <div nz-col [nzSpan]="16">
+      <antd-searchbox
+        placeholder=" ค้นหา Name / Serial / Barcode"
+      ></antd-searchbox>
     </div>
-    <div class="app-content">
+  </div>
+  <div class="radio-style" style="max-width: calc(100vw - 6rem)">
+    <nz-radio-group
+      [(ngModel)]="categoryType"
+      nzButtonStyle="solid"
+      nzSize="large"
+      (ngModelChange)="fetchProduct()"
+    >
+      <label nz-radio-button nzValue="">
+        ทั้งหมด <span>({{ productCount.total }})</span>
+      </label>
+      <label nz-radio-button nzValue="food"
+        >อาหาร <span>({{ productCount.food }})</span></label
+      >
+      <label nz-radio-button nzValue="desert">
+        ของหวาน <span>({{ productCount.desert }})</span></label
+      >
+      <label nz-radio-button nzValue="beverage"
+        >เครื่องดื่ม <span>({{ productCount.beverage }})</span></label
+      >
+      <label nz-radio-button nzValue="etc"
+        >อื่นๆ <span>({{ productCount.etc }})</span></label
+      >
+    </nz-radio-group>
+    <button
+      nz-button
+      nzType="primary"
+      style="height: 40px; border-radius: 10px; margin-right: 10px"
+      (click)="showModal()"
+      class="d-none-950"
+    >
+      <span nz-icon nzType="plus" nzTheme="outline"></span>
+      เพิ่มรายการ
+    </button>
+  </div>
+  <div class="app-content">
+    <nz-table
+      style="margin: 20px 0px; min-height: 300px"
+      #basicTable
+      [nzData]="producList"
+      [nzShowPagination]="false"
+      [nzPageSize]="pageLimit"
+    >
+      <thead>
+        <tr>
+          <th [nzAlign]="'center'">รหัสสินค้า</th>
+          <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
+          <th>ชื่อสินค้า</th>
+          <th [nzAlign]="'center'">ราคา (บาท)</th>
+          <th [nzAlign]="'center'">ตัดสต็อกอัตโนมัติ</th>
+          <th [nzAlign]="'center'">สินค้าในคลัง</th>
+          <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
+          <th [nzAlign]="'center'">สถานะ</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let data of basicTable.data; let index = index"
+          style="cursor: pointer"
+          (click)="editProduct(data)"
+        >
+          <td [nzAlign]="'center'">{{ data.product_id }}</td>
+          <td [nzAlign]="'center'">
+            <nz-tag [nzColor]="getTagDetail(data.product_type).color">
+              {{ getTagDetail(data.product_type).title }}</nz-tag
+            >
+          </td>
+          <td>{{ data.name }}</td>
+          <td [nzAlign]="'center'">{{ data.price.toLocaleString() }}</td>
 
-        <nz-table style="margin:20px 0px; min-height: 300px;" #basicTable [nzData]="producList"
-            [nzShowPagination]="false" [nzPageSize]="pageLimit">
-            <thead>
-                <tr>
-                    <th [nzAlign]="'center'">รหัสสินค้า</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
-                    <th>ชื่อสินค้า</th>
-                    <th [nzAlign]="'center'">ราคา (บาท)</th>
-                    <th [nzAlign]="'center'">ตัดสต็อกอัตโนมัติ</th>
-                    <th [nzAlign]="'center'">สินค้าในคลัง</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
-                    <th [nzAlign]="'center'">สถานะ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let data of basicTable.data ;let index = index" style="cursor: pointer;"
-                    (click)="editProduct(data)">
-                    <td [nzAlign]="'center'">{{ data.product_id }}</td>
-                    <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="getTagDetail(data.product_type).color">
-                            {{ getTagDetail(data.product_type).title }}</nz-tag>
-                    </td>
-                    <td>{{ data.name }}</td>
-                    <td [nzAlign]="'center'">{{ data.price.toLocaleString() }}</td>
+          <td [nzAlign]="'center'">
+            <ng-container *ngIf="data.auto_stock !== false; else zeroAmount">
+              <span
+                nz-icon
+                nzType="check"
+                nzTheme="outline"
+                style="color: #29f"
+              ></span>
+            </ng-container>
+          </td>
 
-                    <td [nzAlign]="'center'">
-                        <ng-container *ngIf="data.auto_stock !== false; else zeroAmount">
-                            <span nz-icon nzType="check" nzTheme="outline" style="color:#29f"></span>
-                        </ng-container>
-                    </td>
+          <td [nzAlign]="'center'">
+            {{ data.stock ? data.stock.name : "-" }}
+          </td>
 
-                    <td [nzAlign]="'center'">
-                        {{ data.stock ? data.stock.name : '-'}}
-                    </td>
+          <td [nzAlign]="'center'">
+            {{ data.stock ? data.stock.amount : "-" }}
+          </td>
 
-                    <td [nzAlign]="'center'">
-                        {{ data.stock ? data.stock.amount : '-'}}
-                    </td>
-
-                    <td [nzAlign]="'center'">
-                        <nz-tag [nzColor]="'#87d068'">เปิดใช้งาน</nz-tag>
-                    </td>
-                    <!-- <td>
+          <td [nzAlign]="'center'">
+            <nz-tag
+              [nzColor]="data.status ? '#87d068' : '#ff7875'"
+              (click)="changeStatus($event, data)"
+              style="padding: 2px 8px"
+            >
+              {{ data.status ? "Open" : "Close" }}
+            </nz-tag>
+          </td>
+          <!-- <td>
                         <button nz-button *ngIf=""
                             style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #fb4545;color:white;"
                             (click)="handleDelete(data, $event)">
@@ -76,73 +116,125 @@
                         </button>
                     </td> -->
 
-                    <ng-template #zeroAmount>
-                        -
-                    </ng-template>
-                </tr>
-            </tbody>
-        </nz-table>
+          <ng-template #zeroAmount> - </ng-template>
+        </tr>
+      </tbody>
+    </nz-table>
 
-        <div style="padding:0px 20px 20px 20px; text-align: right;">
-            <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
-                [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchProduct()"
-                (nzPageSizeChange)="onChangePageLimit($event)" [nzShowTotal]="rangeTemplate">
-            </nz-pagination>
+    <div style="padding: 0px 20px 20px 20px; text-align: right">
+      <nz-pagination
+        [(nzPageIndex)]="page"
+        [nzTotal]="total"
+        [nzSimple]="false"
+        [(nzPageSize)]="pageLimit"
+        [nzShowSizeChanger]="true"
+        (nzPageIndexChange)="fetchProduct()"
+        (nzPageSizeChange)="onChangePageLimit($event)"
+        [nzShowTotal]="rangeTemplate"
+      >
+      </nz-pagination>
 
-            <ng-template #rangeTemplate let-range="range" let-total>
-                {{ range[0] }}-{{ range[1] }} of {{ total }} items
-            </ng-template>
-        </div>
-
-        <!-- [MODAL] : ADD , EDIT PRODUCT -->
-        <nz-modal [(nzVisible)]="isShowModal" [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
-            (nzOnCancel)="handleCloseModal()" (nzOnOk)="handleOk()">
-            <ng-container *nzModalContent>
-                <h4>รหัสสินค้า</h4>
-                <input nz-input class="wns-input" placeholder="กรุณากรอกรหัสสินค้า" [ngModel]="productData.product_id"
-                    (change)="onChangeData($event)" name="product_id" maxlength="10" minlength="10"
-                    [disabled]="isEdit" />
-
-                <h4 style="margin-top: 8px;">ชื่อสินค้า</h4>
-                <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
-                    (change)="onChangeData($event)" name="name" />
-
-                <h4 style="margin-top: 8px;">ราคาสินค้า</h4>
-                <input nz-input class="wns-input" placeholder="กรุณากรอกราคาสินค้า" [ngModel]="productData.price"
-                    (change)="onChangeData($event)" name="price" type="number" />
-
-                <h4 style="margin-top: 8px;">ประเภท</h4>
-                <nz-select [(ngModel)]="pdTypeSelected" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
-                    class="select-style">
-                    <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
-                    <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
-                    <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
-                    <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
-                </nz-select>
-
-                <h4 style="margin-top: 8px;">รูปภาพสินค้า</h4>
-                <nz-upload class="upload-style" [nzLimit]="1" nzListType="picture" [nzBeforeUpload]="beforeUpload"
-                    [(nzFileList)]="fileList">
-                    <button nz-button nzType="primary" *ngIf="fileList.length === 0">
-                        <span nz-icon nzType="upload"></span>
-                        อัพโหลด
-                    </button>
-                </nz-upload>
-
-                <div *ngIf="!productData.stock">
-                    <nz-divider></nz-divider>
-                    <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
-                    <div>
-                        <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem;"></nz-switch>
-                        <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
-                            [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
-                            <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
-                                nzLabel="{{ current.name }} ({{ current.amount }})">
-                            </nz-option>
-                        </nz-select>
-                    </div>
-                </div>
-            </ng-container>
-        </nz-modal>
+      <ng-template #rangeTemplate let-range="range" let-total>
+        {{ range[0] }}-{{ range[1] }} of {{ total }} items
+      </ng-template>
     </div>
+
+    <!-- [MODAL] : ADD , EDIT PRODUCT -->
+    <nz-modal
+      [(nzVisible)]="isShowModal"
+      [nzTitle]="isEdit ? 'แก้ไขสินค้า' : 'เพิ่มสินค้า'"
+      (nzOnCancel)="handleCloseModal()"
+      (nzOnOk)="handleOk()"
+    >
+      <ng-container *nzModalContent>
+        <h4>รหัสสินค้า</h4>
+        <input
+          nz-input
+          class="wns-input"
+          placeholder="กรุณากรอกรหัสสินค้า"
+          [ngModel]="productData.product_id"
+          (change)="onChangeData($event)"
+          name="product_id"
+          maxlength="10"
+          minlength="10"
+          [disabled]="isEdit"
+        />
+
+        <h4 style="margin-top: 8px">ชื่อสินค้า</h4>
+        <input
+          nz-input
+          class="wns-input"
+          placeholder="กรุณากรอกชื่อสินค้า"
+          [ngModel]="productData.name"
+          (change)="onChangeData($event)"
+          name="name"
+        />
+
+        <h4 style="margin-top: 8px">ราคาสินค้า</h4>
+        <input
+          nz-input
+          class="wns-input"
+          placeholder="กรุณากรอกราคาสินค้า"
+          [ngModel]="productData.price"
+          (change)="onChangeData($event)"
+          name="price"
+          type="number"
+        />
+
+        <h4 style="margin-top: 8px">ประเภท</h4>
+        <nz-select
+          [(ngModel)]="pdTypeSelected"
+          nzPlaceHolder="เลือกประเภทของสินค้า"
+          style="width: 180px"
+          class="select-style"
+        >
+          <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
+          <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
+          <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
+          <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
+        </nz-select>
+
+        <h4 style="margin-top: 8px">รูปภาพสินค้า</h4>
+        <nz-upload
+          class="upload-style"
+          [nzLimit]="1"
+          nzListType="picture"
+          [nzBeforeUpload]="beforeUpload"
+          [(nzFileList)]="fileList"
+        >
+          <button nz-button nzType="primary" *ngIf="fileList.length === 0">
+            <span nz-icon nzType="upload"></span>
+            อัพโหลด
+          </button>
+        </nz-upload>
+
+        <div *ngIf="!productData.stock">
+          <nz-divider></nz-divider>
+          <h4 style="margin-top: 8px">ตัดสต็อกอัตโนมัติ</h4>
+          <div>
+            <nz-switch
+              [(ngModel)]="switchValue"
+              style="margin-right: 1rem"
+            ></nz-switch>
+            <nz-select
+              *ngIf="switchValue"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="เลือกของที่ต้องการผูก"
+              [(ngModel)]="productData.stock_id"
+              style="width: 180px"
+              class="select-style"
+            >
+              <nz-option
+                *ngFor="let current of stockList"
+                nzValue="{{ current._id }}"
+                nzLabel="{{ current.name }} ({{ current.amount }})"
+              >
+              </nz-option>
+            </nz-select>
+          </div>
+        </div>
+      </ng-container>
+    </nz-modal>
+  </div>
 </div>

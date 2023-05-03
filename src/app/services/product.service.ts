@@ -13,6 +13,7 @@ const ENDPOINT = {
   CREATE: `${API_DOMAIN}/product`,
   UPDATE: `${API_DOMAIN}/product`,
   DELETE: (productId: string) => `${API_DOMAIN}/product/${productId}`,
+  PUT:`${API_DOMAIN}/product/status`,
 };
 
 @Injectable()
@@ -23,6 +24,15 @@ export class ProductService {
     return this.http.get<IProductPagination>(ENDPOINT.GET_ALL(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  updateStatusProduct(productId:any): Observable<any> {
+    let data = { id: productId };
+    return this.http.put<any>(ENDPOINT.PUT, data, {
+      headers: new HttpHeaders({
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
