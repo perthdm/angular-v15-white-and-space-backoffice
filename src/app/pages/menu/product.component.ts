@@ -224,7 +224,6 @@ export class ProductComponent {
 
   editProduct(current: any) {
     this.productData = current;
-    console.log(current);
 
     this.pdTypeSelected = current.product_type;
     this.switchValue = current.auto_stock;

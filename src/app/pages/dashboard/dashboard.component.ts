@@ -13,7 +13,7 @@ Chart.register(...registerables);
 export class DashboardComponent {
   dataList: IProduct[] = [];
   dateList: any = [];
-
+  inputData: any = {};
   emptyRef?: ElementRef<HTMLElement>;
 
   cardData: any = {
@@ -21,7 +21,8 @@ export class DashboardComponent {
     dailyBill: 0,
     weeklyProfit: 0,
   };
-
+  isGoal: boolean = false;
+  isVisible = false;
   // === PAGINATION === //
   page: number = 1;
   pageLimit: number = 10;
@@ -98,5 +99,30 @@ export class DashboardComponent {
         },
       },
     });
+  }
+  showModalGoal(): void {
+    this.isVisible = true;
+    this.isGoal = true;
+  }
+  showModalMoney(): void {
+    this.isVisible = true;
+    this.isGoal = false;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+  onChangeData(e: any) {
+    let { name, value } = e.target;
+    this.inputData = {
+      ...this.inputData,
+      [name]: value,
+    };
   }
 }

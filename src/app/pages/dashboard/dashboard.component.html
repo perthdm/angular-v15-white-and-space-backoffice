@@ -8,12 +8,7 @@
         <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
           <div class="inner-box card-dashboard">
             <div class="card-icon" style="background-color: #fff3b9">
-              <span
-                nz-icon
-                nzType="dollar-circle"
-                nzTheme="outline"
-                style="color: #e4ca6e"
-              ></span>
+              <span nz-icon nzType="dollar-circle" nzTheme="outline" style="color: #e4ca6e"></span>
             </div>
             <span class="card-title">Daily Profit</span>
             <div class="card-sub-title">
@@ -42,12 +37,7 @@
         <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
           <div class="inner-box card-dashboard">
             <div class="card-icon" style="background-color: #f2effb">
-              <span
-                nz-icon
-                nzType="lock"
-                nzTheme="outline"
-                style="color: #8e77e1"
-              ></span>
+              <span nz-icon nzType="lock" nzTheme="outline" style="color: #8e77e1"></span>
             </div>
             <span class="card-title">Cash Drawer</span>
             <div class="card-sub-title">
@@ -55,19 +45,16 @@
             </div>
             <div class="card-info">
               <span style="color: #b0b6bc; font-size: 14px"> เงินเริ่มต้น </span>
-              <span style="color: #2375d3; font-weight: bold">{{cardData.cashDrawer.toLocaleString()}}</span>
+              <span style="color: #2375d3; font-weight: bold">{{cardData.cashDrawer.toLocaleString()}}</span> <button
+                nz-button nzType="text" (click)="showModalMoney()"><span nz-icon nzType="edit" nzTheme="fill"
+                  style="color:#1890ff;"></span></button>
             </div>
           </div>
         </div>
 
         <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="24">
-          <div
-            class="inner-box card-dashboard"
-            style="min-height: 385px; height: auto; width: auto"
-          >
-            <span style="color: #0b072f; font-weight: bold; font-size: 18px"
-              >Profit Graph</span
-            >
+          <div class="inner-box card-dashboard" style="min-height: 385px; height: auto; width: auto">
+            <span style="color: #0b072f; font-weight: bold; font-size: 18px">Profit Graph</span>
             <div>
               <canvas id="barchart" style="height: 450px; width: auto"></canvas>
             </div>
@@ -125,56 +112,45 @@
     <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
       <div class="inner-box card-dashboard" style="min-height: 385px">
         <div class="card-icon" style="background-color: #effbf2">
-          <span
-            nz-icon
-            nzType="save"
-            nzTheme="outline"
-            style="color: #3cec7f"
-          ></span>
+          <span nz-icon nzType="save" nzTheme="outline" style="color: #3cec7f"></span>
         </div>
-        <span style="color: #0b072f; font-weight: bold; font-size: 18px"
-          >Goal</span
-        >
-        <div
-          style="
+        <span style="color: #0b072f; font-weight: bold; font-size: 18px">Goal</span>
+        <div style="
             display: flex;
             justify-content: center;
             align-items: center;
             height: 70%;
-          "
-        >
-          <nz-progress
-            nzType="dashboard"
-            [nzPercent]="
+          ">
+          <nz-progress nzType="dashboard" [nzPercent]="
               ((cardData.dailyProfit * 100) / cardData.cashGoal).toFixed(2)
-            "
-            [nzStrokeColor]="{
+            " [nzStrokeColor]="{
               '0%': '#8268e0',
               '50%': '#108ee9',
               '100%': '#52b1ff'
-            }"
-            [nzStrokeWidth]="7"
-            [nzWidth]="160"
-            [nzGapPosition]="'bottom'"
-          >
+            }" [nzStrokeWidth]="7" [nzWidth]="160" [nzGapPosition]="'bottom'">
           </nz-progress>
         </div>
         <nz-divider style="margin: 0px 0px 12px 0px"></nz-divider>
         <div nz-row style="text-align: center">
-          <div
-            nz-col
-            [nzXs]="12"
-            style="border-right: 1px solid #f2f2f2; min-height: 50px"
-          >
+          <div nz-col [nzXs]="12" style="border-right: 1px solid #f2f2f2; min-height: 50px">
             <span style="color: #9c9fa9; font-weight: 500">ยอดปัจจุบัน</span>
             <h2>{{ cardData.dailyProfit.toLocaleString() }} ฿</h2>
           </div>
           <div nz-col [nzXs]="12" style="min-height: 50px">
             <span style="color: #9c9fa9; font-weight: 500">เป้าหมาย</span>
-            <h2>{{ cardData.cashGoal.toLocaleString() }} ฿</h2>
+            <h2>{{ cardData.cashGoal.toLocaleString() }} ฿ <button nz-button nzType="text"
+                (click)="showModalGoal()"><span nz-icon nzType="edit" nzTheme="fill"
+                  style="color:#1890ff;"></span></button></h2>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isGoal ? 'ตั้งค่าเป้าหมาย' : 'ตั้งค่าเงินในลิ้นชัก'"
+    (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+    <ng-container *nzModalContent>
+      <input nz-input class="wns-input" placeholder="..." [ngModel]="inputData.value"
+                    (change)="onChangeData($event)" name="inputData" />
+    </ng-container>
+  </nz-modal>
 </div>

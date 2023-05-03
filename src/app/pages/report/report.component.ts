@@ -17,7 +17,6 @@ export class ReportComponent {
     moment().endOf('day').toDate(),
   ];
   dateFormat = 'dd-MM-YYYY';
-
   isLoading: boolean = true;
   totalBill: number = 0;
   totalProfit: number = 0;
