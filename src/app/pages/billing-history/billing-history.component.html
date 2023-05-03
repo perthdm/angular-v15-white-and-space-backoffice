@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <nz-modal [(nzVisible)]="isShow" nzTitle="รายละเอียดบิล" (nzOnCancel)="handleCancel()">
+        <nz-modal [(nzVisible)]="isShow" nzTitle="รายละเอียดบิล" (nzOnCancel)="handleCancel()" [nzFooter]=[]>
             <ng-container *nzModalContent>
 
                 <nz-table style="margin:20px 0px;" #currentTable nzBordered [nzData]="currentBill.items"
