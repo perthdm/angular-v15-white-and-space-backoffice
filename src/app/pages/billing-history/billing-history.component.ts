@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { PAYMENT_TYPE } from 'src/utils/constatnt';
 import Swal from 'sweetalert2';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ActivatedRoute } from '@angular/router';
 
 interface IBillList {
   date: string;
@@ -68,15 +69,24 @@ export class BillingHistoryComponent {
 
   constructor(
     private orderService: OrderService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    this.fetchBill();
+    let dateParam = this.route.snapshot.paramMap.get('date');
+    this.fetchBill(dateParam);
     this.isLoading = false;
   }
 
-  fetchBill() {
+  fetchBill(dateParam?: any) {
+    if (dateParam) {
+      this.dateRange = [
+        moment(dateParam).startOf('day').toDate(),
+        moment(dateParam).startOf('day').toDate(),
+      ];
+    }
+
     let reqConfig: any = {
       start: this.dateRange[0] ? this.dateRange[0] : null,
       end: this.dateRange[1] ? this.dateRange[1] : null,

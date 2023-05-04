@@ -45,6 +45,10 @@ const routes: Routes = [
         component: BillingHistoryComponent,
       },
       {
+        path: 'billing-history/:date',
+        component: BillingHistoryComponent,
+      },
+      {
         path: 'attendance',
         component: AttendanceComponent,
       },
