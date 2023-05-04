@@ -82,10 +82,6 @@ export class ShopComponent {
           if (res) {
             res['tagId'] = barcode;
             this.updateCart(res, 'add');
-            this.message.create(
-              'success',
-              `เพื่ม "${res.name}" ลงตระกร้าสำเร็จ`
-            );
           }
         },
         (err) => {
@@ -143,14 +139,17 @@ export class ShopComponent {
 
     if (type === CART_ACTION.ADD) {
       if (existingItem) {
-        existingItem.amount++;
-        existingItem.totalPrice += item.price;
         if (item.auto_stock) {
           if (!existingItem.tagList.includes(item.tagId)) {
+            existingItem.amount++;
+            existingItem.totalPrice += item.price;
             existingItem.tagList = [...existingItem.tagList, item.tagId];
           } else {
             this.message.create('warning', 'สินค้าชิ้นนี้อยู่ในตระกร้าแล้ว');
           }
+        } else {
+          existingItem.amount++;
+          existingItem.totalPrice += item.price;
         }
       } else {
         const newItem: any = {
@@ -167,9 +166,8 @@ export class ShopComponent {
           newItem['tagList'] = [item?.tagId];
         }
         this.cart.push(newItem);
+        this.totalPrice += item.price;
       }
-
-      this.totalPrice += item.price;
     } else if (type == CART_ACTION.DEL) {
       console.log(existingItem);
 
