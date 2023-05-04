@@ -6,6 +6,7 @@ import { Chart, registerables } from 'chart.js';
 import { formatDateTime } from 'src/utils/utils';
 import { CafeService } from 'src/app/services/cafe.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Observable } from 'rxjs';
 Chart.register(...registerables);
 
 @Component({
@@ -124,13 +125,19 @@ export class DashboardComponent {
 
   handleOk(): void {
     let reqData: any = {};
+
+    let response: Observable<any>;
+
     if (this.isGoal) {
       reqData['goal'] = +this.inputValue;
+
+      response = this.cafeService.updateCafe(reqData);
     } else {
       reqData['cash_drawer'] = +this.inputValue;
+      response = this.cafeService.updateCashDrawer(reqData['cash_drawer']);
     }
 
-    this.cafeService.updateCafe(reqData).subscribe(
+    response.subscribe(
       () => {
         this.message.create('success', `ทำรายการสำเร็จ`);
         this.handleCloseModal();

@@ -6,6 +6,7 @@ import { API_URL } from 'src/utils/utils';
 const ENDPOINT = {
   GET: `${API_URL}/cafe`,
   UPDATE: `${API_URL}/cafe`,
+  UPDATE_CASH_DRAER: `${API_URL}/cafe/cash-drawer`,
 };
 
 @Injectable()
@@ -28,5 +29,18 @@ export class CafeService {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
+  }
+
+  updateCashDrawer(cash_drawer: number): Observable<any> {
+    return this.http.put<any>(
+      ENDPOINT.UPDATE_CASH_DRAER,
+      { cash_drawer },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
   }
 }
