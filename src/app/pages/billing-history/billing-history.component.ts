@@ -45,6 +45,7 @@ enum ProductType {
   FOOD = 'food',
   DESERT = 'desert',
   BEVERAGE = 'beverage',
+  BEAR = 'bear',
   ETC = 'etc',
 }
 

@@ -66,6 +66,7 @@ export class ProductComponent {
           food: 0,
           desert: 0,
           beverage: 0,
+          bear:0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -243,6 +244,8 @@ export class ProductComponent {
         return { title: 'ของหวาน', color: 'magenta' };
       case 'beverage':
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
+      case 'bear':
+        return {title: 'หมี', color: 'orange'}
       default:
         return { title: 'สินค้า', color: 'purple' };
     }

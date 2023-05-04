@@ -19,6 +19,7 @@
             <label nz-radio-button nzValue="desert">
                 ของหวาน <span>({{ productCount.desert }})</span></label>
             <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>({{ productCount.beverage }})</span></label>
+            <label nz-radio-button nzValue="bear">หมี <span>({{ productCount.bear}})</span></label>
             <label nz-radio-button nzValue="etc">อื่นๆ <span>({{ productCount.etc }})</span></label>
         </nz-radio-group>
         <button *ngIf="isAccess" nz-button nzType="primary"
@@ -120,8 +121,8 @@
                     <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
                     <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
                     <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
-                    <!-- <nz-option nzValue="bear" nzLabel="หมี"></nz-option>
-                    <nz-option nzValue="set" nzLabel="คอมโบเซ็ต"></nz-option> -->
+                    <nz-option nzValue="bear" nzLabel="หมี"></nz-option>
+                    <!-- <nz-option nzValue="set" nzLabel="คอมโบเซ็ต"></nz-option> -->
                     <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
                 </nz-select>
 
