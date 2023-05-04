@@ -240,20 +240,20 @@
 
             <div nz-row>
 
-                <div nz-col nzXs="17">
+                <div nz-col nzXs="15">
                     <div class="keypad" style="border-bottom-left-radius: 15px;">
                         <div class="digit" *ngFor="let digit of digits" (click)="onDigitClick(digit.value)">
                             {{digit.text}} </div>
-                        <div class="digit" (click)="onClearClick()">C</div>
+                        <div class="digit" (click)="onClearClick()">AC</div>
                         <div class="digit" (click)="onDigitClick('0')">0</div>
                         <div class="digit" (click)="onBackspaceClick()">←</div>
                     </div>
                 </div>
-                <div nz-col nzXs="7">
-                    <div class="keypad" style="border-bottom-right-radius: 15px; border-left: 1px solid white;">
-                        <div class="digit" (click)="onDigitClick('1000')">1,000</div>
-                        <div class="digit" (click)="onDigitClick('500')">500</div>
-                        <div class="digit" (click)="onDigitClick('100')">100</div>
+                <div nz-col nzXs="9">
+                    <div class="keypad" style="border-bottom-right-radius: 15px;">
+                        <div class="digit2" (click)="onDigitClick('1000')">1,000</div>
+                        <div class="digit2" (click)="onDigitClick('500')">500</div>
+                        <div class="digit2" (click)="onDigitClick('100')">100</div>
                         <div class="submit-btn" (click)="handleOk()">ตกลง</div>
                     </div>
                 </div>

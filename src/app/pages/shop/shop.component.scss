@@ -198,18 +198,16 @@ nz-radio-group{
   justify-content: space-around;
   align-items: center;
   // width: 200px;
-  // height: 200px;
-  background-color: #eee;
+  height: 100%;
+  background-color: #566B77;
   padding: 10px;
 }
 .number-keypad{
-  background-color: rgb(218, 218, 218);
-  padding: 20px;
-  margin-top: 20px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  font-size: 42px;
+  background-color: #566B77;
+  padding: 20px 40px;
+  font-size: 54px;
   font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
 }
 .digit {
   display: flex;
@@ -217,42 +215,85 @@ nz-radio-group{
   align-items: center;
   width: 70px;
   height: 70px;
-  background-color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  // background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+// .digit:hover {
+//   background-color: #ddd;
+// }
+.digit2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: #849DB0;
   border-radius: 50%;
   cursor: pointer;
   margin: 5px;
   font-size: 20px;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-.digit:hover {
-  background-color: #ddd;
+  font-weight: bold;
 }
 .submit-btn {
   display: flex;
-  color: white;
+  color: rgba(22, 22, 22, 0.8);
   justify-content: center;
   align-items: center;
-  width: 70px;
-  height: 70px;
-  background-color: #1890ff;
+  width: 80px;
+  height: 80px;
+  background-color: #ffc400;
   border-radius: 50%;
   cursor: pointer;
   margin: 5px;
   font-size: 20px;
-  box-shadow: 0px 2px 2px #1890ff;
+  box-shadow: 0px 2px 2px #FFD85B;
+  font-weight: bold;
 }
 
 .submit-btn:hover {
-  background-color: #40A9FF;
+  background-color: #FFD85B;
 }
 .large-btn{
   float: right;
   padding: 10px 20px;
   height: auto;
   border-radius: 10px;
-  background: #e6e6e6;
+  background: #89aabd;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 5px;
+  margin-top: 15px;
+  box-shadow: 1px 1px 1px 0px #89aabd;
+}
+.large-btn:hover{
+  border: unset !important;
+  color: white;
+}
+::ng-deep.ant-modal-body{
+  padding: 0px !important;
+  // border-radius: 15px;
+}
+::ng-deep.ant-modal-footer{
+  display: none !important;
+}
+::ng-deep.ant-modal-header{
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 15px !important;
+  background-color: #566B77;
+  border-bottom: 0px !important;
+  .ng-star-inserted{
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+}
+::ng-deep.ant-modal-content {
+  border-radius: 15px !important;
 }
