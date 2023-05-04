@@ -58,29 +58,8 @@ export class ShopComponent {
     // { value: '1000', text: '1000' },
   ];
 
-  onDigitClick(digitValue: string) {
-    if (digitValue == '100' || digitValue == '500' || digitValue == '1000') {
-      this.sumValue = parseInt(digitValue);
-      this.value = this.value + this.sumValue;
-    } else {
-      this.currentValue = digitValue;
-      this.value = parseInt(this.value + this.currentValue);
-    }
-  }
-
-  onClearClick() {
-    this.currentValue = '';
-    this.value = 0;
-  }
-  onBackspaceClick() {
-    this.currentValue = this.currentValue.slice(0, -1);
-    if (isNaN(parseInt(this.currentValue))) {
-      this.currentValue = '0';
-    }
-    this.value = parseInt(this.currentValue);
-  }
   ngOnInit() {
-    this.fetchProduct();
+    this.fetchProductActive();
     window.addEventListener('keypress', this.handleBarcodeInput.bind(this));
   }
 
@@ -122,15 +101,8 @@ export class ShopComponent {
     }
   }
 
-  fetchProduct() {
-    let pageConfig = {
-      page: 1,
-      limit: 100,
-      type: this.categoryType,
-      query: this.query,
-    };
-
-    this.productService.getAllProduct(pageConfig).subscribe(
+  fetchProductActive() {
+    this.productService.getProductActive().subscribe(
       (res) => {
         let { items, summary } = res;
         let nextSum: any = {
@@ -145,11 +117,9 @@ export class ShopComponent {
           nextSum['total'] += i.count;
         });
 
-        let next = items.filter((item: any) => item.status);
-
         this.categoryCount = nextSum;
-        this.productList = next;
-        this.productListPreview = next;
+        this.productList = items;
+        this.productListPreview = items;
         this.userFullName = getStorage('name');
         this.userRole = getStorage('role');
       },
@@ -317,5 +287,27 @@ export class ShopComponent {
         }
       }
     });
+  }
+
+  onDigitClick(digitValue: string) {
+    if (digitValue == '100' || digitValue == '500' || digitValue == '1000') {
+      this.sumValue = parseInt(digitValue);
+      this.value = this.value + this.sumValue;
+    } else {
+      this.currentValue = digitValue;
+      this.value = parseInt(this.value + this.currentValue);
+    }
+  }
+
+  onClearClick() {
+    this.currentValue = '';
+    this.value = 0;
+  }
+  onBackspaceClick() {
+    this.currentValue = this.currentValue.slice(0, -1);
+    if (isNaN(parseInt(this.currentValue))) {
+      this.currentValue = '0';
+    }
+    this.value = parseInt(this.currentValue);
   }
 }

@@ -13,7 +13,8 @@ const ENDPOINT = {
   CREATE: `${API_URL}/product`,
   UPDATE: `${API_URL}/product`,
   DELETE: (productId: string) => `${API_URL}/product/${productId}`,
-  PUT:`${API_URL}/product/status`,
+  PUT: `${API_URL}/product/status`,
+  GET_ACTIVE_ITEMS: `${API_URL}/product/is-active`,
 };
 
 @Injectable()
@@ -29,7 +30,15 @@ export class ProductService {
     });
   }
 
-  updateStatusProduct(productId:any): Observable<any> {
+  getProductActive(): Observable<any> {
+    return this.http.get<any>(ENDPOINT.GET_ACTIVE_ITEMS,{
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  updateStatusProduct(productId: any): Observable<any> {
     let data = { id: productId };
     return this.http.put<any>(ENDPOINT.PUT, data, {
       headers: new HttpHeaders({
