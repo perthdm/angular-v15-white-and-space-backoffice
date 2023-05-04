@@ -111,8 +111,9 @@
 
     <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="6">
       <div class="inner-box card-dashboard" style="min-height: 385px">
-        <div class="card-icon" style="background-color: #effbf2">
-          <span nz-icon nzType="save" nzTheme="outline" style="color: #3cec7f"></span>
+        <div class="card-icon">
+          <button class="button-m-0" nz-button nzType="text" (click)="showModalGoal()"><span nz-icon nzType="edit" nzTheme="fill"
+              style="color:#1890ff;"></span></button>
         </div>
         <span style="color: #0b072f; font-weight: bold; font-size: 18px">Goal</span>
         <div style="
@@ -138,9 +139,7 @@
           </div>
           <div nz-col [nzXs]="12" style="min-height: 50px">
             <span style="color: #9c9fa9; font-weight: 500">เป้าหมาย</span>
-            <h2>{{ cardData.cashGoal.toLocaleString() }} ฿ <button nz-button nzType="text"
-                (click)="showModalGoal()"><span nz-icon nzType="edit" nzTheme="fill"
-                  style="color:#1890ff;"></span></button></h2>
+            <h2>{{ cardData.cashGoal.toLocaleString() }} ฿ </h2>
           </div>
         </div>
       </div>
@@ -149,8 +148,8 @@
   <nz-modal [(nzVisible)]="isVisible" [nzTitle]="isGoal ? 'ตั้งค่าเป้าหมาย' : 'ตั้งค่าเงินในลิ้นชัก'"
     (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
     <ng-container *nzModalContent>
-      <input nz-input class="wns-input" placeholder="..." [ngModel]="inputData.value"
-                    (change)="onChangeData($event)" name="inputData" />
+      <input nz-input class="wns-input" placeholder="..." [ngModel]="inputData.value" (change)="onChangeData($event)"
+        name="inputData" />
     </ng-container>
   </nz-modal>
 </div>
