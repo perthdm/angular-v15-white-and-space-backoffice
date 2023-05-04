@@ -232,18 +232,27 @@ export class ShopComponent {
   // }
 
   handleOk(): void {
-    this.orderService.checkOutCashOrder(this.stashItem).subscribe(
-      (res) => {
-        Swal.fire(
-          'ทำรายการสำเร็จ !',
-          'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-          'success'
-        );
-        this.handleClearOrder();
-      },
-      (err) => {}
-    );
-    this.isShowModal = false;
+    let customer_change = this.value - this.totalPrice 
+    if(customer_change >= 0){
+      this.orderService.checkOutCashOrder(this.stashItem).subscribe(
+        (res) => {
+          Swal.fire(
+            'ทำรายการสำเร็จ !',
+            `ทอน ${customer_change} บาท`,
+            'success'
+          );
+          this.handleClearOrder();
+        },
+        (err) => {}
+      );
+      this.isShowModal = false;
+    }else{
+      Swal.fire(
+        'ทำรายการไม่สำเร็จ !',
+        `กรุณาตรวจสอบจำนวนเงิน`,
+        'warning'
+      );
+    }
   }
 
   handleCancel(): void {
