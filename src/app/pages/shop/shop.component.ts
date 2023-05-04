@@ -30,7 +30,7 @@ export class ShopComponent {
   userRole: any = '';
   categoryCount: any = {};
   currentBarcode: string = '';
-  isShowModal: boolean = true;
+  isShowModal: boolean = false;
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
