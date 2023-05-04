@@ -235,8 +235,6 @@ export class ProductComponent {
     this.showModal();
   }
 
-  
-
   getTagDetail(type: string) {
     switch (type) {
       case 'food':

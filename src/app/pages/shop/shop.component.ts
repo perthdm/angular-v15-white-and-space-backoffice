@@ -144,9 +144,12 @@ export class ShopComponent {
           nextSum[i.product_type] = i.count;
           nextSum['total'] += i.count;
         });
+
+        let next = items.filter((item: any) => item.status);
+
         this.categoryCount = nextSum;
-        this.productList = items;
-        this.productListPreview = items;
+        this.productList = next;
+        this.productListPreview = next;
         this.userFullName = getStorage('name');
         this.userRole = getStorage('role');
       },

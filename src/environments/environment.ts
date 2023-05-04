@@ -1,4 +1,4 @@
 export const ENV = {
   production: false,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://api.whiteandspace.com',
 };
