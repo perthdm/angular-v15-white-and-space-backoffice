@@ -233,7 +233,8 @@
         <div *nzModalFooter>
         </div>
     </nz-modal> -->
-    <nz-modal [(nzVisible)]="isShowModal" [nzFooter]=[] (nzOnCancel)="handleCancel()">
+    <nz-modal [(nzVisible)]="isShowModal" [nzFooter]=[] nzTitle="ใส่จำนวนเงินที่รับ" nzMaskClosable="false"
+        (nzOnCancel)="handleCancel()">
         <ng-container *nzModalContent>
             <div class="number-keypad">{{value}}</div>
 

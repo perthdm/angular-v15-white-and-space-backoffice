@@ -83,6 +83,7 @@ export class StockComponent {
 
     this.stockService.getAllLotByType(reqData).subscribe((res) => {
       let { total, items } = res;
+
       this.lotTrxList = items;
       this.total = total;
     });
@@ -267,6 +268,13 @@ export class StockComponent {
     if (this.exportItemSelected.length > 0) {
       reqData['tracking_list'] = this.exportItemSelected;
     } else {
+      const existingItem = this.importList.find(
+        (current: any) => current._id === this.stockData.lot_id
+      );
+
+      if (this.stockData.amount > existingItem?.amount) {
+        return this.throwErrorMessage(`*จำนวนของสินค้าที่จะนำออกไม่เพียงพอ*`);
+      }
       reqData['amount'] = this.stockData.amount;
     }
 

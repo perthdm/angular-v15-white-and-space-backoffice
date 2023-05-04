@@ -180,7 +180,11 @@ export class ShopComponent {
         existingItem.amount++;
         existingItem.totalPrice += item.price;
         if (item.auto_stock) {
-          existingItem.tagList = [...existingItem.tagList, item.tagId];
+          if (!existingItem.tagList.includes(item.tagId)) {
+            existingItem.tagList = [...existingItem.tagList, item.tagId];
+          } else {
+            this.message.create('warning', 'สินค้าชิ้นนี้อยู่ในตระกร้าแล้ว');
+          }
         }
       } else {
         const newItem: any = {
@@ -286,7 +290,7 @@ export class ShopComponent {
       if (result.value) {
         if (paymentType === PAYMENT_TYPE.CASH) {
           this.isShowModal = true;
-          this.stashItem = b
+          this.stashItem = b;
           // this.orderService.checkOutCashOrder(b).subscribe(
           //   (res) => {
           //     Swal.fire(

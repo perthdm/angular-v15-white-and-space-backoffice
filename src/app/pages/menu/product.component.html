@@ -106,15 +106,15 @@
                     (change)="onChangeData($event)" name="product_id" maxlength="10" minlength="10"
                     [disabled]="isEdit" />
 
-                <h4 style="margin-top: 8px;">ชื่อสินค้า</h4>
+                <h4 style="margin-top: 8px">ชื่อสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกชื่อสินค้า" [ngModel]="productData.name"
                     (change)="onChangeData($event)" name="name" />
 
-                <h4 style="margin-top: 8px;">ราคาสินค้า</h4>
+                <h4 style="margin-top: 8px">ราคาสินค้า</h4>
                 <input nz-input class="wns-input" placeholder="กรุณากรอกราคาสินค้า" [ngModel]="productData.price"
                     (change)="onChangeData($event)" name="price" type="number" />
 
-                <h4 style="margin-top: 8px;">ประเภท</h4>
+                <h4 style="margin-top: 8px">ประเภท</h4>
                 <nz-select [(ngModel)]="pdTypeSelected" nzPlaceHolder="เลือกประเภทของสินค้า" style="width: 180px"
                     class="select-style">
                     <nz-option nzValue="food" nzLabel="อาหาร"></nz-option>
@@ -125,7 +125,7 @@
                     <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
                 </nz-select>
 
-                <h4 style="margin-top: 8px;">รูปภาพสินค้า</h4>
+                <h4 style="margin-top: 8px">รูปภาพสินค้า</h4>
                 <nz-upload class="upload-style" [nzLimit]="1" nzListType="picture" [nzBeforeUpload]="beforeUpload"
                     [(nzFileList)]="fileList">
                     <button nz-button nzType="primary" *ngIf="fileList.length === 0">
@@ -134,18 +134,26 @@
                     </button>
                 </nz-upload>
 
-                <div *ngIf="productData?.image && fileList.length === 0"
-                    style="margin-top: 10px ;border :1px solid #e0e0e0 ;border-radius: 10px; width: 100%;  padding:8px 12px; display :flex; align-items: center;">
-                    <img src="http://assets.whiteandspace.com/images/product/{{ productData?.image }}" alt="current-pic"
-                        width="60px" height="60px">
-                    <div style="margin-left:10px">{{ productData?.image }}</div>
+                <div *ngIf="productData?.image && fileList.length === 0" style="
+            margin-top: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            width: 100%;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+          ">
+                    <img src="http://assets.whiteandspace.com/images/product/{{
+              productData?.image
+            }}" alt="current-pic" width="60px" height="60px" />
+                    <div style="margin-left: 10px">{{ productData?.image }}</div>
                 </div>
 
                 <div *ngIf="!productData.stock">
                     <nz-divider></nz-divider>
-                    <h4 style="margin-top: 8px;">ตัดสต็อกอัตโนมัติ</h4>
+                    <h4 style="margin-top: 8px">ตัดสต็อกอัตโนมัติ</h4>
                     <div>
-                        <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem;"></nz-switch>
+                        <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem"></nz-switch>
                         <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
                             [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
                             <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"

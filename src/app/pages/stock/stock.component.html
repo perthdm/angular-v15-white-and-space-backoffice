@@ -138,7 +138,8 @@
                     <td [nzAlign]="'center'"> {{ data?.user_created?.username }} </td>
                     <td> {{ data?.info }}</td>
                     <td [nzAlign]="'center'">
-                        <button nz-button nzType="primary" style="color:white; border-radius: 8px ; padding: 6px 10px;"
+                        <button *ngIf="data?.tracking.length > 0" nz-button nzType="primary"
+                            style="color:white; border-radius: 8px ; padding: 6px 10px;"
                             (click)="showModalExportDetail($event,data)">
                             <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
                         </button>
