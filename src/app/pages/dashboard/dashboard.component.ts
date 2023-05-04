@@ -3,6 +3,9 @@ import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { IProduct } from 'src/app/model/product.model';
 import { ReportService } from 'src/app/services/report.service';
 import { Chart, registerables } from 'chart.js';
+import { formatDateTime } from 'src/utils/utils';
+import { CafeService } from 'src/app/services/cafe.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 Chart.register(...registerables);
 
 @Component({
@@ -13,7 +16,7 @@ Chart.register(...registerables);
 export class DashboardComponent {
   dataList: IProduct[] = [];
   dateList: any = [];
-  inputData: any = {};
+  inputValue: any = '';
   emptyRef?: ElementRef<HTMLElement>;
 
   cardData: any = {
@@ -22,13 +25,18 @@ export class DashboardComponent {
     weeklyProfit: 0,
   };
   isGoal: boolean = false;
-  isVisible = false;
+  isVisible: boolean = false;
+
   // === PAGINATION === //
   page: number = 1;
   pageLimit: number = 10;
   total: number = 0;
 
-  constructor(private reportService: ReportService) {}
+  constructor(
+    private reportService: ReportService,
+    private cafeService: CafeService,
+    private message: NzMessageService
+  ) {}
 
   ngOnInit() {
     this.fetchDashboardData();
@@ -39,40 +47,44 @@ export class DashboardComponent {
       page: this.page,
       limit: this.pageLimit,
     };
-    this.reportService.getOverviewReport(pageConfig).subscribe(
-      (res) => {
-        let {
-          daily_profit,
-          order_total,
-          stock_min,
-          weekly_profit,
-          cash_drawer,
-          cash_profit,
-          report_weekly,
-        } = res;
-        this.cardData = {
-          dailyProfit: daily_profit,
-          dailyBill: order_total,
-          weeklyProfit: weekly_profit,
-          cashDrawer: cash_drawer,
-          cashProfit: cash_profit,
-          cashTransfer: daily_profit - cash_profit,
-          cashDrawerLast: cash_drawer + cash_profit,
-          cashGoal: 100000,
-        };
+    this.reportService.getOverviewReport(pageConfig).subscribe((res) => {
+      let {
+        daily_profit, // [DAILY] : PROFIT
+        monthly_profit, // [MONTHLY] : PROFIT
+        weekly_profit, // [WEEKLY] : PROFIT
+        order_total, // [DAILY] : BILL COUNT
+        stock_min,
+        cash_drawer, // [DAILY] : START WITH CASH
+        cash_profit, // [DAILY] : CASH PROFIT
+        report_weekly, // [WEEKLY] : GRAPHS
+        goal, // GOAL,
+        daily_percent, // COMPARE WITH YESTERDAY
+      } = res;
+      goal = goal > 0 ? goal : 100000;
 
-        this.dataList = stock_min.items;
-        let tempDate: any = [];
-        let sumData: any = [];
-        report_weekly.map((item: any) => {
-          tempDate.push(item.date);
-          sumData.push(item.profit);
-        });
+      this.cardData = {
+        dailyProfit: daily_profit.toLocaleString(),
+        weeklyProfit: weekly_profit,
+        monthlyProfit: monthly_profit.toLocaleString(),
+        dailyBillCount: order_total.toLocaleString(),
+        startWithCash: cash_drawer.toLocaleString(),
+        cashTransfer: daily_profit - cash_profit,
+        currentCashDrawer: (cash_drawer + cash_profit).toLocaleString(),
+        targetGoal: goal.toLocaleString(),
+        goalProgress: ((monthly_profit * 100) / goal).toFixed(2),
+        compareWithYesterDay: daily_percent,
+      };
 
-        this.RenderChart(tempDate, sumData);
-      },
-      (err) => {}
-    );
+      this.dataList = stock_min.items;
+      let tempDate: any = [];
+      let sumData: any = [];
+      report_weekly.map((item: any) => {
+        tempDate.push(formatDateTime(item.date, 'onlyDate'));
+        sumData.push(item.profit);
+      });
+
+      this.RenderChart(tempDate, sumData);
+    });
   }
 
   RenderChart(tempDate: any, sumData: any) {
@@ -100,29 +112,46 @@ export class DashboardComponent {
       },
     });
   }
+
   showModalGoal(): void {
     this.isVisible = true;
     this.isGoal = true;
   }
+
   showModalMoney(): void {
     this.isVisible = true;
-    this.isGoal = false;
   }
 
   handleOk(): void {
-    console.log('Button ok clicked!');
-    this.isVisible = false;
+    let reqData: any = {};
+    if (this.isGoal) {
+      reqData['goal'] = +this.inputValue;
+    } else {
+      reqData['cash_drawer'] = +this.inputValue;
+    }
+
+    this.cafeService.updateCafe(reqData).subscribe(
+      () => {
+        this.message.create('success', `ทำรายการสำเร็จ`);
+        this.handleCloseModal();
+        this.fetchDashboardData();
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
   }
 
-  handleCancel(): void {
-    console.log('Button cancel clicked!');
+  handleCloseModal(): void {
     this.isVisible = false;
+    this.resetData();
   }
-  onChangeData(e: any) {
-    let { name, value } = e.target;
-    this.inputData = {
-      ...this.inputData,
-      [name]: value,
-    };
+
+  resetData() {
+    this.inputValue = null;
+    this.isGoal = false;
   }
 }

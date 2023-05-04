@@ -150,6 +150,7 @@ export class ShopComponent {
         } else {
           existingItem.amount++;
           existingItem.totalPrice += item.price;
+          this.totalPrice += item.price;
         }
       } else {
         const newItem: any = {
@@ -169,8 +170,6 @@ export class ShopComponent {
         this.totalPrice += item.price;
       }
     } else if (type == CART_ACTION.DEL) {
-      console.log(existingItem);
-
       if (existingItem) {
         if (existingItem.amount >= 1) {
           existingItem.amount--;

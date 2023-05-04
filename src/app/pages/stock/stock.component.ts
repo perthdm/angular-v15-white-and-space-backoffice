@@ -361,6 +361,17 @@ export class StockComponent {
     }
   }
 
+  getStatusDetail(type: string) {
+    switch (type) {
+      case 'close':
+        return { title: 'Close', color: 'magenta' };
+      case 'cancel':
+        return { title: 'Cancel', color: 'volcano' };
+      default:
+        return { title: 'Waiting', color: 'gold' };
+    }
+  }
+
   // select(ret: {}): void {
   //   console.log('nzSelectChange', ret);
   // }

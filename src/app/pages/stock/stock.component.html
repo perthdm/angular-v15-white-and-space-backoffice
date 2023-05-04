@@ -158,13 +158,15 @@
                     <th [nzAlign]="'center'">จำนวน</th>
                     <th [nzAlign]="'center'">ประเภท</th>
                     <th [nzAlign]="'center'">ผู้ทำรายการ</th>
-                    <th>ORDER ID</th>
+                    <th>BILL ID</th>
+                    <th [nzAlign]="'center'">สถานะ</th>
                     <th>หมายเหตุ</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let data of importTrxTable.data ;let index = index" style="cursor: pointer;">
                     <td> {{ mapDate(data.createdAt) }} </td>
+
                     <td> {{ data?.lot.stock.name }}</td>
                     <td [nzAlign]="'center'"> {{ data?.amount }} </td>
                     <td [nzAlign]="'center'">
@@ -172,6 +174,12 @@
                     </td>
                     <td [nzAlign]="'center'"> {{ data?.user_created?.username }} </td>
                     <td> {{ data.order.order_id }} </td>
+                    <td [nzAlign]="'center'">
+                        <nz-tag [nzColor]="getStatusDetail(data.order.status).color"
+                            style="margin-right:0px; font-weight: bold;">
+                            {{ getStatusDetail(data.order.status).title }}
+                        </nz-tag>
+                    </td>
                     <td> {{ data?.tracking }}</td>
                 </tr>
             </tbody>
