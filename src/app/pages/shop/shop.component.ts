@@ -52,10 +52,6 @@ export class ShopComponent {
     { value: '7', text: '7' },
     { value: '8', text: '8' },
     { value: '9', text: '9' },
-    // { value: '0', text: '0' },
-    // { value: '100', text: '100' },
-    // { value: '500', text: '500' },
-    // { value: '1000', text: '1000' },
   ];
 
   ngOnInit() {
@@ -197,27 +193,32 @@ export class ShopComponent {
     }
   }
 
-  // showModal(): void {
-  //   this.isVisible = true;
-  // }
-
   handleOk(): void {
-    this.orderService.checkOutCashOrder(this.stashItem).subscribe(
-      (res) => {
-        Swal.fire(
-          'ทำรายการสำเร็จ !',
-          'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-          'success'
-        );
-        this.handleClearOrder();
-      },
-      (err) => {}
-    );
-    this.isShowModal = false;
+    let customer_change = this.value - this.totalPrice;
+    if (customer_change >= 0) {
+      this.orderService.checkOutCashOrder(this.stashItem).subscribe(
+        (res) => {
+          Swal.fire(
+            'ทำรายการสำเร็จ !',
+            `ทอน ${customer_change} บาท`,
+            'success'
+          );
+          this.handleClearOrder();
+        },
+        (err) => {
+          this.throwErrorMessage(`${err.error.message}`);
+        }
+      );
+      this.isShowModal = false;
+    } else {
+      this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
+    }
   }
 
   handleCancel(): void {
     this.isShowModal = false;
+    this.stashItem = [];
+    this.value = 0;
   }
 
   filterByType() {
@@ -233,6 +234,7 @@ export class ShopComponent {
     this.cart = [];
     this.totalPrice = 0;
     this.stashItem = [];
+    this.value = 0;
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -282,7 +284,9 @@ export class ShopComponent {
               );
               this.handleClearOrder();
             },
-            (err) => {}
+            (err) => {
+              this.throwErrorMessage(`${err.error.message}`);
+            }
           );
         }
       }
@@ -297,6 +301,9 @@ export class ShopComponent {
       this.currentValue = digitValue;
       this.value = parseInt(this.value + this.currentValue);
     }
+  }
+  onEqualClick() {
+    this.value = this.totalPrice;
   }
 
   onClearClick() {

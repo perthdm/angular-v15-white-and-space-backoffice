@@ -47,4 +47,7 @@ nz-radio-group{
 .custom-input-number {
   display: flex;
   align-items: center;
+  .ant-input-number-input-wrap{
+    width: 100%;
+  }
 }
