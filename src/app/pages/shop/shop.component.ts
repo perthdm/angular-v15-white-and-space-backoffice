@@ -232,8 +232,8 @@ export class ShopComponent {
   // }
 
   handleOk(): void {
-    let customer_change = this.value - this.totalPrice 
-    if(customer_change >= 0){
+    let customer_change = this.value - this.totalPrice;
+    if (customer_change >= 0) {
       this.orderService.checkOutCashOrder(this.stashItem).subscribe(
         (res) => {
           Swal.fire(
@@ -243,15 +243,13 @@ export class ShopComponent {
           );
           this.handleClearOrder();
         },
-        (err) => {}
+        (err) => {
+          this.throwErrorMessage(`${err.error.message}`);
+        }
       );
       this.isShowModal = false;
-    }else{
-      Swal.fire(
-        'ทำรายการไม่สำเร็จ !',
-        `กรุณาตรวจสอบจำนวนเงิน`,
-        'warning'
-      );
+    } else {
+      this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
     }
   }
 
@@ -321,7 +319,9 @@ export class ShopComponent {
               );
               this.handleClearOrder();
             },
-            (err) => {}
+            (err) => {
+              this.throwErrorMessage(`${err.error.message}`);
+            }
           );
         }
       }
