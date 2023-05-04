@@ -13,8 +13,8 @@ export class ReportComponent {
   dataList: any = [];
   summaryData: any = { totalProfit: 0, totalBill: 0 };
   dateRange: any = [
-    moment().startOf('day').toDate(),
-    moment().endOf('day').toDate(),
+    moment().startOf('month').toDate(),
+    moment().endOf('month').toDate(),
   ];
   dateFormat = 'dd-MM-YYYY';
   isLoading: boolean = true;
