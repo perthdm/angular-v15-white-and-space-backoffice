@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
@@ -20,6 +20,9 @@ interface Order {
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent {
+  @ViewChild('cartForceFocus') cartForceFocus!: ElementRef;
+
+  scannerBarcodeBond: any;
   productList: any = [];
   productListPreview: any = [];
   cart: any = [];
@@ -31,12 +34,7 @@ export class ShopComponent {
   categoryCount: any = {};
   currentBarcode: string = '';
   isShowModal: boolean = false;
-  constructor(
-    private productService: ProductService,
-    private orderService: OrderService,
-    private stockService: StockService,
-    private message: NzMessageService
-  ) {}
+
   sumValue = 0;
   value = 0;
   stashItem: any = [];
@@ -54,9 +52,27 @@ export class ShopComponent {
     { value: '9', text: '9' },
   ];
 
+  constructor(
+    private productService: ProductService,
+    private orderService: OrderService,
+    private stockService: StockService,
+    private message: NzMessageService
+  ) {
+    this.scannerBarcodeBond = this.handleBarcodeInput.bind(this);
+  }
+
   ngOnInit() {
+    window.addEventListener('keypress', this.scannerBarcodeBond);
     this.fetchProductActive();
-    window.addEventListener('keypress', this.handleBarcodeInput.bind(this));
+  }
+
+  ngAfterViewInit() {
+    this.cartForceFocus.nativeElement.focus();
+    this.cartForceFocus.nativeElement.hidden = true;
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('keypress', this.scannerBarcodeBond);
   }
 
   throwErrorMessage(message: string) {
@@ -65,6 +81,7 @@ export class ShopComponent {
 
   handleBarcodeInput(event: KeyboardEvent) {
     const input = event.key;
+    console.log(input);
 
     if (input === 'Enter') {
       this.processBarcode(this.currentBarcode);
