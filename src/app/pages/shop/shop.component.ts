@@ -52,10 +52,6 @@ export class ShopComponent {
     { value: '7', text: '7' },
     { value: '8', text: '8' },
     { value: '9', text: '9' },
-    // { value: '0', text: '0' },
-    // { value: '100', text: '100' },
-    // { value: '500', text: '500' },
-    // { value: '1000', text: '1000' },
   ];
 
   onDigitClick(digitValue: string) {
@@ -66,6 +62,9 @@ export class ShopComponent {
       this.currentValue = digitValue;
       this.value = parseInt(this.value + this.currentValue);
     }
+  }
+  onEqualClick(){
+    this.value = this.totalPrice 
   }
 
   onClearClick() {
@@ -227,10 +226,6 @@ export class ShopComponent {
     }
   }
 
-  // showModal(): void {
-  //   this.isVisible = true;
-  // }
-
   handleOk(): void {
     let customer_change = this.value - this.totalPrice 
     if(customer_change >= 0){
@@ -257,6 +252,8 @@ export class ShopComponent {
 
   handleCancel(): void {
     this.isShowModal = false;
+    this.stashItem = [];
+    this.value = 0;
   }
 
   filterByType() {
@@ -272,6 +269,7 @@ export class ShopComponent {
     this.cart = [];
     this.totalPrice = 0;
     this.stashItem = [];
+    this.value = 0;
   }
 
   handleConfirmOrder(paymentType: string) {

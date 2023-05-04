@@ -11,8 +11,7 @@
                     </ng-template>
                 </div>
             </div> -->
-            <div class="radio-style" style="margin-bottom: 20px;"
-                style="max-width: calc(100vw - 58px);margin-bottom: 10px;">
+            <div class="radio-style" style="max-width: calc(100vw - 58px);margin-bottom: 20px;">
                 <nz-radio-group [(ngModel)]="categoryType" nzButtonStyle="solid" nzSize="large"
                     (ngModelChange)="filterByType()">
                     <label nz-radio-button nzValue="">
@@ -236,14 +235,15 @@
     <nz-modal [(nzVisible)]="isShowModal" [nzFooter]=[] nzTitle="ใส่จำนวนเงินที่รับ" nzMaskClosable="false"
         (nzOnCancel)="handleCancel()">
         <ng-container *nzModalContent>
-            <div class="number-keypad">{{value}}</div>
+            <div class="number-keypad">{{value}}<button nz-button class="large-btn" (click)="onEqualClick()">เต็ม
+                </button></div>
 
             <div nz-row>
 
                 <div nz-col nzXs="17">
                     <div class="keypad" style="border-bottom-left-radius: 15px;">
                         <div class="digit" *ngFor="let digit of digits" (click)="onDigitClick(digit.value)">
-                            {{digit.text}}</div>
+                            {{digit.text}} </div>
                         <div class="digit" (click)="onClearClick()">C</div>
                         <div class="digit" (click)="onDigitClick('0')">0</div>
                         <div class="digit" (click)="onBackspaceClick()">←</div>
