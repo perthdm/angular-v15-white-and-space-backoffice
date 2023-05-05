@@ -79,6 +79,7 @@ export class StockComponent {
       page: this.page,
       limit: this.pageLimit,
       type: this.stockType,
+      query: this.query,
     };
 
     this.stockService.getAllLotByType(reqData).subscribe((res) => {
@@ -151,6 +152,7 @@ export class StockComponent {
     this.page = 1;
     this.pageLimit = 10;
     this.total = 0;
+    this.query = '';
     this.resetData();
     if (this.stockType === STOCK_TYPE.INVENTORY) {
       this.fetchStock();
@@ -363,5 +365,15 @@ export class StockComponent {
       default:
         return { title: 'Waiting', color: 'gold' };
     }
+  }
+
+  getOutputSearch(searchText: any) {
+    this.page = 1;
+    this.query = searchText;
+
+    if (this.stockType === STOCK_TYPE.INVENTORY) {
+      return this.fetchStock();
+    }
+    this.fetchLot();
   }
 }

@@ -330,11 +330,10 @@ export class ShopComponent {
     this.currentValue = '';
     this.value = 0;
   }
+
   onBackspaceClick() {
-    this.currentValue = this.currentValue.slice(0, -1);
-    if (isNaN(parseInt(this.currentValue))) {
-      this.currentValue = '0';
-    }
-    this.value = parseInt(this.currentValue);
+    let nextVal = this.value.toString();
+    nextVal = nextVal.substring(0, nextVal.length - 1);
+    this.value = +nextVal;
   }
 }

@@ -145,4 +145,10 @@ export class UserComponent {
       [name]: value,
     };
   }
+
+  getOutputSearch(searchText: any) {
+    this.page = 1;
+    this.query = searchText;
+    this.fetchUser();
+  }
 }

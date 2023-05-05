@@ -4,7 +4,7 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">คลังสินค้า</h3>
         </div>
         <div nz-col [nzSpan]="16" class="d-none-950">
-            <antd-searchbox placeholder=" ค้นหา Name / Serial / Barcode"></antd-searchbox>
+            <antd-searchbox (onSearchEvent)="getOutputSearch($event)" placeholder=" ค้นหา ชื่อสต็อกสินค้า"></antd-searchbox>
         </div>
 
         <div class="radio-style" style="max-width: calc(100vw - 58px);">

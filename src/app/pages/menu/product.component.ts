@@ -66,7 +66,7 @@ export class ProductComponent {
           food: 0,
           desert: 0,
           beverage: 0,
-          bear:0,
+          bear: 0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -245,7 +245,7 @@ export class ProductComponent {
       case 'beverage':
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
-        return {title: 'หมี', color: 'orange'}
+        return { title: 'หมี', color: 'orange' };
       default:
         return { title: 'สินค้า', color: 'purple' };
     }
@@ -303,5 +303,12 @@ export class ProductComponent {
         );
       }
     });
+  }
+
+  getOutputSearch(searchText: any) {
+    console.log(searchText);
+    this.query = searchText;
+    this.fetchProduct();
+    // Perform a search based on the value of searchText
   }
 }
