@@ -139,7 +139,6 @@ export class UserComponent {
     let { name, value } = e.target;
     if (name === 'telephone') value = value.replace(/\D|\+|-/g, '');
     if (name === 'salary') value = +value;
-    console.log(name, value);
 
     this.userData = {
       ...this.userData,

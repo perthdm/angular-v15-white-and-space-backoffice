@@ -333,8 +333,6 @@ export class StockComponent {
   }
 
   printBarcode(data: any) {
-    console.log(data);
-
     this.stockService.printBarcodeByLotId(data._id).subscribe(
       () => {
         this.message.create('success', `สั่งพิมพ์บาร์โค้ดสำเร็จ`);
@@ -347,17 +345,12 @@ export class StockComponent {
   handleRenderTracking(event: any) {
     this.trackingList = [];
     this.exportItemSelected = [];
-    console.log(this.importList);
 
     let temp = this.importList.map((obj: any) => Object.assign({}, obj));
     const existingItem = temp.find((current: any) => current._id === event);
 
     if (existingItem && existingItem?.tracking.length != 0) {
-      console.log(existingItem?.tracking);
       this.trackingList = existingItem?.tracking;
-      // existingItem?.tracking.map((item: any) => {
-      //   this.trackingList.push({ key: item, title: item });
-      // });
     }
   }
 
@@ -371,12 +364,4 @@ export class StockComponent {
         return { title: 'Waiting', color: 'gold' };
     }
   }
-
-  // select(ret: {}): void {
-  //   console.log('nzSelectChange', ret);
-  // }
-
-  // change(ret: {}): void {
-  //   console.log('nzChange', ret);
-  // }
 }
