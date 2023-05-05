@@ -27,6 +27,9 @@ export class ShopComponent {
   productListPreview: any = [];
   cart: any = [];
   totalPrice: number = 0;
+  discountValue: number = 0;
+  lastPrice: number = 0;
+  radioValue = 'value';
   categoryType = '';
   query: string = '';
   userFullName: any = 'White And Space';
@@ -34,12 +37,11 @@ export class ShopComponent {
   categoryCount: any = {};
   currentBarcode: string = '';
   isShowModal: boolean = false;
-
+  isDiscount: boolean = false;
   sumValue = 0;
   value = 0;
   stashItem: any = [];
   currentValue = '';
-
   digits = [
     { value: '1', text: '1' },
     { value: '2', text: '2' },
@@ -66,6 +68,10 @@ export class ShopComponent {
     this.fetchProductActive();
   }
 
+  handleOpendiscount() {
+    this.isDiscount = true;
+    this.isShowModal = true;
+  }
   ngAfterViewInit() {
     this.cartForceFocus.nativeElement.focus();
     this.cartForceFocus.nativeElement.hidden = true;
@@ -77,6 +83,11 @@ export class ShopComponent {
 
   throwErrorMessage(message: string) {
     this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
+  }
+  discountType() {
+    this.discountValue = 0;
+    this.value = 0;
+    this.lastPrice = this.totalPrice;
   }
 
   handleBarcodeInput(event: KeyboardEvent) {
@@ -133,7 +144,7 @@ export class ShopComponent {
         this.userFullName = getStorage('name');
         this.userRole = getStorage('role');
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -209,7 +220,23 @@ export class ShopComponent {
       }
     }
   }
+  handleDiscountOk(): void {
+    console.log(this.radioValue)
+    if (this.isDiscount = true) {
+      if (this.radioValue = 'value') {
+        this.discountValue = this.value;
+        this.lastPrice = this.totalPrice - this.discountValue
 
+      } else {
+        if (this.discountValue > 100) {
+          this.discountValue = 100;
+        }
+        this.lastPrice = this.totalPrice * this.discountValue/100
+      }
+    }
+    this.isShowModal = false;
+    this.isDiscount = false;
+  }
   handleOk(): void {
     let customer_change = this.value - this.totalPrice;
 
@@ -239,6 +266,8 @@ export class ShopComponent {
     this.isShowModal = false;
     this.stashItem = [];
     this.value = 0;
+    this.isDiscount = false;
+    this.discountValue = 0;
   }
 
   filterByType() {
@@ -255,6 +284,7 @@ export class ShopComponent {
     this.totalPrice = 0;
     this.stashItem = [];
     this.value = 0;
+    this.discountValue = 0;
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -282,6 +312,7 @@ export class ShopComponent {
       if (result.value) {
         if (paymentType === PAYMENT_TYPE.CASH) {
           this.isShowModal = true;
+          this.value = 0;
           this.stashItem = b;
           // this.orderService.checkOutCashOrder(b).subscribe(
           //   (res) => {
