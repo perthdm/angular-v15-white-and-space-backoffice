@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUser } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
+import { formatDateTime } from 'src/utils/utils';
 
 @Component({
   selector: 'app-pay',
@@ -9,25 +11,53 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class PayComponent {
   userList: IUser | any = [];
-
+  dataList: any = [];
   isShowModal: boolean = false;
   userSelected = null;
-  selectedValue = null;
   value?: string;
-  timeNormal?: string;
-  timeOt?: string;
-  numValue?: string;
-  totalMoney?: string;
+
   netMoney?: string;
-  inputValue?: string;
   size = 'default';
 
   dateRange: any = [];
   dateFormat = 'dd-MM-YYYY';
 
-  constructor(private usService: UserService) {}
+  timeNormal?: any;
+  timeOt?: any;
+  payValue?: any;
+  selectedOption = 'default';
+  optionalValue?: any;
+  totalPay?: any;
+  info: string = '';
 
-  ngOnInit() {}
+  page: number = 1;
+  pageLimit: number = 10;
+  query: string = '';
+  total: number = 0;
+
+  constructor(
+    private usService: UserService,
+    private message: NzMessageService
+  ) {}
+
+  ngOnInit() {
+    this.fetchPayCycle();
+  }
+
+  fetchPayCycle() {
+    let pageConfig = {
+      page: this.page,
+      limit: this.pageLimit,
+      query: this.query,
+    };
+    this.usService.getPayCycle(pageConfig).subscribe((res) => {
+      let { items, total } = res;
+      this.dataList = items;
+      console.log(items);
+
+      this.total = total;
+    });
+  }
 
   onChange(result: Date[]): void {
     this.fetchWorkInfoByUser();
@@ -38,14 +68,66 @@ export class PayComponent {
     this.isShowModal = true;
   }
 
-  handleOk(): void {
+  handleCloseModal(): void {
+    this.isShowModal = false;
+    this.resetData();
+  }
+
+  resetData() {
+    this.timeNormal = null;
+    this.timeOt = null;
+    this.payValue = 0;
+    this.optionalValue = 0;
+    this.selectedOption = 'default';
+    this.totalPay = 0;
+    this.info = '';
+    this.dateRange = [];
+    this.userSelected = null;
+  }
+
+  handleSubmitData(): void {
     console.log('Button ok clicked!');
+    let reqData = {
+      user_id: this.userSelected,
+      pay_amount: this.totalPay,
+      info: this.info,
+    };
+
+    this.usService.createPay(reqData).subscribe(
+      (res) => {
+        this.fetchPayCycle();
+        this.handleCloseModal();
+        this.message.create('success', 'เพิ่มรายการจ่ายสำเร็จ');
+      },
+      (err) => {
+        this.message.create(
+          'error',
+          `Please try again ${err.error.message}::${err.error.statusCode}`
+        );
+      }
+    );
     this.isShowModal = false;
   }
 
-  handleCancel(): void {
-    console.log('Button cancel clicked!');
-    this.isShowModal = false;
+  handleChangeOption() {
+    this.optionalValue = 0;
+    this.totalPay = this.payValue;
+  }
+
+  adjustValue(event: any) {
+    let { value } = event.target;
+    this.totalPay = this.payValue;
+    let next = parseInt(this.payValue);
+    let eventVal = value ? parseInt(value) : 0;
+    let nextValue = 0;
+
+    if (this.selectedOption === 'inc') {
+      nextValue = next + eventVal;
+    } else if (this.selectedOption === 'dec') {
+      nextValue = next - eventVal;
+    }
+
+    this.totalPay = nextValue;
   }
 
   fetchUser() {
@@ -53,6 +135,7 @@ export class PayComponent {
     this.usService.getAllUser(pageConfig).subscribe((res: any) => {
       let { items } = res;
       this.userList = items;
+      this.fetchPayCycle();
     });
   }
 
@@ -63,7 +146,20 @@ export class PayComponent {
       end: this.dateRange[1] ? this.dateRange[1] : null,
     };
     this.usService.getWorkInfo(reqConfig).subscribe((res: any) => {
-      console.log(res);
+      let { normmal_hours, ot_hours, pay } = res;
+      this.timeNormal = normmal_hours ? normmal_hours : 0;
+      this.timeOt = ot_hours ? ot_hours : 0;
+      this.payValue = pay ? pay : 0;
+      this.totalPay = pay;
     });
+  }
+
+  onChangePageLimit(nextLimit: number) {
+    this.pageLimit = nextLimit;
+    this.fetchPayCycle();
+  }
+
+  mapDate(date: any) {
+    return formatDateTime(date, 'onlyDate');
   }
 }

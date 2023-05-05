@@ -24,10 +24,13 @@ const ENDPOINT = {
     CHECK_IN: `${API_URL}/attendance/check-in`,
     CHECK_OUT: `${API_URL}/attendance/check-out`,
   },
+
+  GET_WORK_INFO: `${API_URL}/attendance/summary-date`,
+  SUBMIT_PAY: `${API_URL}/pay-cycle`,
+  GET_PAY_CYCLE: ({ page, limit, query }: IPagination) =>
+    `${API_URL}/pay-cycle?page=${page}&limit=${limit}&query=${query}`,
   // CREATE_PAY_CYCLE: ({ start, end, user_id }: any) =>
   //   `${API_URL}/attendance/summary-date?start=${start}&end=${end}&user_id${user_id}`,
-
-  CREATE_PAY_CYCLE: `${API_URL}/attendance/summary-date`,
 };
 
 @Injectable()
@@ -36,15 +39,6 @@ export class UserService {
 
   getProfile() {
     return this.http.get<IUser>(ENDPOINT.GET_PROFILE, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }),
-    });
-  }
-
-  getWorkInfo(data: any) {
-    return this.http.post<any>(ENDPOINT.CREATE_PAY_CYCLE, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -151,5 +145,32 @@ export class UserService {
         }),
       }
     );
+  }
+
+  getWorkInfo(data: any) {
+    return this.http.post<any>(ENDPOINT.GET_WORK_INFO, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  createPay(data: any) {
+    return this.http.post<any>(ENDPOINT.SUBMIT_PAY, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  getPayCycle(pageConfig: any): Observable<IUserPagination> {
+    return this.http.get<IUserPagination>(ENDPOINT.GET_PAY_CYCLE(pageConfig), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
   }
 }
