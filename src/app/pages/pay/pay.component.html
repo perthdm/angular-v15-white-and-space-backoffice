@@ -10,23 +10,6 @@
     </div>
   </div>
 
-  <div>
-    <div
-      nz-col
-      [nzSpan]="24"
-      [nzMd]="24"
-      nzShape="round"
-      style="text-align: right"
-    >
-      <nz-select
-        style="width: 200px; text-align: left"
-        nzPlaceHolder="Select a person"
-        class="select-style"
-      >
-      </nz-select>
-    </div>
-  </div>
-
   <div class="app-content">
     <div nz-row style="padding: 0px 20px">
       <div nz-col [nzSpan]="24" nzShape="round" style="text-align: right">
@@ -52,6 +35,31 @@
             เพิ่มรายการ
           </button>
         </nz-space>
+
+        <nz-space [nzSize]="'small'">
+          <button
+            *nzSpaceItem
+            nz-button
+            nzType="primary"
+            style="
+              height: 40px;
+              border-radius: 10px;
+              background-color: #1890ff;
+              border-color: #1890ff;
+              margin-left: 10px;
+            "
+          >
+            <span nz-icon nzType="export" nzTheme="outline"></span>
+            export pdf
+          </button>
+        </nz-space>
+
+        <nz-select
+          style="width: 200px; text-align: left; margin-left: 10px"
+          nzPlaceHolder="Select a person"
+          class="select-style"
+        >
+        </nz-select>
       </div>
     </div>
 
@@ -68,47 +76,94 @@
             nzShowSearch
             nzAllowClear
             nzPlaceHolder="Select a person"
-            [(ngModel)]="selectedValue"
+            [(ngModel)]="userSelected"
             class="select-style"
           >
-            <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
-            <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
-            <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+            <nz-option
+              *ngFor="let user of userList"
+              nzLabel="{{ user.name }}"
+              nzValue="{{ user._id }}"
+            ></nz-option>
           </nz-select>
 
-          <br />
-          <br />
-          <p>รายได้</p>
-          <input
-            nz-input
-            placeholder="รายได้ทั้งหมด"
-            [(ngModel)]="value"
-            style="border-radius: 12px"
-          />
-          <br />
-          <br />
-          <nz-select
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="เพิ่ม/ลด"
-            [(ngModel)]="selectedValue"
-            class="select-style"
-            style="width: 100px"
-          >
-            <nz-option nzLabel="เพิ่ม" nzValue="jack"></nz-option>
-            <nz-option nzLabel="ลด" nzValue="lucy"></nz-option>
-          </nz-select>
-          <span 
-          ><input
+          <div *ngIf="userSelected">
+            <p style="margin-top: 12px">เลือกวันที่</p>
+            <div
+              nz-col
+              [nzSpan]="24"
+              [nzMd]="24"
+              style="display: flex; align-items: left"
+            >
+              <nz-range-picker [(ngModel)]="dateRange" [nzFormat]="dateFormat" (ngModelChange)="onChange($event)">
+              </nz-range-picker>
+            </div>
+          </div>
+
+          <div *ngIf="dateRange[0] && dateRange[1]">
+            <div nz-row [nzGutter]="[16, 16]">
+              <div nz-col class="gutter-row" nzSpan="12">
+                <p style="margin-top: 12px">ชั่วโมงทำงานปกติ</p>
+                <input
+                  nz-input
+                  placeholder=""
+                  [(ngModel)]="timeNormal"
+                  [disabled]="true"
+                  style="height: 40px; border-radius: 12px"
+                />
+              </div>
+              <div nz-col class="gutter-row" nzSpan="12">
+                <p style="margin-top: 12px">ชั่วโมงทำงานOT</p>
+                <input
+                  nz-input
+                  placeholder=""
+                  [(ngModel)]="timeOt"
+                  [disabled]="true"
+                  style="height: 40px; border-radius: 12px"
+                />
+              </div>
+            </div>
+
+            <p style="margin-top: 12px">เงินที่ได้ทั้งหมด</p>
+            <input
               nz-input
-              placeholder="รายได้ทั้งหมด"
-              [(ngModel)]="value"
-              style="border-radius: 12px; width:300px"
-          /></span>
-          <br />
-          <br />
-          <p>หมายเหตุ</p>
-          <textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
+              placeholder=""
+              [(ngModel)]="totalMoney"
+              [disabled]="true"
+              style="height: 40px; border-radius: 12px"
+            />
+            <nz-select
+              nzAllowClear
+              nzPlaceHolder="เพิ่ม/ลด"
+              [(ngModel)]="selectedValue"
+              class="select-style"
+              style="width: 100px; margin-top: 16px"
+            >
+              <nz-option nzLabel="เพิ่ม" nzValue="jack"></nz-option>
+              <nz-option nzLabel="ลด" nzValue="lucy"></nz-option>
+            </nz-select>
+            <span
+              ><input
+                nz-input
+                placeholder="จำนวน"
+                [(ngModel)]="numValue"
+                style="
+                  border-radius: 12px;
+                  width: 100%;
+                  margin-top: 12px;
+                  height: 40px;
+                "
+            /></span>
+            <p style="margin-top: 12px">เงินสุทธิ</p>
+            <input
+              nz-input
+              placeholder=""
+              [(ngModel)]="netMoney"
+              [disabled]="true"
+              style="height: 40px; border-radius: 12px"
+            />
+            <p style="margin-top: 12px">หมายเหตุ</p>
+            <textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
+          </div>
         </ng-container>
       </nz-modal>
     </div>
