@@ -17,8 +17,8 @@ const ENDPOINT = {
   },
 
   LOT: {
-    GET_ALL_TRX: ({ page, limit, type }: IPagination) =>
-      `${API_URL}/lot/transaction?page=${page}&limit=${limit}&type=${type}`,
+    GET_ALL_TRX: ({ page, limit, type, query }: IPagination) =>
+      `${API_URL}/lot/transaction?page=${page}&limit=${limit}&type=${type}&query=${query}`,
     IMPORT_ITEM: `${API_URL}/lot`,
     GET_STOCK_DETAIL_BY_ID: (stockId: string) =>
       `${API_URL}/lot?stock_id=${stockId}`,
