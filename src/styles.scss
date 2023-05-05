@@ -121,3 +121,8 @@ button:focus-visible {
   margin-top: -16px !important;
   border-radius: 10px !important;
 }
+@media (max-width:950px) {
+  .d-none-950{
+    display: none !important;
+  }
+}
