@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUser } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
@@ -19,6 +20,10 @@ export class PayComponent {
   netMoney?: string;
   size = 'default';
 
+  mainDateRange: any = [
+    moment().startOf('month').toDate(),
+    moment().endOf('month').toDate(),
+  ];
   dateRange: any = [];
   dateFormat = 'dd-MM-YYYY';
 
@@ -57,6 +62,11 @@ export class PayComponent {
 
       this.total = total;
     });
+  }
+
+  handleChangeDate() {
+    this.page = 1;
+    this.fetchPayCycle();
   }
 
   onChange(result: Date[]): void {

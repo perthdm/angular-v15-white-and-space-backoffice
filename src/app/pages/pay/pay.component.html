@@ -6,7 +6,8 @@
       </h3>
     </div>
     <div nz-col [nzSpan]="24" [nzMd]="16">
-      <nz-range-picker> </nz-range-picker>
+      <nz-range-picker [(ngModel)]="mainDateRange" [nzFormat]="dateFormat" (ngModelChange)="handleChangeDate()">
+      </nz-range-picker>
     </div>
   </div>
 
