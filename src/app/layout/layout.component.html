@@ -47,18 +47,6 @@
                         </a>
                     </li>
 
-                    <!-- <li nz-submenu nzTitle="ADMIN" nzIcon="user" *ngIf="isFullAccess">
-                        <ul>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/user">ผู้ใช้งาน</a>
-                            </li>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/setting">ตั้งค่าร้าน</a>
-                            </li>
-                        </ul>
-                    </li> -->
-
-
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
@@ -66,14 +54,19 @@
                         </a>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter style="float: right;">
-                        <a routerLink="/attendance">
-                            <span nz-icon nzType="history" nzTheme="outline"></span>
-                            <span class="menu-text">ประวัติเข้างาน</span>
-                        </a>
+                    <li nz-submenu nzTitle="การเข้างาน" nzIcon="history"  style="float: right;">
+                        <ul>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/attendance">ประวัติเข้างาน</a>
+                            </li>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/pay-cycle">การจ่ายเงิน</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
+
             <div class="app-header app-header-750" *ngIf="!isFullAccess">
                 <ul nz-menu nzTheme="dark" nzMode="horizontal">
                     <li nz-menu-item nzMatchRouter nzIcon="user">
@@ -83,15 +76,7 @@
                             <span class="menu-text" style="font-weight: bold;">White And Space</span>
                         </a>
                     </li>
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
-                        <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
-                            <span class="menu-text">แดชบอร์ด</span></a>
-                    </li>
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
-                        <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
-                                class="menu-text">รายงาน</span>
-                        </a>
-                    </li>
+                  
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/billing-history">
                             <span nz-icon nzType="file-text" nzTheme="fill"></span>
@@ -106,32 +91,6 @@
                         </a>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
-                        <a routerLink="/stock">
-                            <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
-                            <span class="menu-text">คลังสินค้า</span>
-                        </a>
-                    </li>
-
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
-                        <a routerLink="/user">
-                            <span nz-icon nzType="user" nzTheme="outline"></span>
-                            <span class="menu-text">ผู้ใช้งาน</span>
-                        </a>
-                    </li>
-
-                    <!-- <li nz-submenu nzTitle="ADMIN" nzIcon="user" *ngIf="isFullAccess">
-                        <ul>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/user">ผู้ใช้งาน</a>
-                            </li>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/setting">ตั้งค่าร้าน</a>
-                            </li>
-                        </ul>
-                    </li> -->
-
-
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
@@ -139,7 +98,7 @@
                         </a>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter style="float: right;">
+                    <li *ngIf="!isFullAccess" nz-menu-item nzMatchRouter style="float: right;">
                         <a routerLink="/attendance">
                             <span nz-icon nzType="history" nzTheme="outline"></span>
                             <span class="menu-text">ประวัติเข้างาน</span>
