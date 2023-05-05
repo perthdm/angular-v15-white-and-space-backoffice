@@ -29,7 +29,7 @@ export class ShopComponent {
   totalPrice: number = 0;
   discountValue: number = 0;
   lastPrice: number = 0;
-  radioValue = 'value';
+  radioValue = 'price';
   categoryType = '';
   query: string = '';
   userFullName: any = 'White And Space';
@@ -144,7 +144,7 @@ export class ShopComponent {
         this.userFullName = getStorage('name');
         this.userRole = getStorage('role');
       },
-      (err) => { }
+      (err) => {}
     );
   }
 
@@ -217,32 +217,44 @@ export class ShopComponent {
           }
         }
         this.totalPrice -= item.price;
+        if (this.radioValue == 'value') {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        } else {
+          this.lastPrice =
+            this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+        }
       }
     }
   }
-  handleDiscountOk(): void {
-    console.log(this.radioValue)
-    if (this.isDiscount = true) {
-      if (this.radioValue = 'value') {
-        this.discountValue = this.value;
-        this.lastPrice = this.totalPrice - this.discountValue
 
+  handleDiscountOk(): void {
+    if ((this.isDiscount = true)) {
+      this.discountValue = this.value;
+      if (this.radioValue == 'price') {
+        if (this.totalPrice - this.discountValue < 0) {
+          this.throwErrorMessage(`กรุณากรอกเพิ่มสินค้าก่อนทำรายการ`);
+          this.discountValue = 0;
+        } else {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        }
       } else {
         if (this.discountValue > 100) {
           this.discountValue = 100;
         }
-        this.lastPrice = this.totalPrice * this.discountValue/100
+        this.lastPrice =
+          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
       }
     }
     this.isShowModal = false;
     this.isDiscount = false;
   }
+
   handleOk(): void {
-    let customer_change = this.value - this.totalPrice;
+    let customer_change = this.value - this.lastPrice;
 
     if (customer_change >= 0) {
       this.orderService
-        .checkOutOrder(this.stashItem, 'cash', this.value)
+        .checkOutOrder(this.stashItem, 'cash', this.value, this.radioValue, this.discountValue)
         .subscribe(
           (res) => {
             Swal.fire(
@@ -258,7 +270,6 @@ export class ShopComponent {
         );
       this.isShowModal = false;
     } else {
-      this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
     }
   }
 
@@ -285,6 +296,7 @@ export class ShopComponent {
     this.stashItem = [];
     this.value = 0;
     this.discountValue = 0;
+    this.lastPrice = 0;
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -326,7 +338,7 @@ export class ShopComponent {
           //   (err) => {}
           // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
-          this.orderService.checkOutOrder(b, 'banking').subscribe(
+          this.orderService.checkOutOrder(b, 'banking', this.value, this.radioValue, this.discountValue ).subscribe(
             (res) => {
               Swal.fire(
                 'ทำรายการสำเร็จ !',
@@ -354,7 +366,7 @@ export class ShopComponent {
     }
   }
   onEqualClick() {
-    this.value = this.totalPrice;
+    this.value = this.lastPrice;
   }
 
   onClearClick() {

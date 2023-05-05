@@ -163,33 +163,33 @@
         </div>
         <div style="margin-top: 10px; padding: 20px">
           <div nz-row [nzGutter]="10">
-            <div nz-col [nzSpan]="4" class="text-start text-bold kanit" style="font-size: 24px">
+            <div nz-col [nzSpan]="4" class="text-start text-bold kanit" style="font-size: 18px">
               ลด
             </div>
-            <div nz-col [nzSpan]="20" class="text-end text-bold" style="font-size: 32px" (click)="handleOpendiscount()">
+            <div nz-col [nzSpan]="20" class="text-end text-bold" style="font-size: 24px" (click)="handleOpendiscount()">
               {{ discountValue }}
               <!-- <span style="font-size: 16px">THB</span> -->
               <nz-radio-group class="radio-style-discount" [(ngModel)]="radioValue" nzButtonStyle="solid"
                 nzSize="large">
-                <label nz-radio-button nzValue="value" (click)="discountType()">บาท</label>
+                <label nz-radio-button nzValue="price" (click)="discountType()">บาท</label>
                 <label nz-radio-button nzValue="percent" (click)="discountType()">%</label>
               </nz-radio-group>
             </div>
           </div>
           <div nz-row [nzGutter]="10">
-            <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size: 24px">
+            <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size: 18px">
               รวม
             </div>
-            <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size: 32px">
+            <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size: 24px">
               {{ totalPrice.toLocaleString() }}
               <span style="font-size: 16px">THB</span>
             </div>
           </div>
           <div nz-row [nzGutter]="10">
-            <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size: 24px">
+            <div nz-col [nzSpan]="12" class="text-start text-bold kanit" style="font-size: 18px">
               สุทธิ
             </div>
-            <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size: 32px"> 
+            <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size: 24px">
               {{ lastPrice }}
               <span style="font-size: 16px">THB</span>
             </div>
@@ -296,8 +296,9 @@
             <div class="digit2" (click)="onDigitClick('1000')">1,000</div>
             <div class="digit2" (click)="onDigitClick('500')">500</div>
             <div class="digit2" (click)="onDigitClick('100')">100</div>
-            <div class="submit-btn" (click)="handleOk()"  *ngIf="!isDiscount">ตกลง</div>
-            <div class="submit-btn" (click)="handleDiscountOk()"  *ngIf="isDiscount">ตกลง</div>
+            <div class="submit-btn" (click)="!isDiscount ? handleOk() :handleDiscountOk()">ตกลง
+            </div>
+            <!-- <div class="submit-btn" (click)="handleDiscountOk()"  *ngIf="isDiscount">ตกลง</div> -->
           </div>
         </div>
       </div>
