@@ -8,7 +8,7 @@ import { API_URL } from 'src/utils/utils';
 const ENDPOINT = {
   GET_ALL: ({ start, end }: any) =>
     `${API_URL}/order?start=${start}&end=${end}`,
-  CASH_ORDER: `${API_URL}/order/employee-confirm-cash`,
+  CONFIRM_ORDER: `${API_URL}/order/employee-confirm`,
   BANKING_ORDER: `${API_URL}/order/employee-confirm-banking`,
   CANCEL_ORDER: `${API_URL}/order/cancel`,
 };
@@ -26,23 +26,27 @@ export class OrderService {
     });
   }
 
-  checkOutCashOrder(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.CASH_ORDER, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }),
-    });
+  checkOutOrder(data: any, payment: string, coin?: number): Observable<any> {
+    return this.http.post<any>(
+      ENDPOINT.CONFIRM_ORDER,
+      { order: data, payment, coin },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
   }
 
-  checkOutBankingOrder(data: any): Observable<any> {
-    return this.http.post<any>(ENDPOINT.BANKING_ORDER, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      }),
-    });
-  }
+  // checkOutBankingOrder(data: any): Observable<any> {
+  //   return this.http.post<any>(ENDPOINT.BANKING_ORDER, data, {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       Authorization: `Bearer ${localStorage.getItem('token')}`,
+  //     }),
+  //   });
+  // }
 
   cancelOrder(id: string): Observable<any> {
     let data = { id };

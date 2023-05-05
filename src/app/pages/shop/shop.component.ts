@@ -212,20 +212,23 @@ export class ShopComponent {
 
   handleOk(): void {
     let customer_change = this.value - this.totalPrice;
+
     if (customer_change >= 0) {
-      this.orderService.checkOutCashOrder(this.stashItem).subscribe(
-        (res) => {
-          Swal.fire(
-            'ทำรายการสำเร็จ !',
-            `ทอน ${customer_change} บาท`,
-            'success'
-          );
-          this.handleClearOrder();
-        },
-        (err) => {
-          this.throwErrorMessage(`${err.error.message}`);
-        }
-      );
+      this.orderService
+        .checkOutOrder(this.stashItem, 'cash', this.value)
+        .subscribe(
+          (res) => {
+            Swal.fire(
+              'ทำรายการสำเร็จ !',
+              `ทอน ${customer_change} บาท`,
+              'success'
+            );
+            this.handleClearOrder();
+          },
+          (err) => {
+            this.throwErrorMessage(`${err.error.message}`);
+          }
+        );
       this.isShowModal = false;
     } else {
       this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
@@ -292,7 +295,7 @@ export class ShopComponent {
           //   (err) => {}
           // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
-          this.orderService.checkOutBankingOrder(b).subscribe(
+          this.orderService.checkOutOrder(b, 'banking').subscribe(
             (res) => {
               Swal.fire(
                 'ทำรายการสำเร็จ !',
