@@ -47,7 +47,6 @@ export class CheckStockComponent {
 
   handleBarcodeInput(event: KeyboardEvent) {
     const input = event.key;
-    console.log(input);
 
     if (input === 'Enter') {
       this.processBarcode(this.currentBarcode);
@@ -59,12 +58,11 @@ export class CheckStockComponent {
   }
 
   processBarcode(barcode: string) {
-    this.message.create('success', `สแกนแล้ว สแกนอีก สแกนต่อ`);
     if (barcode) {
       this.stockService.checkStockByBarcode(barcode).subscribe(
         (res) => {
           if (res) {
-            this.message.create('success', `สแกนแล้ว สแกนอีก สแกนต่อ`);
+            this.message.create('success', `สแกนสินค้าสำเร็จ`);
             this.fetchCheckStockHistory();
           }
         },

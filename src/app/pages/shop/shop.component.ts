@@ -175,6 +175,7 @@ export class ShopComponent {
             existingItem.amount++;
             existingItem.totalPrice += item.price;
             existingItem.tagList = [...existingItem.tagList, item.tagId];
+            this.totalPrice += item.price;
           } else {
             this.message.create('warning', 'สินค้าชิ้นนี้อยู่ในตระกร้าแล้ว');
           }
@@ -200,6 +201,12 @@ export class ShopComponent {
         this.cart.push(newItem);
         this.totalPrice += item.price;
       }
+      if (this.radioValue == 'price') {
+        this.lastPrice = this.totalPrice - this.discountValue;
+      } else {
+        this.lastPrice =
+          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+      }
     } else if (type == CART_ACTION.DEL) {
       if (existingItem) {
         if (existingItem.amount >= 1) {
@@ -217,7 +224,7 @@ export class ShopComponent {
           }
         }
         this.totalPrice -= item.price;
-        if (this.radioValue == 'value') {
+        if (this.radioValue == 'price') {
           this.lastPrice = this.totalPrice - this.discountValue;
         } else {
           this.lastPrice =
@@ -227,13 +234,16 @@ export class ShopComponent {
     }
   }
 
-  handleDiscountOk(): void {
+  handleDiscountOk(): any {
     if ((this.isDiscount = true)) {
       this.discountValue = this.value;
       if (this.radioValue == 'price') {
         if (this.totalPrice - this.discountValue < 0) {
-          this.throwErrorMessage(`กรุณากรอกเพิ่มสินค้าก่อนทำรายการ`);
           this.discountValue = 0;
+          return this.message.create(
+            'warning',
+            'กรุณาตรวจสอบส่วนลดเนื่องจาก ลดคาส่วนลดมากกว่าจำนวนราคาทั้งหมด'
+          );
         } else {
           this.lastPrice = this.totalPrice - this.discountValue;
         }
@@ -251,10 +261,15 @@ export class ShopComponent {
 
   handleOk(): void {
     let customer_change = this.value - this.lastPrice;
-
     if (customer_change >= 0) {
       this.orderService
-        .checkOutOrder(this.stashItem, 'cash', this.value, this.radioValue, this.discountValue)
+        .checkOutOrder(
+          this.stashItem,
+          'cash',
+          this.value,
+          this.radioValue,
+          this.discountValue
+        )
         .subscribe(
           (res) => {
             Swal.fire(
@@ -270,6 +285,7 @@ export class ShopComponent {
         );
       this.isShowModal = false;
     } else {
+      this.message.create('warning', 'กรุณาตรวจสอบจำนวนเงินที่รับ');
     }
   }
 
@@ -279,6 +295,7 @@ export class ShopComponent {
     this.value = 0;
     this.isDiscount = false;
     this.discountValue = 0;
+    this.lastPrice = this.totalPrice;
   }
 
   filterByType() {
@@ -338,19 +355,27 @@ export class ShopComponent {
           //   (err) => {}
           // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
-          this.orderService.checkOutOrder(b, 'banking', this.value, this.radioValue, this.discountValue ).subscribe(
-            (res) => {
-              Swal.fire(
-                'ทำรายการสำเร็จ !',
-                'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-                'success'
-              );
-              this.handleClearOrder();
-            },
-            (err) => {
-              this.throwErrorMessage(`${err.error.message}`);
-            }
-          );
+          this.orderService
+            .checkOutOrder(
+              b,
+              'banking',
+              this.value,
+              this.radioValue,
+              this.discountValue
+            )
+            .subscribe(
+              (res) => {
+                Swal.fire(
+                  'ทำรายการสำเร็จ !',
+                  'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+                  'success'
+                );
+                this.handleClearOrder();
+              },
+              (err) => {
+                this.throwErrorMessage(`${err.error.message}`);
+              }
+            );
         }
       }
     });
@@ -366,7 +391,7 @@ export class ShopComponent {
     }
   }
   onEqualClick() {
-    if(this.lastPrice == 0){
+    if (this.lastPrice == 0) {
       this.lastPrice = this.totalPrice;
     }
     this.value = this.lastPrice;

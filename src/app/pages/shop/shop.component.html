@@ -73,7 +73,7 @@
               {{ item.name }}
             </div>
             <div class="price-tag">
-              ฿ {{ item.price }}
+              ฿ {{ item?.price?.toLocaleString() }}
               <span style="
                   border: 1px solid red;
                   color: red;
@@ -167,7 +167,7 @@
               ลด
             </div>
             <div nz-col [nzSpan]="20" class="text-end text-bold" style="font-size: 24px" (click)="handleOpendiscount()">
-              {{ discountValue }}
+              {{ discountValue?.toLocaleString() }}
               <!-- <span style="font-size: 16px">THB</span> -->
               <nz-radio-group class="radio-style-discount" [(ngModel)]="radioValue" nzButtonStyle="solid"
                 nzSize="large">
@@ -190,7 +190,7 @@
               สุทธิ
             </div>
             <div nz-col [nzSpan]="12" class="text-end text-bold" style="font-size: 24px">
-              {{ lastPrice }}
+              {{ lastPrice?.toLocaleString() }}
               <span style="font-size: 16px">THB</span>
             </div>
           </div>
@@ -273,7 +273,7 @@
   <nz-modal [(nzVisible)]="isShowModal" [nzFooter]="[]" [nzTitle]="isDiscount ? 'ใส่ส่วนลด' : 'ใส่จำนวนเงินที่รับ'"
     nzMaskClosable="false" (nzOnCancel)="handleCancel()">
     <ng-container *nzModalContent>
-      <div class="number-keypad">
+      <div class="number-keypad" style="border-top-left-radius: 15px;border-top-right-radius: 15px">
         {{ value
         }}<button nz-button class="large-btn" (click)="onEqualClick()" *ngIf="!isDiscount">
           เต็ม

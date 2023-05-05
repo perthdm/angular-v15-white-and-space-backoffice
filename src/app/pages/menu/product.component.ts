@@ -224,16 +224,18 @@ export class ProductComponent {
   }
 
   editProduct(current: any) {
-    this.productData = current;
+    if (this.isAccess) {
+      this.productData = current;
 
-    this.pdTypeSelected = current.product_type;
-    this.switchValue = current.auto_stock;
+      this.pdTypeSelected = current.product_type;
+      this.switchValue = current.auto_stock;
 
-    if (this.productData?.stock?._id) {
-      this.productData['stock_id'] = this.productData?.stock?._id;
+      if (this.productData?.stock?._id) {
+        this.productData['stock_id'] = this.productData?.stock?._id;
+      }
+      this.isEdit = true;
+      this.showModal();
     }
-    this.isEdit = true;
-    this.showModal();
   }
 
   getTagDetail(type: string) {
