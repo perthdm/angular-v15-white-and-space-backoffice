@@ -366,6 +366,9 @@ export class ShopComponent {
     }
   }
   onEqualClick() {
+    if(this.lastPrice == 0){
+      this.lastPrice = this.totalPrice;
+    }
     this.value = this.lastPrice;
   }
 
