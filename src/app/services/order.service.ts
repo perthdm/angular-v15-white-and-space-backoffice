@@ -26,10 +26,16 @@ export class OrderService {
     });
   }
 
-  checkOutOrder(data: any, payment: string, coin?: number): Observable<any> {
+  checkOutOrder(
+    data: any,
+    payment: string,
+    coin?: number,
+    discount_type?: string,
+    discount?: number
+  ): Observable<any> {
     return this.http.post<any>(
       ENDPOINT.CONFIRM_ORDER,
-      { order: data, payment, coin },
+      { order: data, payment, discount_type, discount, coin },
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

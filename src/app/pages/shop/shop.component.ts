@@ -27,6 +27,9 @@ export class ShopComponent {
   productListPreview: any = [];
   cart: any = [];
   totalPrice: number = 0;
+  discountValue: number = 0;
+  lastPrice: number = 0;
+  radioValue = 'price';
   categoryType = '';
   query: string = '';
   userFullName: any = 'White And Space';
@@ -34,12 +37,11 @@ export class ShopComponent {
   categoryCount: any = {};
   currentBarcode: string = '';
   isShowModal: boolean = false;
-
+  isDiscount: boolean = false;
   sumValue = 0;
   value = 0;
   stashItem: any = [];
   currentValue = '';
-
   digits = [
     { value: '1', text: '1' },
     { value: '2', text: '2' },
@@ -66,6 +68,10 @@ export class ShopComponent {
     this.fetchProductActive();
   }
 
+  handleOpendiscount() {
+    this.isDiscount = true;
+    this.isShowModal = true;
+  }
   ngAfterViewInit() {
     this.cartForceFocus.nativeElement.focus();
     this.cartForceFocus.nativeElement.hidden = true;
@@ -77,6 +83,11 @@ export class ShopComponent {
 
   throwErrorMessage(message: string) {
     this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
+  }
+  discountType() {
+    this.discountValue = 0;
+    this.value = 0;
+    this.lastPrice = this.totalPrice;
   }
 
   handleBarcodeInput(event: KeyboardEvent) {
@@ -206,16 +217,44 @@ export class ShopComponent {
           }
         }
         this.totalPrice -= item.price;
+        if (this.radioValue == 'value') {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        } else {
+          this.lastPrice =
+            this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+        }
       }
     }
   }
 
+  handleDiscountOk(): void {
+    if ((this.isDiscount = true)) {
+      this.discountValue = this.value;
+      if (this.radioValue == 'price') {
+        if (this.totalPrice - this.discountValue < 0) {
+          this.throwErrorMessage(`กรุณากรอกเพิ่มสินค้าก่อนทำรายการ`);
+          this.discountValue = 0;
+        } else {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        }
+      } else {
+        if (this.discountValue > 100) {
+          this.discountValue = 100;
+        }
+        this.lastPrice =
+          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+      }
+    }
+    this.isShowModal = false;
+    this.isDiscount = false;
+  }
+
   handleOk(): void {
-    let customer_change = this.value - this.totalPrice;
+    let customer_change = this.value - this.lastPrice;
 
     if (customer_change >= 0) {
       this.orderService
-        .checkOutOrder(this.stashItem, 'cash', this.value)
+        .checkOutOrder(this.stashItem, 'cash', this.value, this.radioValue, this.discountValue)
         .subscribe(
           (res) => {
             Swal.fire(
@@ -231,7 +270,6 @@ export class ShopComponent {
         );
       this.isShowModal = false;
     } else {
-      this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
     }
   }
 
@@ -239,6 +277,8 @@ export class ShopComponent {
     this.isShowModal = false;
     this.stashItem = [];
     this.value = 0;
+    this.isDiscount = false;
+    this.discountValue = 0;
   }
 
   filterByType() {
@@ -255,6 +295,8 @@ export class ShopComponent {
     this.totalPrice = 0;
     this.stashItem = [];
     this.value = 0;
+    this.discountValue = 0;
+    this.lastPrice = 0;
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -282,6 +324,7 @@ export class ShopComponent {
       if (result.value) {
         if (paymentType === PAYMENT_TYPE.CASH) {
           this.isShowModal = true;
+          this.value = 0;
           this.stashItem = b;
           // this.orderService.checkOutCashOrder(b).subscribe(
           //   (res) => {
@@ -295,7 +338,7 @@ export class ShopComponent {
           //   (err) => {}
           // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
-          this.orderService.checkOutOrder(b, 'banking').subscribe(
+          this.orderService.checkOutOrder(b, 'banking', this.value, this.radioValue, this.discountValue ).subscribe(
             (res) => {
               Swal.fire(
                 'ทำรายการสำเร็จ !',
@@ -323,7 +366,7 @@ export class ShopComponent {
     }
   }
   onEqualClick() {
-    this.value = this.totalPrice;
+    this.value = this.lastPrice;
   }
 
   onClearClick() {

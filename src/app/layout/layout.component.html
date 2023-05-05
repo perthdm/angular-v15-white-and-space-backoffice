@@ -10,11 +10,11 @@
                             <span class="menu-text" style="font-weight: bold;">White And Space</span>
                         </a>
                     </li>
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
+                    <li nz-menu-item nzMatchRouter>
                         <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
                             <span class="menu-text">แดชบอร์ด</span></a>
                     </li>
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
+                    <li nz-menu-item nzMatchRouter>
                         <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
                                 class="menu-text">รายงาน</span>
                         </a>
@@ -29,18 +29,23 @@
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/product">
                             <span nz-icon nzType="golden" nzTheme="fill"></span>
-                            <span class="menu-text">สินค้า / บริการ</span>
+                            <span class="menu-text">จัดการสินค้า</span>
                         </a>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
-                        <a routerLink="/stock">
-                            <span nz-icon nzType="appstore-add" nzTheme="outline"></span>
-                            <span class="menu-text">คลังสินค้า</span>
-                        </a>
+
+                    <li nz-submenu nzTitle="คลังสินค้า" nzIcon="appstore-add">
+                        <ul>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/stock">สต็อกสินค้า</a>
+                            </li>
+                            <li nz-menu-item nzMatchRouter>
+                                <a routerLink="/check-stock">การเช็คสต็อก</a>
+                            </li>
+                        </ul>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter *ngIf="isFullAccess">
+                    <li nz-menu-item nzMatchRoute>
                         <a routerLink="/user">
                             <span nz-icon nzType="user" nzTheme="outline"></span>
                             <span class="menu-text">ผู้ใช้งาน</span>
@@ -54,7 +59,7 @@
                         </a>
                     </li>
 
-                    <li nz-submenu nzTitle="การเข้างาน" nzIcon="history"  style="float: right;">
+                    <li nz-submenu nzTitle="การเข้างาน" nzIcon="history" style="float: right;">
                         <ul>
                             <li nz-menu-item nzMatchRouter>
                                 <a routerLink="/attendance">ประวัติเข้างาน</a>
@@ -76,7 +81,7 @@
                             <span class="menu-text" style="font-weight: bold;">White And Space</span>
                         </a>
                     </li>
-                  
+
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/billing-history">
                             <span nz-icon nzType="file-text" nzTheme="fill"></span>
@@ -88,6 +93,13 @@
                         <a routerLink="/product">
                             <span nz-icon nzType="golden" nzTheme="fill"></span>
                             <span class="menu-text">สินค้า / บริการ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter>
+                        <a routerLink="/check-stock">
+                            <span nz-icon nzType="scan" nzTheme="outline"></span>
+                            <span class="menu-text">การเช็คสต็อก</span>
                         </a>
                     </li>
 
