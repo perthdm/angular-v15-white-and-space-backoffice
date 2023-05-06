@@ -4,7 +4,8 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">คลังสินค้า</h3>
         </div>
         <div nz-col [nzSpan]="16" class="d-none-950">
-            <antd-searchbox (onSearchEvent)="getOutputSearch($event)" placeholder=" ค้นหา ชื่อสต็อกสินค้า"></antd-searchbox>
+            <antd-searchbox (onSearchEvent)="getOutputSearch($event)"
+                placeholder=" ค้นหา ชื่อสต็อกสินค้า"></antd-searchbox>
         </div>
 
         <div class="radio-style" style="max-width: calc(100vw - 58px);">
@@ -54,7 +55,8 @@
                             <th [nzAlign]="'center'">สร้างเมื่อ</th>
                             <th [nzAlign]="'center'">ผู้ทำรายการ</th>
                             <th [nzAlign]="'center'">เครื่องมือ</th>
-                            <th [nzAlign]="'center'">รายละเอียด</th>
+                            <th [nzAlign]="'center'" nzWidth="100px">รายละเอียด</th>
+                            <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,9 +77,16 @@
 
                             <td [nzAlign]="'center'">
                                 <button nz-button nzType="primary"
-                                    style="color:white; border-radius: 8px ; padding: 6px 10px;"
+                                    style="color:white; border-radius: 6px ; padding: 6px 8px;"
                                     (click)="showModalStockDetail($event,data)">
                                     <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
+                                </button>
+                            </td>
+
+                            <td *ngIf="isAccess" [nzAlign]="'center'">
+                                <button nz-button nzType="primary" nzDanger style="border-radius: 6px; padding:4px 8px;"
+                                    (click)="handleDeleteStock($event, data?._id)">
+                                    <span nz-icon nzType="delete" nzTheme="fill"></span>
                                 </button>
                             </td>
                         </tr>
@@ -139,7 +148,7 @@
                     <td> {{ data?.info }}</td>
                     <td [nzAlign]="'center'">
                         <button *ngIf="data?.tracking.length > 0" nz-button nzType="primary"
-                            style="color:white; border-radius: 8px ; padding: 6px 10px;"
+                            style="color:white; border-radius: 6px ; padding: 6px 8px;"
                             (click)="showModalExportDetail($event,data)">
                             <span nz-icon nzType="file-sync" nzTheme="outline" style="font-size: 18px;"></span>
                         </button>

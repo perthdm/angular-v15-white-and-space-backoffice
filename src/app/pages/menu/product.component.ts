@@ -112,25 +112,6 @@ export class ProductComponent {
     this.resetData();
   }
 
-  // handleDelete(current: any, event: MouseEvent) {
-  //   event.stopPropagation();
-  //   this.productData = current;
-  //   this.productService.deleteProduct(this.productData?._id).subscribe(
-  //     (res) => {
-  //       this.fetchProduct();
-  //       this.resetData();
-  //       this.message.create('success', 'ลบสินค้าสำเร็จ');
-  //       return;
-  //     },
-  //     (err) => {
-  //       this.message.create(
-  //         'error',
-  //         `Please try again ${err.error.message}::${err.error.statusCode}`
-  //       );
-  //     }
-  //   );
-  // }
-
   handleOk(): void {
     if (!this.isEdit) {
       let reqData: any = {
@@ -308,9 +289,35 @@ export class ProductComponent {
   }
 
   getOutputSearch(searchText: any) {
-    console.log(searchText);
     this.query = searchText;
     this.fetchProduct();
-    // Perform a search based on the value of searchText
+  }
+
+  handleDelete(event: any, productId: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'คำเตือน!',
+      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยัน',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.productService.deleteProduct(productId).subscribe(
+          (res) => {
+            this.fetchProduct();
+            this.message.create('success', 'ลบสินค้าสำเร็จ');
+          },
+          (err) => {
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            );
+          }
+        );
+      }
+    });
   }
 }

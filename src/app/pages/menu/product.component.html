@@ -42,6 +42,7 @@
                     <th [nzAlign]="'center'">สินค้าในคลัง</th>
                     <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
                     <th [nzAlign]="'center'">สถานะ</th>
+                    <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,17 +72,17 @@
 
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="data.status ? '#87d068' : '#ff7875'" (click)="changeStatus($event, data)"
-                            style="padding: 2px 8px">
+                            style="padding: 2px 8px; font-weight: bold;">
                             {{ data.status ? "Open" : "Close" }}
                         </nz-tag>
                     </td>
-                    <!-- <td>
-                        <button nz-button *ngIf=""
-                            style="height: 40px; border-radius: 10px; margin-right: 10px;background-color: #fb4545;color:white;"
-                            (click)="handleDelete(data, $event)">
+
+                    <td *ngIf="isAccess" [nzAlign]="'center'">
+                        <button nz-button nzType="primary" nzDanger style="border-radius: 6px; padding:4px 8px;"
+                            (click)="handleDelete($event, data?._id)">
                             <span nz-icon nzType="delete" nzTheme="fill"></span>
                         </button>
-                    </td> -->
+                    </td>
 
                     <ng-template #zeroAmount> - </ng-template>
                 </tr>

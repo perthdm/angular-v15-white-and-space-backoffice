@@ -120,9 +120,9 @@ export class BillingHistoryComponent {
   getStatusDetail(type: string) {
     switch (type) {
       case 'close':
-        return { title: 'Close', color: 'magenta' };
+        return { title: 'Close', color: 'volcano' };
       case 'cancel':
-        return { title: 'Cancel', color: 'volcano' };
+        return { title: 'Void', color: 'purple' };
       default:
         return { title: 'Waiting', color: 'gold' };
     }

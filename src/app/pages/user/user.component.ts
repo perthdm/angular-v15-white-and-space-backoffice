@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUser, IUserPagination } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
-import { formatDateTime } from 'src/utils/utils';
+import { formatDateTime, getStorage } from 'src/utils/utils';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -26,6 +27,7 @@ export class UserComponent {
   total: number = 0;
 
   dateFormat = 'dd-MM-YYYY';
+  isAccess = getStorage('role') === 'owner' ? true : false;
 
   constructor(
     private userService: UserService,
@@ -150,5 +152,33 @@ export class UserComponent {
     this.page = 1;
     this.query = searchText;
     this.fetchUser();
+  }
+
+  handleDeleteUser(event: any, userId: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'คำเตือน!',
+      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการผู้ใช้งานนี้หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยัน',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.userService.deleteUser(userId).subscribe(
+          (res) => {
+            this.fetchUser();
+            this.message.create('success', 'ลบผู้ใช้งานสำเร็จ');
+          },
+          (err) => {
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            );
+          }
+        );
+      }
+    });
   }
 }
