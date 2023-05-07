@@ -1,0 +1,93 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Styles for the profile picture */
+.profile-pic {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 20px;
+}
+
+/* Styles for the headings */
+.heading-primary {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.heading-secondary {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Styles for the skills */
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.skills li {
+  margin: 5px;
+  padding: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Styles for the experience */
+.experience {
+  margin-bottom: 40px;
+}
+
+.experience .heading-tertiary {
+  margin-top: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.experience .experience-date {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.experience ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+/* Styles for the contact information */
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.contact li {
+  margin: 10px;
+  padding: 10px;
+  background-color: #ddd;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.contact li a {
+  color: #333;
+  text-decoration: none;
+}

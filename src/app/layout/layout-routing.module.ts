@@ -13,6 +13,7 @@ import { ProductComponent } from '../pages/menu/product.component';
 import { AuthRoleService } from '../services/auth-role.service';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { PayComponent } from '../pages/pay/pay.component';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -72,7 +73,10 @@ const routes: Routes = [
           roles: ['owner', 'manager'],
         },
       },
-
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
       {
         path: 'setting',
         component: SettingComponent,

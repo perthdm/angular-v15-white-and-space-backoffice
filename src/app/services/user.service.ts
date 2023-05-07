@@ -13,6 +13,7 @@ const ENDPOINT = {
   UPDATE: `${API_URL}/user`,
   DELETE: (userId: string) => `${API_URL}/user/${userId}`,
   GET_PROFILE: `${API_URL}/auth/profile`,
+  CHNAGE_PWD: `${API_URL}/user/change-pwd`,
 
   ATTENDANCE: {
     GET_CHECK_IN_STATUS: `${API_URL}/attendance/check-in`,
@@ -164,5 +165,18 @@ export class UserService {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       }),
     });
+  }
+
+  changePwd(password: string, new_password: string) {
+    return this.http.put(
+      ENDPOINT.CHNAGE_PWD,
+      { password, new_password },
+      {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        }),
+      }
+    );
   }
 }

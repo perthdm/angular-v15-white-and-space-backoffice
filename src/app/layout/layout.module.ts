@@ -34,6 +34,7 @@ import { ProductService } from '../services/product.service';
 import { OrderService } from '../services/order.service';
 import { CafeService } from '../services/cafe.service';
 import { ReportService } from '../services/report.service';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { ReportService } from '../services/report.service';
     SettingComponent,
     NotFoundComponent,
     PayComponent,
+    ProfileComponent,
   ],
 
   providers: [

@@ -21,6 +21,7 @@
                 ของหวาน <span>({{ productCount.desert }})</span></label>
             <label nz-radio-button nzValue="beverage">เครื่องดื่ม <span>({{ productCount.beverage }})</span></label>
             <label nz-radio-button nzValue="bear">หมี <span>({{ productCount.bear}})</span></label>
+            <label nz-radio-button nzValue="set">คอมโบเซ็ต <span>({{ productCount.set }})</span></label>
             <label nz-radio-button nzValue="etc">อื่นๆ <span>({{ productCount.etc }})</span></label>
         </nz-radio-group>
         <button *ngIf="isAccess" nz-button nzType="primary"
@@ -31,12 +32,12 @@
     </div>
     <div class="app-content">
         <nz-table style="margin: 20px 0px; min-height: 300px" #basicTable [nzData]="producList"
-            [nzShowPagination]="false" [nzPageSize]="pageLimit">
+            [nzShowPagination]="false" [nzPageSize]="pageLimit" [nzLoading]="isLoading">
             <thead>
                 <tr>
                     <th [nzAlign]="'center'">รหัสสินค้า</th>
-                    <th>ชื่อสินค้า</th>
                     <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
+                    <th>ชื่อสินค้า</th>
                     <th [nzAlign]="'right'">ราคา (บาท)</th>
                     <th [nzAlign]="'center'">สร้างเมื่อ</th>
                     <th [nzAlign]="'center'">สถานะ</th>
@@ -47,11 +48,13 @@
                 <tr *ngFor="let data of basicTable.data; let index = index" style="cursor: pointer"
                     (click)="editProduct(data)">
                     <td [nzAlign]="'center'">{{ data.product_id }}</td>
-                    <td>{{ data.name }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
-                            {{ getTagDetail(data.product_type).title }}</nz-tag>
+                            {{ getTagDetail(data.product_type).title }}
+                        </nz-tag>
                     </td>
+                    <td>{{ data.name }}</td>
+
                     <td [nzAlign]="'right'">{{ data.price.toLocaleString() }}</td>
 
                     <td [nzAlign]="'center'">{{ mapDate(data.createdAt) }}</td>
@@ -106,9 +109,15 @@
                     <nz-option nzValue="desert" nzLabel="ของหวาน"></nz-option>
                     <nz-option nzValue="beverage" nzLabel="เครื่องดื่ม"></nz-option>
                     <nz-option nzValue="bear" nzLabel="หมี"></nz-option>
-                    <!-- <nz-option nzValue="set" nzLabel="คอมโบเซ็ต"></nz-option> -->
+                    <nz-option nzValue="set" nzLabel="คอมโบเซ็ต"></nz-option>
                     <nz-option nzValue="etc" nzLabel="อื่นๆ"></nz-option>
                 </nz-select>
+
+                <div *ngIf="pdTypeSelected === 'set'">
+                    <h4 style="margin-top: 8px">คำอธิบายเซ็ต</h4>
+                    <textarea rows="4" nz-input [(ngModel)]="desciptionText"
+                        placeholder="กรอกรายละเอียดของเซ็ต เช่น ตุ๊กตาหมี ORG 23cm 3ตัว, สีอคิลิค 9ขวด"></textarea>
+                </div>
 
                 <h4 style="margin-top: 8px">รูปภาพสินค้า</h4>
                 <nz-upload class="upload-style" [nzLimit]="1" nzListType="picture" [nzBeforeUpload]="beforeUpload"

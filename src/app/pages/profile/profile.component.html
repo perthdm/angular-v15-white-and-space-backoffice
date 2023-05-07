@@ -1,0 +1,87 @@
+<div class="inner-content">
+    <div nz-row>
+        <div nz-col [nzSpan]="8">
+            <h3 style="margin-bottom: 24px; font-size: 24px; font-weight: bold">
+                โปรไฟล์
+            </h3>
+        </div>
+        <div nz-col [nzSpan]="16" style="text-align: right;">
+            <button nz-button nzType="primary" style="height: 40px; border-radius: 10px;" (click)="handleShowModal()">
+                <span nz-icon nzType="lock" nzTheme="outline"></span>
+                เปลี่ยนรหัสผ่าน
+            </button>
+        </div>
+    </div>
+
+
+    <div class="app-content">
+        <div class="container">
+
+            <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <img class="profile-pic"
+                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    alt="My Profile Picture">
+            </div>
+            <h1 class="heading-primary">{{ userData?.name }}</h1>
+
+            <h2 class="heading-secondary">About Me</h2>
+            <div class="experience">
+                <h3 class="heading-tertiary"> {{ userData?.name }} </h3>
+                <ul>
+                    <li>
+                        <span style="font-weight: bold;">ชื่อผู้ใช้งาน : </span>
+                        {{ userData?.username }}
+                    </li>
+                    <li> <span style="font-weight: bold;">เพศ : </span> {{ genderString(userData?.gender) }}</li>
+                    <li> <span style="font-weight: bold;">โทร : </span> {{ userData?.telephone }}</li>
+                    <li>
+                        <span style="font-weight: bold;">วัน/เดือน/ปี เกิด : </span>
+                        {{ mapDate(userData?.dob) }}
+                    </li>
+                </ul>
+            </div>
+
+
+            <h2 class="heading-secondary">About Us</h2>
+            <div class="experience">
+                <h3 class="heading-tertiary">White & Space</h3>
+                <p>
+                    <span style="padding-left: 40px;">Some Text</span>
+                    White & Space เหมาะสำทุกท่านที่กำลังมองหากิจกรรมทำยามว่าง หรือ คอนเทนต์ใหม่ๆในชลบุรี
+                    ร้านเราเป็นแนว
+                    work shop ศิลปะ สามารถมาร่วมสนุกกันได้ทั้ง เด็กเล็ก วัยรุ่น และผู้ใหญ่
+                    ร้านเรามีน้องๆทีมงานคอยช่วยแนะนำเทคนิคการแบ่งชั้นสี จับคู่สี และการลงสี ให้กับลูกค้าอยู่ตลอด
+                    ลูกค้าไม่ต้องกังวลว่าการลงสี หรือ เลือกสีจะยากอีกต่อไป บวกกับบรรยากาศภายในร้านแล้ว
+                    ด้วยการตกแต่งร้านในสไตล์มูจิ & โมเดิร์น ลูกค้าสามารถถ่ายรูปได้ทุกมุมของร้าน
+                </p>
+
+                <p> ร้าน WHITE & SPACE (ไวท์แอนด์สเปซ) จดจัดตั้งทะเบียนพาณิชย์ และได้รับการรับรองจากนายทะเบียนพาณิชย์ ณ
+                    สำนักงานทะเบียนพาณิชย์ เทศบาลเมืองแสนสุข ตามพระราชบัญญัติทะเบียนพาณิชย์ พ.ศ. 2499
+                </p>
+
+                <h3 class="heading-tertiary">Contact</h3>
+                <ul>
+                    <li>ร้านเปิด ทุกวัน เวลา 9.00-20.00 น.</li>
+                    <li>โทร 082-445-3665</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <nz-modal [(nzVisible)]="isShowModal" nzTitle="เปลี่ยนรหัสผ่าน" (nzOnCancel)="handleCloseModal()"
+        (nzOnOk)="handleSubmitData()">
+        <ng-container *nzModalContent>
+            <h4>รหัสผ่านปัจจุบัน</h4>
+            <input [(ngModel)]="currentPassword" nz-input class="wns-input" placeholder="กรุณากรอกรหัสผ่าน"
+                type="password" name="password" [ngModel]="currentPassword" />
+
+            <h4 style="margin-top: 8px;">รหัสผ่านใหม่</h4>
+            <input [(ngModel)]="newPassword" nz-input class="wns-input" placeholder="กรุณากรอกรหัสผ่าน" type="password"
+                name="password" [ngModel]="newPassword" />
+
+            <h4 style="margin-top: 8px;">ยืนยันรหัสผ่านใหม่</h4>
+            <input [(ngModel)]="confirmPassword" nz-input class="wns-input" placeholder="กรุณากรอกรหัสผ่าน"
+                type="password" name="password" [ngModel]="confirmPassword" />
+        </ng-container>
+    </nz-modal>
+</div>

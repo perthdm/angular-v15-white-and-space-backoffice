@@ -104,14 +104,22 @@ export class UserComponent {
         salary: this.userData.salary,
         dob: this.dob,
         gender: this.gender,
+        new_password: this.userData.password
+          ? this.userData.password
+          : null,
       };
 
       this.userService.updateUser(reqUpdateData).subscribe(
         (res) => {
           this.resetData();
           this.fetchUser();
+          this.message.create('success', `แก้ไขผู้ใช้งานสำเร็จ`);
         },
-        (err) => {}
+        (err) =>
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          )
       );
     }
 
@@ -159,7 +167,7 @@ export class UserComponent {
 
     Swal.fire({
       title: 'คำเตือน!',
-      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการผู้ใช้งานนี้หรือไม่ ?',
+      text: 'คุณต้องการผู้ใช้งานนี้หรือไม่ ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'ยืนยัน',

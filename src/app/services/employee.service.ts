@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Employee, EmployeePagination } from 'src/app/model/employee.model';
+import { IUserPagination } from 'src/app/model/user.model';
 import { API_URL } from 'src/utils/utils';
 import { IPagination } from '../model/pagination.model';
 
@@ -19,8 +19,8 @@ const ENDPOINT = {
 export class EmployeeService {
   constructor(private readonly http: HttpClient) {}
 
-  getAllEmployee(pageConfig: IPagination): Observable<EmployeePagination> {
-    return this.http.get<EmployeePagination>(ENDPOINT.GET_ALL(pageConfig), {
+  getAllEmployee(pageConfig: IPagination): Observable<IUserPagination> {
+    return this.http.get<IUserPagination>(ENDPOINT.GET_ALL(pageConfig), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

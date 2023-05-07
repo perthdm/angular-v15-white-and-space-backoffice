@@ -35,6 +35,7 @@ export class ProductComponent {
   fileList: NzUploadFile[] | any = [];
   avatarUrl?: string;
   productStatus = false;
+  desciptionText: string = '';
 
   isAccess = getStorage('role') === 'owner' ? true : false;
 
@@ -91,6 +92,7 @@ export class ProductComponent {
   resetData = () => {
     this.productData = {};
     this.pdTypeSelected = '';
+    this.desciptionText = '';
     this.fileList = [];
   };
 
@@ -108,6 +110,7 @@ export class ProductComponent {
         product_type: this.pdTypeSelected,
         price: this.productData.price,
         add_on_id: JSON.stringify([]),
+        desciption: this.pdTypeSelected === 'set' ? this.desciptionText : '',
       };
 
       let data = new FormData();
@@ -197,8 +200,10 @@ export class ProductComponent {
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
         return { title: 'หมี', color: 'orange' };
+      case 'set':
+        return { title: 'เซ็ต', color: 'green' };
       default:
-        return { title: 'สินค้า', color: 'purple' };
+        return { title: 'อื่นๆ', color: 'purple' };
     }
   }
 
@@ -255,7 +260,7 @@ export class ProductComponent {
 
     Swal.fire({
       title: 'คำเตือน!',
-      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
+      text: 'คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'ยืนยัน',

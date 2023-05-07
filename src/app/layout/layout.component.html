@@ -41,10 +41,18 @@
                         </a>
                     </li>
 
+
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
                             <span class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter style="float: right;">
+                        <a routerLink="/profile">
+                            <span nz-icon nzType="contacts" nzTheme="outline"></span>
+                            <span class="menu-text">โปรไฟล์</span>
                         </a>
                     </li>
 
@@ -58,6 +66,8 @@
                             </li>
                         </ul>
                     </li>
+
+
                 </ul>
             </div>
 
@@ -89,6 +99,13 @@
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
                             <span class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter style="float: right;">
+                        <a routerLink="/profile">
+                            <span nz-icon nzType="contacts" nzTheme="outline"></span>
+                            <span class="menu-text">โปรไฟล์</span>
                         </a>
                     </li>
 
