@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { formatDateTime, getStorage } from 'src/utils/utils';
+import { formatDateTime, getDefaultValue, getStorage } from 'src/utils/utils';
 import * as moment from 'moment';
 import { PAYMENT_TYPE } from 'src/utils/constatnt';
 import Swal from 'sweetalert2';
@@ -29,7 +29,6 @@ interface IBill {
 interface IBillDetail {
   add_on: any;
   amount: number;
-  auto_stock: boolean;
   createdAt: string;
   description: string;
   name: string;
@@ -37,7 +36,6 @@ interface IBillDetail {
   product_id: string;
   product_type: ProductType;
   status: boolean;
-  stock: boolean;
 }
 
 enum ProductType {

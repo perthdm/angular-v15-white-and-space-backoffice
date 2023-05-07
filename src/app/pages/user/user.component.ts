@@ -47,7 +47,7 @@ export class UserComponent {
 
     this.userService.getAllUser(pageConfig).subscribe(
       (res) => {
-        let { total, page, last_page, items } = res;
+        let { total, items } = res;
         items.map((us: IUser) => {
           us.createdAt = formatDateTime(us.createdAt);
           us.updatedAt = formatDateTime(us.updatedAt);

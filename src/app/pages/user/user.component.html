@@ -33,7 +33,7 @@
                             <th [nzAlign]="'center'">เพศ</th>
                             <th [nzAlign]="'center'">ตำแหน่ง</th>
                             <th [nzAlign]="'right'">เงินเดือน</th>
-                            <th>สร้างเมื่อ</th>
+                            <th [nzAlign]="'center'">สร้างเมื่อ</th>
                             <th [nzAlign]="'center'">สถานะ</th>
                             <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                         </tr>
@@ -56,7 +56,7 @@
                             <td [nzAlign]="'center'">{{ data.role}}</td>
 
                             <td [nzAlign]="'right'">{{ data.salary.toLocaleString() }}</td>
-                            <td>{{ data.createdAt }}</td>
+                            <td [nzAlign]="'center'">{{ data.createdAt }}</td>
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
                             </td>

@@ -7,11 +7,3 @@ export const CART_ACTION = {
   ADD: 'add',
   DEL: 'del',
 };
-
-
-export const STOCK_TYPE = {
-  INVENTORY : "inventory",
-  IMPORT : "in",
-  EXPORT : "out",
-  ORDER : "order"
-}

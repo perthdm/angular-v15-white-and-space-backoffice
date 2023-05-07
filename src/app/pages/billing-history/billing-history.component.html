@@ -77,13 +77,13 @@
 
                         </tr>
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
-                            <td [nzAlign]="'center'" style="padding:6px 14px">รวม</td>
+                            <td [nzAlign]="'center'" style="padding:12px 8px">รวม</td>
                             <td [nzAlign]="'center'"> จำนวนบิล : {{ data.totalBill.toLocaleString() }} </td>
                             <td></td>
                             <td></td>
-                            <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalOrder.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">{{ data.totalOrder.toLocaleString() }}
                             </td>
-                            <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalProfit.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">{{ data.totalProfit.toLocaleString() }}
                             </td>
                             <td></td>
                             <td></td>
@@ -104,22 +104,22 @@
                         <tr>
                             <th id="id" [nzAlign]="'center'">#</th>
                             <th id="name">ชื่อรายการ</th>
-                            <th id="checkOut" [nzAlign]="'center'">จำนวน</th>
-                            <th id="checkIn" [nzAlign]="'center'">ราคา</th>
+                            <th id="checkOut" [nzAlign]="'right'">จำนวน</th>
+                            <th id="checkIn" [nzAlign]="'right'">ราคา</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of currentTable.data ;let index = index">
                             <td [nzAlign]="'center'">{{ index+1 }}</td>
                             <td> {{data.product.name}} </td>
-                            <td [nzAlign]="'center'">{{ data.amount.toLocaleString() }} </td>
-                            <td [nzAlign]="'center'"> {{ data.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'">{{ data.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ data.price.toLocaleString() }} </td>
                         </tr>
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                             <td [nzAlign]="'center'">รวม</td>
                             <td> </td>
-                            <td [nzAlign]="'center'"> {{ currentBill.amount.toLocaleString() }} </td>
-                            <td [nzAlign]="'center'">{{ currentBill.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ currentBill.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'">{{ currentBill.price.toLocaleString() }} </td>
 
                         </tr>
                     </tbody>

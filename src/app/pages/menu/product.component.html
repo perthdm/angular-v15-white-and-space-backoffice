@@ -26,7 +26,7 @@
         <button *ngIf="isAccess" nz-button nzType="primary"
             style="height: 40px; border-radius: 10px; margin-right: 10px" (click)="showModal()" class="d-none-950">
             <span nz-icon nzType="plus" nzTheme="outline"></span>
-            เพิ่มรายการ
+            เพิ่มสินค้า
         </button>
     </div>
     <div class="app-content">
@@ -35,12 +35,10 @@
             <thead>
                 <tr>
                     <th [nzAlign]="'center'">รหัสสินค้า</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
                     <th>ชื่อสินค้า</th>
-                    <th [nzAlign]="'center'">ราคา (บาท)</th>
-                    <th [nzAlign]="'center'">ตัดสต็อกอัตโนมัติ</th>
-                    <th [nzAlign]="'center'">สินค้าในคลัง</th>
-                    <th [nzAlign]="'center'" nzWidth="100px">คงเหลือ</th>
+                    <th [nzAlign]="'center'" nzWidth="100px">หมวดหมู่</th>
+                    <th [nzAlign]="'right'">ราคา (บาท)</th>
+                    <th [nzAlign]="'center'">สร้างเมื่อ</th>
                     <th [nzAlign]="'center'">สถานะ</th>
                     <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                 </tr>
@@ -49,42 +47,26 @@
                 <tr *ngFor="let data of basicTable.data; let index = index" style="cursor: pointer"
                     (click)="editProduct(data)">
                     <td [nzAlign]="'center'">{{ data.product_id }}</td>
+                    <td>{{ data.name }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="getTagDetail(data.product_type).color">
                             {{ getTagDetail(data.product_type).title }}</nz-tag>
                     </td>
-                    <td>{{ data.name }}</td>
-                    <td [nzAlign]="'center'">{{ data.price.toLocaleString() }}</td>
+                    <td [nzAlign]="'right'">{{ data.price.toLocaleString() }}</td>
 
-                    <td [nzAlign]="'center'">
-                        <ng-container *ngIf="data.auto_stock !== false; else zeroAmount">
-                            <span nz-icon nzType="check" nzTheme="outline" style="color: #29f"></span>
-                        </ng-container>
-                    </td>
-
-                    <td [nzAlign]="'center'">
-                        {{ data.stock ? data.stock.name : "-" }}
-                    </td>
-
-                    <td [nzAlign]="'center'">
-                        {{ data.stock ? data.stock.amount : "-" }}
-                    </td>
-
+                    <td [nzAlign]="'center'">{{ mapDate(data.createdAt) }}</td>
                     <td [nzAlign]="'center'">
                         <nz-tag [nzColor]="data.status ? '#87d068' : '#ff7875'" (click)="changeStatus($event, data)"
                             style="padding: 2px 8px; font-weight: bold;">
                             {{ data.status ? "Open" : "Close" }}
                         </nz-tag>
                     </td>
-
                     <td *ngIf="isAccess" [nzAlign]="'center'">
                         <button nz-button nzType="primary" nzDanger style="border-radius: 6px; padding:4px 8px;"
                             (click)="handleDelete($event, data?._id)">
                             <span nz-icon nzType="delete" nzTheme="fill"></span>
                         </button>
                     </td>
-
-                    <ng-template #zeroAmount> - </ng-template>
                 </tr>
             </tbody>
         </nz-table>
@@ -137,33 +119,11 @@
                     </button>
                 </nz-upload>
 
-                <div *ngIf="productData?.image && fileList.length === 0" style="
-            margin-top: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            width: 100%;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-          ">
-                    <img src="http://assets.whiteandspace.com/images/product/{{
-              productData?.image
-            }}" alt="current-pic" width="60px" height="60px" />
+                <div *ngIf="productData?.image && fileList.length === 0"
+                    style="margin-top: 10px; border: 1px solid #e0e0e0; border-radius: 10px; width: 100%; padding: 8px 12px; display: flex;align-items: center;">
+                    <img src="http://assets.whiteandspace.com/images/product/{{productData?.image}}" alt="current-pic"
+                        width="60px" height="60px" />
                     <div style="margin-left: 10px">{{ productData?.image }}</div>
-                </div>
-
-                <div *ngIf="!productData.stock">
-                    <nz-divider></nz-divider>
-                    <h4 style="margin-top: 8px">ตัดสต็อกอัตโนมัติ</h4>
-                    <div>
-                        <nz-switch [(ngModel)]="switchValue" style="margin-right: 1rem"></nz-switch>
-                        <nz-select *ngIf="switchValue" nzShowSearch nzAllowClear nzPlaceHolder="เลือกของที่ต้องการผูก"
-                            [(ngModel)]="productData.stock_id" style="width: 180px" class="select-style">
-                            <nz-option *ngFor="let current of stockList" nzValue="{{ current._id }}"
-                                nzLabel="{{ current.name }} ({{ current.amount }})">
-                            </nz-option>
-                        </nz-select>
-                    </div>
                 </div>
             </ng-container>
         </nz-modal>

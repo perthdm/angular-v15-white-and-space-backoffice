@@ -54,7 +54,6 @@ export class DashboardComponent {
         monthly_profit, // [MONTHLY] : PROFIT
         weekly_profit, // [WEEKLY] : PROFIT
         order_total, // [DAILY] : BILL COUNT
-        stock_min,
         cash_drawer, // [DAILY] : START WITH CASH
         cash_profit, // [DAILY] : CASH PROFIT
         report_weekly, // [WEEKLY] : GRAPHS
@@ -76,7 +75,6 @@ export class DashboardComponent {
         compareWithYesterDay: daily_percent,
       };
 
-      this.dataList = stock_min.items;
       let tempDate: any = [];
       let sumData: any = [];
       report_weekly.map((item: any) => {
