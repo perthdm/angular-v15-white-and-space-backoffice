@@ -19,7 +19,7 @@ interface Order {
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent {
-  @ViewChild('cartForceFocus') cartForceFocus!: ElementRef;
+  // @ViewChild('cartForceFocus') cartForceFocus!: ElementRef;
 
   scannerBarcodeBond: any;
   productList: any = [];
@@ -60,7 +60,7 @@ export class ShopComponent {
   ) {}
 
   ngOnInit() {
-    window.addEventListener('keypress', this.scannerBarcodeBond);
+    // window.addEventListener('keypress', this.scannerBarcodeBond);
     this.fetchProductActive();
   }
 
@@ -69,13 +69,13 @@ export class ShopComponent {
     this.isShowModal = true;
   }
   ngAfterViewInit() {
-    this.cartForceFocus.nativeElement.focus();
-    this.cartForceFocus.nativeElement.hidden = true;
+    // this.cartForceFocus.nativeElement.focus();
+    // this.cartForceFocus.nativeElement.hidden = true;
   }
 
-  ngOnDestroy() {
-    window.removeEventListener('keypress', this.scannerBarcodeBond);
-  }
+  // ngOnDestroy() {
+  //   window.removeEventListener('keypress', this.scannerBarcodeBond);
+  // }
 
   throwErrorMessage(message: string) {
     this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
