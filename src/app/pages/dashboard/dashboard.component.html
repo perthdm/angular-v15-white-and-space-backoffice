@@ -73,7 +73,7 @@
             <nz-table
               #remindTable
               [nzData]="dataList"
-              [nzPageSize]="4"
+              [nzPageSize]="10"
               style="margin-top: 10px"
             >
               <thead>
@@ -87,7 +87,7 @@
               <tbody>
                 <tr *ngFor="let data of remindTable.data; let index = index">
                   <td [nzAlign]="'center'">
-                    {{ index + 1 + (remindTable.nzPageIndex - 1) * 8 }}
+                    {{ index + 1 + (remindTable.nzPageIndex - 1) * 10 }}
                   </td>
                   <td>{{ data.name }}</td>
                   <td>{{ data.price }}</td>

@@ -30,7 +30,7 @@ export class DashboardComponent {
 
   // === PAGINATION === //
   page: number = 1;
-  pageLimit: number = 10;
+  pageLimit: number = 150;
   total: number = 0;
 
   constructor(
