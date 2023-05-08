@@ -276,24 +276,24 @@ nz-radio-group{
   border: unset !important;
   color: white;
 }
-::ng-deep.ant-modal-body{
-  padding: 0px !important;
-  // border-radius: 15px;
-}
-::ng-deep.ant-modal-footer{
-  display: none !important;
-}
+// ::ng-deep.ant-modal-body{
+//   padding: 0px !important;
+//   // border-radius: 15px;
+// }
+// ::ng-deep.ant-modal-footer{
+//   display: none !important;
+// }
 ::ng-deep.ant-modal-header{
-  border-top-left-radius: 15px !important;
-  border-top-right-radius: 15px !important;
-  background-color: #566B77;
-  border-bottom: 0px !important;
+  // border-top-left-radius: 15px !important;
+  // border-top-right-radius: 15px !important;
+  // background-color: #566B77;
+  // border-bottom: 0px !important;
   .ng-star-inserted{
     font-weight: bold;
-    color: rgba(255, 255, 255, 0.8);
+    // color: rgba(255, 255, 255, 0.8);
   }
 
 }
-::ng-deep.ant-modal-content {
-  border-radius: 15px !important;
-}
+// ::ng-deep.ant-modal-content {
+//   border-radius: 15px !important;
+// }
