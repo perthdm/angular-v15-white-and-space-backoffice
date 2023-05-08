@@ -64,6 +64,7 @@ export class ProductComponent {
           desert: 0,
           beverage: 0,
           bear: 0,
+          set:0,
           etc: 0,
         };
         summary.map((i: any) => {
