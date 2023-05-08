@@ -12,6 +12,7 @@ interface IBillList {
   totalProfit: number;
   totalBill: number;
   totalOrder: number;
+  totalDiscount: number;
 }
 
 interface IBill {
@@ -24,6 +25,7 @@ interface IBill {
   user_created: any;
   payment: string;
   amount: number;
+  discount: number;
 }
 
 interface IBillDetail {
