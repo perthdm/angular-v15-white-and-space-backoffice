@@ -90,7 +90,7 @@
                     {{ index + 1 + (remindTable.nzPageIndex - 1) * 8 }}
                   </td>
                   <td>{{ data.name }}</td>
-                  <td>{{ data.price }}</td>
+                  <td [nzAlign]="'right'">{{ data.price.tolocalString() }}</td>
                   <td [nzAlign]="'center'">{{ data.ranking }}</td>
                 </tr>
               </tbody>
