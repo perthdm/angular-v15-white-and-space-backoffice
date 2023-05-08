@@ -48,10 +48,15 @@
                             <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                             <td [nzAlign]="'center'"> {{ bill?.user_created?.username }} </td>
                             <td></td>
-                            <td [nzAlign]="'right'"> {{ bill.amount }} </td>
-                            <td [nzAlign]="'right'"> {{ bill.price.toLocaleString() }}</td>
-                            <td [nzAlign]="'right'"> {{ bill.discount?.toLocaleString() }} </td>
-                            <td [nzAlign]="'right'"> <b>{{ (bill.price - bill.discount).toLocaleString() }}</b> </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.amount : "-"}} </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.price.toLocaleString() : "-"}}
+                            </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.discount.toLocaleString() : "-"}}
+                            </td>
+                            <td [nzAlign]="'right'">
+                                <b>{{ bill.status !== 'cancel' ? (bill.price - bill.discount).toLocaleString() : "-"}}
+                                </b>
+                            </td>
 
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color"
@@ -81,6 +86,7 @@
                             </td>
 
                         </tr>
+
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                             <td [nzAlign]="'center'" style="padding:12px 8px">รวม</td>
                             <td [nzAlign]="'center'"> จำนวนบิล : {{ data.totalBill.toLocaleString() }} </td>
@@ -106,6 +112,8 @@
                     </tbody>
                 </nz-table>
             </div>
+
+            <ng-template #zeroValue> 0 </ng-template>
         </div>
 
         <nz-modal [(nzVisible)]="isShow" nzTitle="รายละเอียดบิล" (nzOnCancel)="handleCancel()" [nzFooter]=[]>

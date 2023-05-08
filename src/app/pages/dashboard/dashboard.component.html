@@ -67,20 +67,14 @@
 
         <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="24">
           <div class="inner-box"
-            style="height: 100%;min-height: 385px;border: 1px solid #eceef1;border-radius: 10px;padding: 1.25rem;background-color: #fff;"
-          >
+            style="height: 100%;min-height: 385px;border: 1px solid #eceef1;border-radius: 10px;padding: 1.25rem;background-color: #fff;">
             <span style="color: #0b072f; font-weight: bold; font-size: 18px">อันดับสินค้ายอดนิยม</span>
-            <nz-table
-              #remindTable
-              [nzData]="dataList"
-              [nzPageSize]="10"
-              style="margin-top: 10px"
-            >
+            <nz-table #remindTable [nzData]="dataList" [nzPageSize]="10" style="margin-top: 10px">
               <thead>
                 <tr>
                   <th id="index" [nzAlign]="'center'">อันดับ</th>
                   <th id="pdName">ชื่อ</th>
-                  <th id="priceperamount">ราคาขายต่อชิ้น</th>
+                  <th id="priceperamount" [nzAlign]="'right'">ราคาขายต่อชิ้น</th>
                   <th id="amount" [nzAlign]="'center'">ขายแล้ว</th>
                 </tr>
               </thead>
@@ -90,7 +84,7 @@
                     {{ index + 1 + (remindTable.nzPageIndex - 1) * 10 }}
                   </td>
                   <td>{{ data.name }}</td>
-                  <td [nzAlign]="'right'">{{ data.price.tolocalString() }}</td>
+                  <td [nzAlign]="'right'">{{ data.price.toLocaleString() }}</td>
                   <td [nzAlign]="'center'">{{ data.ranking }}</td>
                 </tr>
               </tbody>
