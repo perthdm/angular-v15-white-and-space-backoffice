@@ -4,7 +4,8 @@
             <h3 style="margin-bottom:24px; font-size: 24px; font-weight: bold;">พนักงานร้าน</h3>
         </div>
         <div nz-col [nzSpan]="12" [nzSm]="12" class="d-none-950">
-            <antd-searchbox placeholder=" ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox>
+            <antd-searchbox (onSearchEvent)="getOutputSearch($event)"
+                placeholder="ค้นหา รหัสพนักงาน / ชื่อพนักงาน"></antd-searchbox>
         </div>
     </div>
 
@@ -23,9 +24,7 @@
         <div nz-row>
             <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 6rem);">
                 <nz-table style="margin:20px 0px;" #userTable [nzData]="dataList" [nzShowPagination]="false"
-                    [nzLoading]="isLoading" [nzPageSize]="pageLimit" 
-                    [nzScroll]="{ x: '1200px' }"
-                    >
+                    [nzLoading]="isLoading" [nzPageSize]="pageLimit">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -36,6 +35,7 @@
                             <th [nzAlign]="'right'">เงินเดือน</th>
                             <th>สร้างเมื่อ</th>
                             <th [nzAlign]="'center'">สถานะ</th>
+                            <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,6 +59,12 @@
                             <td>{{ data.createdAt }}</td>
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
+                            </td>
+                            <td *ngIf="isAccess" [nzAlign]="'center'">
+                                <button nz-button nzType="primary" nzDanger style="border-radius: 6px; padding:4px 8px;"
+                                    (click)="handleDeleteUser($event, data?._id)">
+                                    <span nz-icon nzType="delete" nzTheme="fill"></span>
+                                </button>
                             </td>
                         </tr>
                     </tbody>

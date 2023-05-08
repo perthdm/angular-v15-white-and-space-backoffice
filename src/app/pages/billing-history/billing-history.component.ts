@@ -6,7 +6,6 @@ import { PAYMENT_TYPE } from 'src/utils/constatnt';
 import Swal from 'sweetalert2';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { ActivatedRoute } from '@angular/router';
-
 interface IBillList {
   date: string;
   bills: IBill[];
@@ -77,7 +76,6 @@ export class BillingHistoryComponent {
   ngOnInit() {
     let dateParam = this.route.snapshot.paramMap.get('date');
     this.fetchBill(dateParam);
-    this.isLoading = false;
   }
 
   fetchBill(dateParam?: any) {
@@ -106,6 +104,7 @@ export class BillingHistoryComponent {
         });
       }
       this.billList = items;
+      this.isLoading = false;
     });
   }
 
@@ -121,9 +120,9 @@ export class BillingHistoryComponent {
   getStatusDetail(type: string) {
     switch (type) {
       case 'close':
-        return { title: 'Close', color: 'magenta' };
+        return { title: 'Close', color: 'volcano' };
       case 'cancel':
-        return { title: 'Cancel', color: 'volcano' };
+        return { title: 'Void', color: 'purple' };
       default:
         return { title: 'Waiting', color: 'gold' };
     }
@@ -169,5 +168,31 @@ export class BillingHistoryComponent {
 
   mapDate(date: string, option?: string) {
     return formatDateTime(date, option);
+  }
+
+  handlePrintBill(event: any, bill: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'พิมพ์ใบเสร็จ',
+      text: 'คุณต้องการที่จะพิมพ์ใบเสร็จรายการนี้ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'พิมพ์',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.orderService.printBill(bill).subscribe(
+          () => {
+            this.message.create('success', `พิมพ์ใบเสร็จสำเร็จ`);
+          },
+          (err) =>
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            )
+        );
+      }
+    });
   }
 }

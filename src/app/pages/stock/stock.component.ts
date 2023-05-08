@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service';
-import { formatDateTime } from 'src/utils/utils';
+import { formatDateTime, getStorage } from 'src/utils/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { STOCK_TYPE } from 'src/utils/constatnt';
 import { TransferChange, TransferItem } from 'ng-zorro-antd/transfer';
+import Swal from 'sweetalert2';
 
 // interface Stock {
 //   id: string;
@@ -39,7 +40,7 @@ export class StockComponent {
   trackingList: any = [];
   exportItemSelected: any = [];
 
-  $asTransferItems = (data: unknown): TransferItem[] => data as TransferItem[];
+  isAccess = getStorage('role') === 'owner' ? true : false;
 
   // == PAGINATION ==
   page: number = 1;
@@ -79,6 +80,7 @@ export class StockComponent {
       page: this.page,
       limit: this.pageLimit,
       type: this.stockType,
+      query: this.query,
     };
 
     this.stockService.getAllLotByType(reqData).subscribe((res) => {
@@ -151,6 +153,7 @@ export class StockComponent {
     this.page = 1;
     this.pageLimit = 10;
     this.total = 0;
+    this.query = '';
     this.resetData();
     if (this.stockType === STOCK_TYPE.INVENTORY) {
       this.fetchStock();
@@ -357,11 +360,47 @@ export class StockComponent {
   getStatusDetail(type: string) {
     switch (type) {
       case 'close':
-        return { title: 'Close', color: 'magenta' };
+        return { title: 'Close', color: 'volcano' };
       case 'cancel':
-        return { title: 'Cancel', color: 'volcano' };
+        return { title: 'Void', color: 'purple' };
       default:
         return { title: 'Waiting', color: 'gold' };
     }
+  }
+
+  getOutputSearch(searchText: any) {
+    this.page = 1;
+    this.query = searchText;
+
+    if (this.stockType === STOCK_TYPE.INVENTORY) {
+      return this.fetchStock();
+    }
+    this.fetchLot();
+  }
+
+  handleDeleteStock(event: any, stockId: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'คำเตือน !',
+      text: 'คุณต้องการที่จะลบสต็อกสินค้านี้ใช่หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'พิมพ์',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        // this.orderService.printBill(bill).subscribe(
+        //   () => {
+        //     this.message.create('success', `พิมพ์ใบเสร็จสำเร็จ`);
+        //   },
+        //   (err) =>
+        //     this.message.create(
+        //       'error',
+        //       `Please try again ${err.error.message}::${err.error.statusCode}`
+        //     )
+        // );
+      }
+    });
   }
 }

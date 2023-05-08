@@ -26,7 +26,7 @@
           <th id="empty" nzWidth="55%"></th>
           <th id="bill" [nzAlign]="'center'">จำนวนบิล</th>
           <th id="profit" [nzAlign]="'right'">ยอดขาย (บาท)</th>
-          <th id="empty2"></th>
+          <th id="empty2" nzWidth="80px"></th>
         </tr>
       </thead>
       <tbody>
@@ -40,7 +40,7 @@
           <td [nzAlign]="'right'">{{ data.totalProfit.toLocaleString()}}</td>
           <td [nzAlign]="'center'">
             <a [routerLink]="['/billing-history', data.date]">
-              <button nz-button nzType="primary" nzShape="circle">
+              <button nz-button nzType="primary" style="border-radius: 8px;">
                 <span nz-icon nzType="search" nzTheme="outline"></span>
               </button>
             </a>

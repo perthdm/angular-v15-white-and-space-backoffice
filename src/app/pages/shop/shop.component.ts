@@ -27,6 +27,9 @@ export class ShopComponent {
   productListPreview: any = [];
   cart: any = [];
   totalPrice: number = 0;
+  discountValue: number = 0;
+  lastPrice: number = 0;
+  radioValue = 'price';
   categoryType = '';
   query: string = '';
   userFullName: any = 'White And Space';
@@ -34,12 +37,11 @@ export class ShopComponent {
   categoryCount: any = {};
   currentBarcode: string = '';
   isShowModal: boolean = false;
-
+  isDiscount: boolean = false;
   sumValue = 0;
   value = 0;
   stashItem: any = [];
   currentValue = '';
-
   digits = [
     { value: '1', text: '1' },
     { value: '2', text: '2' },
@@ -66,6 +68,10 @@ export class ShopComponent {
     this.fetchProductActive();
   }
 
+  handleOpendiscount() {
+    this.isDiscount = true;
+    this.isShowModal = true;
+  }
   ngAfterViewInit() {
     this.cartForceFocus.nativeElement.focus();
     this.cartForceFocus.nativeElement.hidden = true;
@@ -77,6 +83,11 @@ export class ShopComponent {
 
   throwErrorMessage(message: string) {
     this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
+  }
+  discountType() {
+    this.discountValue = 0;
+    this.value = 0;
+    this.lastPrice = this.totalPrice;
   }
 
   handleBarcodeInput(event: KeyboardEvent) {
@@ -164,6 +175,7 @@ export class ShopComponent {
             existingItem.amount++;
             existingItem.totalPrice += item.price;
             existingItem.tagList = [...existingItem.tagList, item.tagId];
+            this.totalPrice += item.price;
           } else {
             this.message.create('warning', 'สินค้าชิ้นนี้อยู่ในตระกร้าแล้ว');
           }
@@ -189,6 +201,12 @@ export class ShopComponent {
         this.cart.push(newItem);
         this.totalPrice += item.price;
       }
+      if (this.radioValue == 'price') {
+        this.lastPrice = this.totalPrice - this.discountValue;
+      } else {
+        this.lastPrice =
+          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+      }
     } else if (type == CART_ACTION.DEL) {
       if (existingItem) {
         if (existingItem.amount >= 1) {
@@ -206,16 +224,52 @@ export class ShopComponent {
           }
         }
         this.totalPrice -= item.price;
+        if (this.radioValue == 'price') {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        } else {
+          this.lastPrice =
+            this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+        }
       }
     }
   }
 
-  handleOk(): void {
-    let customer_change = this.value - this.totalPrice;
+  handleDiscountOk(): any {
+    if ((this.isDiscount = true)) {
+      this.discountValue = this.value;
+      if (this.radioValue == 'price') {
+        if (this.totalPrice - this.discountValue < 0) {
+          this.discountValue = 0;
+          return this.message.create(
+            'warning',
+            'กรุณาตรวจสอบส่วนลดเนื่องจาก ลดคาส่วนลดมากกว่าจำนวนราคาทั้งหมด'
+          );
+        } else {
+          this.lastPrice = this.totalPrice - this.discountValue;
+        }
+      } else {
+        if (this.discountValue > 100) {
+          this.discountValue = 100;
+        }
+        this.lastPrice =
+          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
+      }
+    }
+    this.isShowModal = false;
+    this.isDiscount = false;
+  }
 
+  handleOk(): void {
+    let customer_change = this.value - this.lastPrice;
     if (customer_change >= 0) {
       this.orderService
-        .checkOutOrder(this.stashItem, 'cash', this.value)
+        .checkOutOrder(
+          this.stashItem,
+          'cash',
+          this.value,
+          this.radioValue,
+          this.discountValue
+        )
         .subscribe(
           (res) => {
             Swal.fire(
@@ -231,7 +285,7 @@ export class ShopComponent {
         );
       this.isShowModal = false;
     } else {
-      this.throwErrorMessage(`กรุณากรอกจำนวนเงินที่รับก่อนทำรายการ`);
+      this.message.create('warning', 'กรุณาตรวจสอบจำนวนเงินที่รับ');
     }
   }
 
@@ -239,6 +293,9 @@ export class ShopComponent {
     this.isShowModal = false;
     this.stashItem = [];
     this.value = 0;
+    this.isDiscount = false;
+    this.discountValue = 0;
+    this.lastPrice = this.totalPrice;
   }
 
   filterByType() {
@@ -255,6 +312,8 @@ export class ShopComponent {
     this.totalPrice = 0;
     this.stashItem = [];
     this.value = 0;
+    this.discountValue = 0;
+    this.lastPrice = 0;
   }
 
   handleConfirmOrder(paymentType: string) {
@@ -282,6 +341,7 @@ export class ShopComponent {
       if (result.value) {
         if (paymentType === PAYMENT_TYPE.CASH) {
           this.isShowModal = true;
+          this.value = 0;
           this.stashItem = b;
           // this.orderService.checkOutCashOrder(b).subscribe(
           //   (res) => {
@@ -295,19 +355,27 @@ export class ShopComponent {
           //   (err) => {}
           // );
         } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
-          this.orderService.checkOutOrder(b, 'banking').subscribe(
-            (res) => {
-              Swal.fire(
-                'ทำรายการสำเร็จ !',
-                'กรุณาตรวจสอบยอดเงินที่ได้รับ',
-                'success'
-              );
-              this.handleClearOrder();
-            },
-            (err) => {
-              this.throwErrorMessage(`${err.error.message}`);
-            }
-          );
+          this.orderService
+            .checkOutOrder(
+              b,
+              'banking',
+              this.value,
+              this.radioValue,
+              this.discountValue
+            )
+            .subscribe(
+              (res) => {
+                Swal.fire(
+                  'ทำรายการสำเร็จ !',
+                  'กรุณาตรวจสอบยอดเงินที่ได้รับ',
+                  'success'
+                );
+                this.handleClearOrder();
+              },
+              (err) => {
+                this.throwErrorMessage(`${err.error.message}`);
+              }
+            );
         }
       }
     });
@@ -323,18 +391,20 @@ export class ShopComponent {
     }
   }
   onEqualClick() {
-    this.value = this.totalPrice;
+    if (this.lastPrice == 0) {
+      this.lastPrice = this.totalPrice;
+    }
+    this.value = this.lastPrice;
   }
 
   onClearClick() {
     this.currentValue = '';
     this.value = 0;
   }
+
   onBackspaceClick() {
-    this.currentValue = this.currentValue.slice(0, -1);
-    if (isNaN(parseInt(this.currentValue))) {
-      this.currentValue = '0';
-    }
-    this.value = parseInt(this.currentValue);
+    let nextVal = this.value.toString();
+    nextVal = nextVal.substring(0, nextVal.length - 1);
+    this.value = +nextVal;
   }
 }

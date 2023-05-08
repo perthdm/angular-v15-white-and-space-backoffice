@@ -11,6 +11,7 @@ const ENDPOINT = {
   CONFIRM_ORDER: `${API_URL}/order/employee-confirm`,
   BANKING_ORDER: `${API_URL}/order/employee-confirm-banking`,
   CANCEL_ORDER: `${API_URL}/order/cancel`,
+  PRINT_BILL_ORDER: (id:string) => `${API_URL}/order/printer/${id}`
 };
 
 @Injectable()
@@ -26,10 +27,16 @@ export class OrderService {
     });
   }
 
-  checkOutOrder(data: any, payment: string, coin?: number): Observable<any> {
+  checkOutOrder(
+    data: any,
+    payment: string,
+    coin?: number,
+    discount_type?: string,
+    discount?: number
+  ): Observable<any> {
     return this.http.post<any>(
       ENDPOINT.CONFIRM_ORDER,
-      { order: data, payment, coin },
+      { order: data, payment, discount_type, discount, coin },
       {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -51,6 +58,15 @@ export class OrderService {
   cancelOrder(id: string): Observable<any> {
     let data = { id };
     return this.http.put<any>(ENDPOINT.CANCEL_ORDER, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  printBill(billId: string): Observable<any> {
+    return this.http.get<any>(ENDPOINT.PRINT_BILL_ORDER(billId), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

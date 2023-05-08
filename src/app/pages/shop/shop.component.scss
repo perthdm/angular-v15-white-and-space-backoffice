@@ -20,7 +20,7 @@
 }
 
 .order-detail {
-  height: calc(100vh - 540px);
+  height: calc(100vh - 560px);
   overflow-y: auto;
   border: 1px solid #f3f3f3;
   border-radius: 10px;
@@ -276,6 +276,7 @@ nz-radio-group{
   border: unset !important;
   color: white;
 }
+
 // ::ng-deep.ant-modal-body{
 //   padding: 0px !important;
 //   // border-radius: 15px;
@@ -283,17 +284,25 @@ nz-radio-group{
 // ::ng-deep.ant-modal-footer{
 //   display: none !important;
 // }
-::ng-deep.ant-modal-header{
-  // border-top-left-radius: 15px !important;
-  // border-top-right-radius: 15px !important;
-  // background-color: #566B77;
-  // border-bottom: 0px !important;
-  .ng-star-inserted{
-    font-weight: bold;
-    // color: rgba(255, 255, 255, 0.8);
-  }
+// ::ng-deep.ant-modal-header{
+//   border-top-left-radius: 15px !important;
+//   border-top-right-radius: 15px !important;
+//   background-color: #566B77;
+//   border-bottom: 0px !important;
+//   .ng-star-inserted{
+//     font-weight: bold;
+//     color: rgba(255, 255, 255, 0.8);
+//   }
 
-}
+// }
 // ::ng-deep.ant-modal-content {
 //   border-radius: 15px !important;
 // }
+.radio-style-discount .ant-radio-button-wrapper:first-child{
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+.radio-style-discount .ant-radio-button-wrapper:last-child{
+  border-top-right-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}

@@ -14,17 +14,19 @@ const ENDPOINT = {
     ADD: `${API_URL}/stock`,
     UPDATE: `${API_URL}/stock`,
     GET_ALL_UNBINDING: `${API_URL}/stock/un-used`,
+    SCAN_CHECK: `${API_URL}/stock-prove`,
+    GET_CHECK_HISTORY: ({ start, end }: any) =>
+      `${API_URL}/stock-prove?start=${start}&end=${end}`,
   },
 
   LOT: {
-    GET_ALL_TRX: ({ page, limit, type }: IPagination) =>
-      `${API_URL}/lot/transaction?page=${page}&limit=${limit}&type=${type}`,
+    GET_ALL_TRX: ({ page, limit, type, query }: IPagination) =>
+      `${API_URL}/lot/transaction?page=${page}&limit=${limit}&type=${type}&query=${query}`,
     IMPORT_ITEM: `${API_URL}/lot`,
     GET_STOCK_DETAIL_BY_ID: (stockId: string) =>
       `${API_URL}/lot?stock_id=${stockId}`,
     SEARCH_TAG_ID: `${API_URL}/lot/search-product`,
     EXPORT_ITEM: `${API_URL}/lot/export`,
-
     PUT_IDLOT: `${API_URL}/lot/tracking-generator`,
   },
 };
@@ -121,6 +123,25 @@ export class StockService {
   printBarcodeByLotId(lotId: string) {
     const data = { id: lotId };
     return this.http.put<any>(ENDPOINT.LOT.PUT_IDLOT, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  checkStockByBarcode(tagId: string) {
+    let data = { tracking: tagId };
+    return this.http.post<any>(ENDPOINT.STOCK.SCAN_CHECK, data, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      }),
+    });
+  }
+
+  getCheckStockHistory(data: any) {
+    return this.http.get<any>(ENDPOINT.STOCK.GET_CHECK_HISTORY(data), {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${localStorage.getItem('token')}`,

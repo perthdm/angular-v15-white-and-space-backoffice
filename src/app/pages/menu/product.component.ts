@@ -66,7 +66,7 @@ export class ProductComponent {
           food: 0,
           desert: 0,
           beverage: 0,
-          bear:0,
+          bear: 0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -111,25 +111,6 @@ export class ProductComponent {
     this.isEdit = false;
     this.resetData();
   }
-
-  // handleDelete(current: any, event: MouseEvent) {
-  //   event.stopPropagation();
-  //   this.productData = current;
-  //   this.productService.deleteProduct(this.productData?._id).subscribe(
-  //     (res) => {
-  //       this.fetchProduct();
-  //       this.resetData();
-  //       this.message.create('success', 'ลบสินค้าสำเร็จ');
-  //       return;
-  //     },
-  //     (err) => {
-  //       this.message.create(
-  //         'error',
-  //         `Please try again ${err.error.message}::${err.error.statusCode}`
-  //       );
-  //     }
-  //   );
-  // }
 
   handleOk(): void {
     if (!this.isEdit) {
@@ -224,16 +205,18 @@ export class ProductComponent {
   }
 
   editProduct(current: any) {
-    this.productData = current;
+    if (this.isAccess) {
+      this.productData = current;
 
-    this.pdTypeSelected = current.product_type;
-    this.switchValue = current.auto_stock;
+      this.pdTypeSelected = current.product_type;
+      this.switchValue = current.auto_stock;
 
-    if (this.productData?.stock?._id) {
-      this.productData['stock_id'] = this.productData?.stock?._id;
+      if (this.productData?.stock?._id) {
+        this.productData['stock_id'] = this.productData?.stock?._id;
+      }
+      this.isEdit = true;
+      this.showModal();
     }
-    this.isEdit = true;
-    this.showModal();
   }
 
   getTagDetail(type: string) {
@@ -245,7 +228,7 @@ export class ProductComponent {
       case 'beverage':
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
-        return {title: 'หมี', color: 'orange'}
+        return { title: 'หมี', color: 'orange' };
       default:
         return { title: 'สินค้า', color: 'purple' };
     }
@@ -300,6 +283,39 @@ export class ProductComponent {
               'error',
               `Please try again ${err.error.message}::${err.error.statusCode}`
             )
+        );
+      }
+    });
+  }
+
+  getOutputSearch(searchText: any) {
+    this.query = searchText;
+    this.fetchProduct();
+  }
+
+  handleDelete(event: any, productId: string) {
+    event.stopPropagation();
+
+    Swal.fire({
+      title: 'คำเตือน!',
+      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'ยืนยัน',
+      cancelButtonText: 'ยกเลิก',
+    }).then((result) => {
+      if (result.value) {
+        this.productService.deleteProduct(productId).subscribe(
+          (res) => {
+            this.fetchProduct();
+            this.message.create('success', 'ลบสินค้าสำเร็จ');
+          },
+          (err) => {
+            this.message.create(
+              'error',
+              `Please try again ${err.error.message}::${err.error.statusCode}`
+            );
+          }
         );
       }
     });

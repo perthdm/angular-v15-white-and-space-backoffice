@@ -66,7 +66,9 @@ export class AttendanceComponent {
         this.employeeList = this.isAccess
           ? this.getAllNameOfEmployee(items)
           : [];
-
+        if (this.selectedValue) {
+          this.handleFilter();
+        }
         this.isLoading = false;
       },
       (err) => {

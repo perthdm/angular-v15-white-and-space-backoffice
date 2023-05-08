@@ -29,6 +29,7 @@
                             <th id="sum" [nzAlign]="'right'">ยอดรวม</th>
                             <th id="gateway" [nzAlign]="'center'">ชำระโดย</th>
                             <th id="status" nzWidth="5%" [nzAlign]="'center'">สถานะ</th>
+                            <th id="bill" nzWidth="3%"></th>
                             <th id="cancel" nzWidth="3%"></th>
                         </tr>
                     </thead>
@@ -61,11 +62,19 @@
                             </td>
 
                             <td [nzAlign]="'center'">
+                                <button nz-button nzType="primary" (click)="handlePrintBill($event,bill._id)"
+                                    style="border-radius: 8px; padding: 6px;">
+                                    <span nz-icon nzType="diff" nzTheme="outline" style="font-size: 18px;"></span>
+                                </button>
+                            </td>
+
+                            <td [nzAlign]="'center'">
                                 <button nz-button nzType="primary" nzDanger (click)="cancelOrder($event,bill._id)"
-                                    style="padding:6px; border-radius: 10px; ">
+                                    style="padding:6px; border-radius: 8px; ">
                                     <span nz-icon nzType="stop" nzTheme="outline" style="font-size: 18px;"></span>
                                 </button>
                             </td>
+
                         </tr>
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                             <td [nzAlign]="'center'" style="padding:6px 14px">รวม</td>
@@ -76,6 +85,7 @@
                             </td>
                             <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalProfit.toLocaleString() }}
                             </td>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
