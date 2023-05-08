@@ -123,7 +123,7 @@ export class ShopComponent {
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
         return { title: 'หมี', color: 'orange' };
-      case 'bear':
+      case 'set':
         return { title: 'เซ็ต', color: 'green' };
       default:
         return { title: 'อื่นๆ', color: 'purple' };
