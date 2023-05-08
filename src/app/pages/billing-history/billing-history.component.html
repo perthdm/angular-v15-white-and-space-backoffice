@@ -24,9 +24,11 @@
                             <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
                             <th id="billId" [nzAlign]="'center'">เลขที่บิล</th>
                             <th id="contribute" [nzAlign]="'center'">ผู้ทำรายการ</th>
-                            <th id="empty" nzWidth="30%"></th>
+                            <th id="empty" nzWidth="25%"></th>
                             <th id="document" [nzAlign]="'right'">รายการ</th>
                             <th id="sum" [nzAlign]="'right'">ยอดรวม</th>
+                            <th id="discount" [nzAlign]="'right'">ส่วนลด</th>
+                            <th id="sum" [nzAlign]="'right'"><b>ยอดสุทธิ</b></th>
                             <th id="gateway" [nzAlign]="'center'">ชำระโดย</th>
                             <th id="status" nzWidth="5%" [nzAlign]="'center'">สถานะ</th>
                             <th id="bill" nzWidth="3%"></th>
@@ -47,7 +49,10 @@
                             <td [nzAlign]="'center'"> {{ bill?.user_created?.username }} </td>
                             <td></td>
                             <td [nzAlign]="'right'"> {{ bill.amount }} </td>
-                            <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ bill.price.toLocaleString() }}</td>
+                            <td [nzAlign]="'right'"> {{ bill.discount?.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> <b>{{ (bill.price - bill.discount).toLocaleString() }}</b> </td>
+
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color"
                                     style="margin-right:0px ; font-weight: bold;">
@@ -81,9 +86,17 @@
                             <td [nzAlign]="'center'"> จำนวนบิล : {{ data.totalBill.toLocaleString() }} </td>
                             <td></td>
                             <td></td>
-                            <td [nzAlign]="'right'" style="padding:12px 8px">{{ data.totalOrder.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalOrder.toLocaleString() }}
                             </td>
-                            <td [nzAlign]="'right'" style="padding:12px 8px">{{ data.totalProfit.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalProfit.toLocaleString() }}
+                            </td>
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalDiscount.toLocaleString() }}
+                            </td>
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                <b>{{ (data.totalProfit - data.totalDiscount).toLocaleString() }}</b>
                             </td>
                             <td></td>
                             <td></td>
