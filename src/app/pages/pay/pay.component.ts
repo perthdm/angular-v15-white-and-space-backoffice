@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { IUser } from 'src/app/model/user.model';
 import { UserService } from 'src/app/services/user.service';
 import { formatDateTime } from 'src/utils/utils';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-pay',
@@ -11,6 +13,8 @@ import { formatDateTime } from 'src/utils/utils';
   styleUrls: ['./pay.component.scss'],
 })
 export class PayComponent {
+  @ViewChild('htmlData') htmlData!: ElementRef;
+
   userList: IUser | any = [];
   dataList: any = [];
   isShowModal: boolean = false;
@@ -19,6 +23,8 @@ export class PayComponent {
 
   netMoney?: string;
   size = 'default';
+
+  fileName = 'Data.xlsx';
 
   mainDateRange: any = [
     moment().startOf('month').toDate(),
@@ -40,6 +46,8 @@ export class PayComponent {
   query: string = '';
   total: number = 0;
 
+  isVisible = false;
+
   constructor(
     private usService: UserService,
     private message: NzMessageService
@@ -49,17 +57,21 @@ export class PayComponent {
     this.fetchPayCycle();
   }
 
-  fetchPayCycle() {
+  fetchPayCycle(type?: string) {
     let pageConfig = {
       page: this.page,
       limit: this.pageLimit,
       query: this.query,
     };
+
+    if (type) {
+      pageConfig.page = 1;
+      pageConfig.limit = 100;
+    }
+
     this.usService.getPayCycle(pageConfig).subscribe((res) => {
       let { items, total } = res;
       this.dataList = items;
-      console.log(items);
-
       this.total = total;
     });
   }
@@ -96,7 +108,6 @@ export class PayComponent {
   }
 
   handleSubmitData(): void {
-    console.log('Button ok clicked!');
     let reqData = {
       user_id: this.userSelected,
       pay_amount: this.totalPay,
@@ -171,5 +182,31 @@ export class PayComponent {
 
   mapDate(date: any) {
     return formatDateTime(date, 'onlyDate');
+  }
+
+  exportPDF(): void {
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('Data.pdf');
+    });
+  }
+
+  showModalPDF(): void {
+    this.fetchPayCycle('PDF');
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    this.exportPDF();
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    this.isVisible = false;
   }
 }

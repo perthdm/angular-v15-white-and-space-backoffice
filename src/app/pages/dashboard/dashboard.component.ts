@@ -15,7 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  dataList: IProduct[] = [];
+  dataList: any[] = [];
   dateList: any = [];
   inputValue: any = '';
   emptyRef?: ElementRef<HTMLElement>;
@@ -59,6 +59,7 @@ export class DashboardComponent {
         report_weekly, // [WEEKLY] : GRAPHS
         goal, // GOAL,
         daily_percent, // COMPARE WITH YESTERDAY
+        product_ranking,
       } = res;
       goal = goal > 0 ? goal : 100000;
 
@@ -74,6 +75,8 @@ export class DashboardComponent {
         goalProgress: ((monthly_profit * 100) / goal).toFixed(2),
         compareWithYesterDay: daily_percent,
       };
+      
+      this.dataList = product_ranking.items;
 
       let tempDate: any = [];
       let sumData: any = [];

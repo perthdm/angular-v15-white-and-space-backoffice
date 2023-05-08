@@ -6,7 +6,11 @@
       </h3>
     </div>
     <div nz-col [nzSpan]="24" [nzMd]="16">
-      <nz-range-picker [(ngModel)]="mainDateRange" [nzFormat]="dateFormat" (ngModelChange)="handleChangeDate()">
+      <nz-range-picker
+        [(ngModel)]="mainDateRange"
+        [nzFormat]="dateFormat"
+        (ngModelChange)="handleChangeDate()"
+      >
       </nz-range-picker>
     </div>
   </div>
@@ -15,28 +19,43 @@
     <div nz-row style="padding: 0px 20px">
       <div nz-col [nzSpan]="24" nzShape="round" style="text-align: right">
         <nz-space [nzSize]="'small'">
-          <button *nzSpaceItem nz-button nzType="primary" style="
+          <button
+            *nzSpaceItem
+            nz-button
+            nzType="primary"
+            style="
               height: 40px;
               border-radius: 10px;
               background-color: #04aa6d;
               border-color: #04aa6d;
-            " (click)="showModal()">
-            <span nz-icon nzType="plus" nzTheme="outline" style="font-size: 16px"></span>
+            "
+            (click)="showModal()"
+          >
+            <span
+              nz-icon
+              nzType="plus"
+              nzTheme="outline"
+              style="font-size: 16px"
+            ></span>
             เพิ่มรายการ
           </button>
-        </nz-space>
 
-        <nz-space [nzSize]="'small'">
-          <!-- <button *nzSpaceItem nz-button nzType="primary" style="
+          <button
+            *nzSpaceItem
+            nz-button
+            nzType="primary"
+            style="
               height: 40px;
               border-radius: 10px;
               background-color: #1890ff;
               border-color: #1890ff;
               margin-left: 10px;
-            ">
+            "
+            (click)="showModalPDF()"
+          >
             <span nz-icon nzType="export" nzTheme="outline"></span>
-            export pdf
-          </button> -->
+            Export pdf
+          </button>
         </nz-space>
 
         <!--        <nz-select style="width: 200px; text-align: left; margin-left: 10px" nzPlaceHolder="Select a person"
@@ -47,8 +66,14 @@
 
     <div nz-row>
       <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 58px)">
-        <nz-table style="margin:20px 0px;" #payTable [nzData]="dataList" [nzShowPagination]="false"
-          [nzPageSize]="pageLimit" [nzScroll]="{ x: '1200px' }">
+        <nz-table
+          style="margin: 20px 0px"
+          #payTable
+          [nzData]="dataList"
+          [nzShowPagination]="false"
+          [nzPageSize]="pageLimit"
+          [nzScroll]="{ x: '1200px' }"
+        >
           <thead>
             <tr>
               <th [nzAlign]="'center'">จ่ายวันที่</th>
@@ -59,11 +84,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let data of payTable.data ;let index = index">
+            <tr *ngFor="let data of payTable.data; let index = index">
               <td [nzAlign]="'center'">{{ mapDate(data.createdAt) }}</td>
-              <td> {{ data?.user?.name }}</td>
-              <td [nzAlign]="'center'"> {{ data?.pay_amount?.toLocaleString() }} </td>
-              <td [nzAlign]="'center'"> {{ data?.user_created?.name }} </td>
+              <td>{{ data?.user?.name }}</td>
+              <td [nzAlign]="'center'">
+                {{ data?.pay_amount?.toLocaleString() }}
+              </td>
+              <td [nzAlign]="'center'">{{ data?.user_created?.name }}</td>
               <td>{{ data?.info }}</td>
             </tr>
           </tbody>
@@ -71,32 +98,109 @@
       </div>
     </div>
 
-    <div style="padding:0px 20px 20px 20px; text-align: right;">
-      <nz-pagination [(nzPageIndex)]="page" [nzTotal]="total" [nzSimple]="false" [(nzPageSize)]="pageLimit"
-        [nzShowSizeChanger]="true" (nzPageIndexChange)="fetchPayCycle()" (nzPageSizeChange)="onChangePageLimit($event)"
-        [nzShowTotal]="rangeTemplate">
+    <div style="padding: 0px 20px 20px 20px; text-align: right">
+      <nz-pagination
+        [(nzPageIndex)]="page"
+        [nzTotal]="total"
+        [nzSimple]="false"
+        [(nzPageSize)]="pageLimit"
+        [nzShowSizeChanger]="true"
+        (nzPageIndexChange)="fetchPayCycle()"
+        (nzPageSizeChange)="onChangePageLimit($event)"
+        [nzShowTotal]="rangeTemplate"
+      >
       </nz-pagination>
 
       <ng-template #rangeTemplate let-range="range" let-total>
         {{ range[0] }}-{{ range[1] }} of {{ total }} items
       </ng-template>
     </div>
-
   </div>
 
-  <nz-modal [(nzVisible)]="isShowModal" nzTitle="เพิ่มรายการจ่ายเงิน" (nzOnCancel)="handleCloseModal()"
-    (nzOnOk)="handleSubmitData()">
+  <div>
+    <nz-modal
+      [(nzVisible)]="isVisible"
+      nzTitle="PDF"
+      (nzOnCancel)="handleCancel()"
+      (nzOnOk)="handleOk()"
+      nzWidth="100%"
+    >
+      <ng-container *nzModalContent>
+        <div nz-row id="htmlData">
+          <div nz-col [nzSpan]="24" style="max-width: calc(100vw - 58px)">
+            <nz-table
+              style="margin: 20px 0px"
+              #payTable
+              [nzData]="dataList"
+              [nzShowPagination]="false"
+              [nzPageSize]="100"
+              
+            >
+              <thead>
+                <tr>
+                  <th class="tb-style" [nzAlign]="'center'">จ่ายวันที่</th>
+                  <th class="tb-style">ชื่อ</th>
+                  <th class="tb-style" [nzAlign]="'center'">จำนวนเงิน</th>
+                  <th class="tb-style" [nzAlign]="'center'">ผู้ทำรายการ</th>
+                  <th class="tb-style" nzWidth="100px">หมายเหตุ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let data of payTable.data; let index = index"
+                  class="th-bd-style"
+                >
+                  <td [nzAlign]="'center'">{{ mapDate(data.createdAt) }}</td>
+                  <td>{{ data?.user?.name }}</td>
+                  <td [nzAlign]="'center'">
+                    {{ data?.pay_amount?.toLocaleString() }}
+                  </td>
+                  <td [nzAlign]="'center'">{{ data?.user_created?.name }}</td>
+                  <td >{{ data?.info }}</td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </div>
+        </div>
+      </ng-container>
+    </nz-modal>
+  </div>
+
+  <nz-modal
+    [(nzVisible)]="isShowModal"
+    nzTitle="เพิ่มรายการจ่ายเงิน"
+    (nzOnCancel)="handleCloseModal()"
+    (nzOnOk)="handleSubmitData()"
+  >
     <ng-container *nzModalContent>
       <p>ชื่อ-นามสกุล</p>
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a person" [(ngModel)]="userSelected"
-        class="select-style">
-        <nz-option *ngFor="let user of userList" nzLabel="{{ user.name }}" nzValue="{{ user._id }}"></nz-option>
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select a person"
+        [(ngModel)]="userSelected"
+        class="select-style"
+      >
+        <nz-option
+          *ngFor="let user of userList"
+          nzLabel="{{ user.name }}"
+          nzValue="{{ user._id }}"
+        ></nz-option>
       </nz-select>
 
       <div *ngIf="userSelected">
         <p style="margin-top: 12px">เลือกวันที่</p>
-        <div nz-col [nzSpan]="24" [nzMd]="24" style="display: flex; align-items: left">
-          <nz-range-picker [(ngModel)]="dateRange" [nzFormat]="dateFormat" (ngModelChange)="onChange($event)">
+        <div
+          nz-col
+          [nzSpan]="24"
+          [nzMd]="24"
+          style="display: flex; align-items: left"
+        >
+          <nz-range-picker
+            [(ngModel)]="dateRange"
+            [nzFormat]="dateFormat"
+            (ngModelChange)="onChange($event)"
+          >
           </nz-range-picker>
         </div>
       </div>
@@ -105,45 +209,77 @@
         <div nz-row [nzGutter]="[16, 16]">
           <div nz-col class="gutter-row" nzSpan="12">
             <p style="margin-top: 12px">ชั่วโมงทำงานปกติ</p>
-            <input nz-input [(ngModel)]="timeNormal" [disabled]="true" style="height: 40px; border-radius: 12px" />
+            <input
+              nz-input
+              [(ngModel)]="timeNormal"
+              [disabled]="true"
+              style="height: 40px; border-radius: 12px"
+            />
           </div>
           <div nz-col class="gutter-row" nzSpan="12">
             <p style="margin-top: 12px">ชั่วโมงทำงานOT</p>
-            <input nz-input [(ngModel)]="timeOt" [disabled]="true" style="height: 40px; border-radius: 12px" />
+            <input
+              nz-input
+              [(ngModel)]="timeOt"
+              [disabled]="true"
+              style="height: 40px; border-radius: 12px"
+            />
           </div>
         </div>
 
         <p style="margin-top: 12px">เงินที่ได้ทั้งหมด</p>
-        <input nz-input [(ngModel)]="payValue" [disabled]="true" style="height: 40px; border-radius: 12px" />
-
+        <input
+          nz-input
+          [(ngModel)]="payValue"
+          [disabled]="true"
+          style="height: 40px; border-radius: 12px"
+        />
 
         <div nz-row [nzGutter]="[16, 16]">
           <div nz-col class="gutter-row" nzSpan="8">
-            <p style="margin-top: 16px;">การปรับเงิน</p>
-            <nz-select nzPlaceHolder="การปรับเงิน" [(ngModel)]="selectedOption" class="select-style"
-              style="height: 40px; width: 100%;" (ngModelChange)="handleChangeOption()">
+            <p style="margin-top: 16px">การปรับเงิน</p>
+            <nz-select
+              nzPlaceHolder="การปรับเงิน"
+              [(ngModel)]="selectedOption"
+              class="select-style"
+              style="height: 40px; width: 100%"
+              (ngModelChange)="handleChangeOption()"
+            >
               <nz-option nzLabel="ไม่ปรับเปลี่ยน" nzValue="default"></nz-option>
               <nz-option nzLabel="เพิ่ม" nzValue="inc"></nz-option>
               <nz-option nzLabel="ลด" nzValue="dec"></nz-option>
             </nz-select>
           </div>
 
-          <div *ngIf="selectedOption != 'default'" nz-col class="gutter-row" nzSpan="16">
+          <div
+            *ngIf="selectedOption != 'default'"
+            nz-col
+            class="gutter-row"
+            nzSpan="16"
+          >
             <p style="margin-top: 16px">จำนวนเงินที่ต้องการเพิ่ม / ลด</p>
-            <input nz-input placeholder="กรุณากรอกจำนวนเต็มบวก" [(ngModel)]="optionalValue"
-              (change)="adjustValue($event)" style="border-radius: 12px; width: 100%; height: 40px;" />
+            <input
+              nz-input
+              placeholder="กรุณากรอกจำนวนเต็มบวก"
+              [(ngModel)]="optionalValue"
+              (change)="adjustValue($event)"
+              style="border-radius: 12px; width: 100%; height: 40px"
+            />
           </div>
         </div>
 
         <p style="margin-top: 12px">เงินสุทธิ</p>
-        <input nz-input placeholder="จำนวนเงินสุทธิ" [(ngModel)]="totalPay" [disabled]="true"
-          style="height: 40px; border-radius: 12px" />
+        <input
+          nz-input
+          placeholder="จำนวนเงินสุทธิ"
+          [(ngModel)]="totalPay"
+          [disabled]="true"
+          style="height: 40px; border-radius: 12px"
+        />
 
         <p style="margin-top: 12px">หมายเหตุ</p>
         <textarea rows="4" nz-input [(ngModel)]="info"></textarea>
       </div>
     </ng-container>
   </nz-modal>
-
-
 </div>

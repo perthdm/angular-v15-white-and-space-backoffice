@@ -65,21 +65,11 @@
           <div></div>
         </div>
 
-        <!-- <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="8">
-          <div
-            class="inner-box"
-            style="
-              height: 100%;
-              min-height: 385px;
-              border: 1px solid #eceef1;
-              border-radius: 10px;
-              padding: 1.25rem;
-              background-color: #fff;
-            "
+        <div nz-col class="gutter-row" [nzXs]="24" [nzMd]="24">
+          <div class="inner-box"
+            style="height: 100%;min-height: 385px;border: 1px solid #eceef1;border-radius: 10px;padding: 1.25rem;background-color: #fff;"
           >
-            <span style="color: #0b072f; font-weight: bold; font-size: 18px"
-              >สินค้าใกล้หมด</span
-            >
+            <span style="color: #0b072f; font-weight: bold; font-size: 18px">อันดับสินค้ายอดนิยม</span>
             <nz-table
               #remindTable
               [nzData]="dataList"
@@ -88,9 +78,10 @@
             >
               <thead>
                 <tr>
-                  <th id="index" [nzAlign]="'center'">#</th>
+                  <th id="index" [nzAlign]="'center'">อันดับ</th>
                   <th id="pdName">ชื่อ</th>
-                  <th id="amount" [nzAlign]="'center'">จำนวน</th>
+                  <th id="priceperamount">ราคาขายต่อชิ้น</th>
+                  <th id="amount" [nzAlign]="'center'">ขายแล้ว</th>
                 </tr>
               </thead>
               <tbody>
@@ -99,7 +90,8 @@
                     {{ index + 1 + (remindTable.nzPageIndex - 1) * 8 }}
                   </td>
                   <td>{{ data.name }}</td>
-                  <td [nzAlign]="'center'">{{ data.amount }}</td>
+                  <td>{{ data.price }}</td>
+                  <td [nzAlign]="'center'">{{ data.ranking }}</td>
                 </tr>
               </tbody>
             </nz-table>
@@ -108,7 +100,7 @@
               <nz-empty></nz-empty>
             </ng-template>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
 
