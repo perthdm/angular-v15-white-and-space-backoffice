@@ -16,6 +16,7 @@ export class UserComponent {
   gender: string = '';
   dob: Date | any = null;
   userType: string = '';
+  userRole: string = 'staff';
 
   isLoading: boolean = true;
   isVisible: boolean = false;
@@ -75,6 +76,7 @@ export class UserComponent {
     this.gender = '';
     this.dob = null;
     this.userType = '';
+    this.userRole = 'staff';
   };
 
   handleSubmitData(): void {
@@ -84,6 +86,7 @@ export class UserComponent {
         dob: this.dob,
         gender: this.gender,
         type: this.userType,
+        role: this.userRole,
       };
 
       this.userService.addUser(reqData).subscribe(
@@ -108,6 +111,7 @@ export class UserComponent {
         dob: this.dob,
         gender: this.gender,
         type: this.userType,
+        role: this.userRole,
         new_password: this.userData.password ? this.userData.password : null,
       };
 
@@ -144,6 +148,7 @@ export class UserComponent {
     this.dob = usData.dob;
     this.gender = usData.gender;
     this.userType = usData.type;
+    this.userRole = usData.role;
     this.isEdit = true;
     this.isVisible = true;
   }

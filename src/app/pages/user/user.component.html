@@ -143,7 +143,12 @@
                         </nz-select>
                     </div>
                     <div nz-col [nzSpan]="12">
-
+                        <h4 style="margin-top: 8px;">ตำแหน่งของพนักงาน</h4>
+                        <nz-select [(ngModel)]="userRole" nzPlaceHolder="เลือกตำแหน่ง" style="width: 120px"
+                            class="select-style">
+                            <nz-option nzValue="staff" nzLabel="พนักงาน"></nz-option>
+                            <nz-option nzValue="owner" nzLabel="แอดมิน"></nz-option>
+                        </nz-select>
                     </div>
                 </div>
 
