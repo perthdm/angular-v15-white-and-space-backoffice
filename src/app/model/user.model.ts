@@ -6,7 +6,7 @@ export interface IUser {
   telephone: string;
   salary: number;
   gender: string;
-  dob: Date;
+  dob: string;
   is_check_in: false;
   status: string;
   type: string;

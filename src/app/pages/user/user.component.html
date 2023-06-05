@@ -32,8 +32,9 @@
                             <th nzWidth="150px">ชื่อ-นามสกุล</th>
                             <th [nzAlign]="'center'">เพศ</th>
                             <th [nzAlign]="'center'">ตำแหน่ง</th>
+                            <th [nzAlign]="'center'" nzWidth="100px">ประเภท</th>
                             <th [nzAlign]="'right'">เงินเดือน</th>
-                            <th>สร้างเมื่อ</th>
+                            <th [nzAlign]="'center'">สร้างเมื่อ</th>
                             <th [nzAlign]="'center'">สถานะ</th>
                             <th *ngIf="isAccess" [nzAlign]="'center'" nzWidth="100px">เครื่องมือ</th>
                         </tr>
@@ -54,9 +55,14 @@
 
                             </td>
                             <td [nzAlign]="'center'">{{ data.role}}</td>
+                            <td [nzAlign]="'center'">
+                                <nz-tag [nzColor]="data.type === 'full_time' ?  'blue' : 'magenta'">
+                                    {{data.type === 'full_time' ? 'ประจำ' : 'พาร์ทไทม์' }}
+                                </nz-tag>
+                            </td>
 
                             <td [nzAlign]="'right'">{{ data.salary.toLocaleString() }}</td>
-                            <td>{{ data.createdAt }}</td>
+                            <td [nzAlign]="'center'">{{ data.createdAt }}</td>
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="'#87d068'">ปกติ</nz-tag>
                             </td>
@@ -110,8 +116,6 @@
                 <input nz-input class="wns-input" #salaryInputElement placeholder="กรุณากรอกเงินเดือน" name="salary"
                     (change)="onChangeData($event)" [ngModel]="userData.salary" type="number" />
 
-
-
                 <div nz-row>
                     <div nz-col [nzSpan]="12">
                         <h4 style="margin-top: 8px;">เพศ</h4>
@@ -126,6 +130,25 @@
                         <h4 style="margin-top: 8px;">วัน/เดือน/ปีเกิด</h4>
                         <nz-date-picker [nzFormat]="dateFormat" [(ngModel)]="dob" style="width: 150px;"
                             class="searchbar-style"></nz-date-picker>
+                    </div>
+                </div>
+
+                <div nz-row>
+                    <div nz-col [nzSpan]="12">
+                        <h4 style="margin-top: 8px;">ประเภทของพนักงาน</h4>
+                        <nz-select [(ngModel)]="userType" nzPlaceHolder="เลือกประเภท" style="width: 120px"
+                            class="select-style">
+                            <nz-option nzValue="full_time" nzLabel="ประจำ"></nz-option>
+                            <nz-option nzValue="part_time" nzLabel="พาร์ทไทม์"></nz-option>
+                        </nz-select>
+                    </div>
+                    <div nz-col [nzSpan]="12">
+                        <h4 style="margin-top: 8px;">ตำแหน่งของพนักงาน</h4>
+                        <nz-select [(ngModel)]="userRole" nzPlaceHolder="เลือกตำแหน่ง" style="width: 120px"
+                            class="select-style">
+                            <nz-option nzValue="staff" nzLabel="พนักงาน"></nz-option>
+                            <nz-option nzValue="owner" nzLabel="แอดมิน"></nz-option>
+                        </nz-select>
                     </div>
                 </div>
 

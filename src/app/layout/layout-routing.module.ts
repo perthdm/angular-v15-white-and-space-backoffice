@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { SettingComponent } from '../pages/setting/setting.component';
-import { StockComponent } from '../pages/stock/stock.component';
 import { ShopComponent } from '../pages/shop/shop.component';
 import { LayoutComponent } from './layout.component';
 import { ReportComponent } from '../pages/report/report.component';
@@ -14,7 +13,7 @@ import { ProductComponent } from '../pages/menu/product.component';
 import { AuthRoleService } from '../services/auth-role.service';
 import { NotFoundComponent } from '../pages/not-found/not-found.component';
 import { PayComponent } from '../pages/pay/pay.component';
-import { CheckStockComponent } from '../pages/check-stock/check-stock.component';
+import { ProfileComponent } from '../pages/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -67,18 +66,6 @@ const routes: Routes = [
         component: ProductComponent,
       },
       {
-        path: 'stock',
-        component: StockComponent,
-        canActivate: [AuthRoleService],
-        data: {
-          roles: ['owner', 'manager'],
-        },
-      },
-      {
-        path: 'check-stock',
-        component: CheckStockComponent,
-      },
-      {
         path: 'pay-cycle',
         component: PayComponent,
         canActivate: [AuthRoleService],
@@ -86,7 +73,10 @@ const routes: Routes = [
           roles: ['owner', 'manager'],
         },
       },
-
+      {
+        path: 'profile',
+        component: ProfileComponent,
+      },
       {
         path: 'setting',
         component: SettingComponent,

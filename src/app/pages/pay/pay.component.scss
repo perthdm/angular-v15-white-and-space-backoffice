@@ -55,3 +55,13 @@
   nz-select {
     width: 200px;
   }
+
+.tb-style{
+    background-color:#00AFA3 !important;
+    color: white;
+  }
+
+.th-bd-style:nth-child(even){
+    background-color: rgba(0,179, 166, 0.1);
+  }
+

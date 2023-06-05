@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { getISOWeek } from 'date-fns';
 import * as moment from 'moment';
 import { ReportService } from 'src/app/services/report.service';
-import { formatDateTime, getStorage } from 'src/utils/utils';
+import { formatDateTime, getDefaultValue, getStorage } from 'src/utils/utils';
 
 @Component({
   selector: 'app-report',

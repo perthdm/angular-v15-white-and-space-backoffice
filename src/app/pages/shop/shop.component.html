@@ -35,6 +35,10 @@
               alt="item" />
             หมี ({{ categoryCount.bear }})
           </label>
+          <label nz-radio-button nzValue="set">
+            <img src="../assets/img/new-product.png" style="margin-right: 10px; margin-bottom: 12px" alt="item" />
+            คอมโบเซ็ต ({{ categoryCount.set }})
+          </label>
           <label nz-radio-button nzValue="etc">
             <img src="../assets/img/product.png" style="margin-right: 10px; margin-bottom: 3px" alt="item" />
             อื่นๆ ({{ categoryCount.etc }})
@@ -44,11 +48,7 @@
 
       <div nz-row [nzGutter]="[20, 20]" style="margin-top: 20px">
         <div nz-col [nzSpan]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4" *ngFor="let item of productListPreview">
-          <div class="card-product" [class.disable-card-product]="item.auto_stock" (click)="
-              !item.auto_stock
-                ? updateCart(item, 'add')
-                : throwErrorMessage('สินค้าชิ้นนี้ต้องสแกนเพื่อเพิ่มลงตระกร้า')
-            ">
+          <div class="card-product" (click)="updateCart(item, 'add')">
             <div style="position: relative">
               <!-- PUBLIC IMAGE : HAVE IMAGE -->
               <img *ngIf="item.image" src="http://assets.whiteandspace.com/images/product/{{
@@ -74,15 +74,6 @@
             </div>
             <div class="price-tag">
               ฿ {{ item?.price?.toLocaleString() }}
-              <span style="
-                  border: 1px solid red;
-                  color: red;
-                  font-size: 12px;
-                  padding: 0px 5px;
-                  background-color: #f9f9fb;
-                " *ngIf="item.auto_stock">
-                Scan only
-              </span>
             </div>
           </div>
         </div>
@@ -113,7 +104,7 @@
       </div>
 
       <div style="padding: 15px">
-        <h2 class="text-bold kanit">รายการอาหาร</h2>
+        <h2 class="text-bold kanit">รายการสินค้า</h2>
         <div class="order-detail">
           <div class="button-group-wrapper" *ngFor="let item of cart">
             <div class="group-content">
@@ -309,5 +300,5 @@
     </ng-container>
   </nz-modal>
 
-  <input type="text" #cartForceFocus />
+  <!-- <input type="text" #cartForceFocus /> -->
 </div>

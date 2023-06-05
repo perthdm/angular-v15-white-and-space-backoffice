@@ -24,9 +24,11 @@
                             <th id="date" [nzAlign]="'center'">วัน/เดือน/ปี</th>
                             <th id="billId" [nzAlign]="'center'">เลขที่บิล</th>
                             <th id="contribute" [nzAlign]="'center'">ผู้ทำรายการ</th>
-                            <th id="empty" nzWidth="30%"></th>
+                            <th id="empty" nzWidth="25%"></th>
                             <th id="document" [nzAlign]="'right'">รายการ</th>
                             <th id="sum" [nzAlign]="'right'">ยอดรวม</th>
+                            <th id="discount" [nzAlign]="'right'">ส่วนลด</th>
+                            <th id="sum" [nzAlign]="'right'"><b>ยอดสุทธิ</b></th>
                             <th id="gateway" [nzAlign]="'center'">ชำระโดย</th>
                             <th id="status" nzWidth="5%" [nzAlign]="'center'">สถานะ</th>
                             <th id="bill" nzWidth="3%"></th>
@@ -46,8 +48,16 @@
                             <td [nzAlign]="'center'"> {{ bill.order_id }}</td>
                             <td [nzAlign]="'center'"> {{ bill?.user_created?.username }} </td>
                             <td></td>
-                            <td [nzAlign]="'right'"> {{ bill.amount }} </td>
-                            <td [nzAlign]="'right'">{{ bill.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.amount : "-"}} </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.price.toLocaleString() : "-"}}
+                            </td>
+                            <td [nzAlign]="'right'"> {{ bill.status !== 'cancel' ? bill.discount.toLocaleString() : "-"}}
+                            </td>
+                            <td [nzAlign]="'right'">
+                                <b>{{ bill.status !== 'cancel' ? (bill.price - bill.discount).toLocaleString() : "-"}}
+                                </b>
+                            </td>
+
                             <td [nzAlign]="'center'">
                                 <nz-tag [nzColor]="getPaymentsDetail(bill.payment).color"
                                     style="margin-right:0px ; font-weight: bold;">
@@ -76,14 +86,23 @@
                             </td>
 
                         </tr>
+
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
-                            <td [nzAlign]="'center'" style="padding:6px 14px">รวม</td>
+                            <td [nzAlign]="'center'" style="padding:12px 8px">รวม</td>
                             <td [nzAlign]="'center'"> จำนวนบิล : {{ data.totalBill.toLocaleString() }} </td>
                             <td></td>
                             <td></td>
-                            <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalOrder.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalOrder.toLocaleString() }}
                             </td>
-                            <td [nzAlign]="'right'" style="padding:6px 14px">{{ data.totalProfit.toLocaleString() }}
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalProfit.toLocaleString() }}
+                            </td>
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                {{ data.totalDiscount.toLocaleString() }}
+                            </td>
+                            <td [nzAlign]="'right'" style="padding:12px 8px">
+                                <b>{{ (data.totalProfit - data.totalDiscount).toLocaleString() }}</b>
                             </td>
                             <td></td>
                             <td></td>
@@ -93,6 +112,8 @@
                     </tbody>
                 </nz-table>
             </div>
+
+            <ng-template #zeroValue> 0 </ng-template>
         </div>
 
         <nz-modal [(nzVisible)]="isShow" nzTitle="รายละเอียดบิล" (nzOnCancel)="handleCancel()" [nzFooter]=[]>
@@ -104,22 +125,22 @@
                         <tr>
                             <th id="id" [nzAlign]="'center'">#</th>
                             <th id="name">ชื่อรายการ</th>
-                            <th id="checkOut" [nzAlign]="'center'">จำนวน</th>
-                            <th id="checkIn" [nzAlign]="'center'">ราคา</th>
+                            <th id="checkOut" [nzAlign]="'right'">จำนวน</th>
+                            <th id="checkIn" [nzAlign]="'right'">ราคา</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let data of currentTable.data ;let index = index">
                             <td [nzAlign]="'center'">{{ index+1 }}</td>
                             <td> {{data.product.name}} </td>
-                            <td [nzAlign]="'center'">{{ data.amount.toLocaleString() }} </td>
-                            <td [nzAlign]="'center'"> {{ data.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'">{{ data.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ data.price.toLocaleString() }} </td>
                         </tr>
                         <tr style="font-size: 16px; font-weight: 500; background-color:#fbfbfb; ">
                             <td [nzAlign]="'center'">รวม</td>
                             <td> </td>
-                            <td [nzAlign]="'center'"> {{ currentBill.amount.toLocaleString() }} </td>
-                            <td [nzAlign]="'center'">{{ currentBill.price.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'"> {{ currentBill.amount.toLocaleString() }} </td>
+                            <td [nzAlign]="'right'">{{ currentBill.price.toLocaleString() }} </td>
 
                         </tr>
                     </tbody>

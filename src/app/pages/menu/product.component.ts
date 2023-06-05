@@ -3,8 +3,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
 import { IProduct } from 'src/app/model/product.model';
 import { ProductService } from 'src/app/services/product.service';
-import { StockService } from 'src/app/services/stock.service';
-import { formatDateTime, getStorage } from 'src/utils/utils';
+import { formatDateTime, getStorage, getDefaultValue } from 'src/utils/utils';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,7 +13,6 @@ import Swal from 'sweetalert2';
 })
 export class ProductComponent {
   producList: any = [];
-  stockList: any = [];
   productData: any = {};
   productCount: any = {};
 
@@ -34,15 +32,14 @@ export class ProductComponent {
   isLoading: boolean = true;
   isEdit: boolean = false;
   pdTypeSelected: string = '';
-  switchValue = false;
   fileList: NzUploadFile[] | any = [];
   avatarUrl?: string;
   productStatus = false;
+  desciptionText: string = '';
 
   isAccess = getStorage('role') === 'owner' ? true : false;
 
   constructor(
-    private stockService: StockService,
     private productService: ProductService,
     private message: NzMessageService
   ) {}
@@ -67,6 +64,7 @@ export class ProductComponent {
           desert: 0,
           beverage: 0,
           bear: 0,
+          set:0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -83,26 +81,19 @@ export class ProductComponent {
     );
   }
 
-  fetchStockUnBinding() {
-    this.stockService.getAllStockUnBinding().subscribe((res) => {
-      this.stockList = res;
-    });
-  }
-
   onChangePageLimit(nextLimit: number) {
     this.pageLimit = nextLimit;
     this.fetchProduct();
   }
 
   showModal(): void {
-    this.fetchStockUnBinding();
     this.isShowModal = true;
   }
 
   resetData = () => {
     this.productData = {};
     this.pdTypeSelected = '';
-    this.switchValue = false;
+    this.desciptionText = '';
     this.fileList = [];
   };
 
@@ -120,14 +111,8 @@ export class ProductComponent {
         product_type: this.pdTypeSelected,
         price: this.productData.price,
         add_on_id: JSON.stringify([]),
+        desciption: this.pdTypeSelected === 'set' ? this.desciptionText : '',
       };
-
-      if (this.switchValue && this.productData.stock_id) {
-        reqData['stock_id'] = this.productData.stock_id;
-        reqData['auto_stock'] = true;
-      } else {
-        reqData['auto_stock'] = false;
-      }
 
       let data = new FormData();
       Object.entries(reqData).forEach((item: any) => {
@@ -160,13 +145,6 @@ export class ProductComponent {
         price: this.productData.price,
         add_on_id: JSON.stringify([]),
       };
-
-      if (this.switchValue && this.productData.stock_id) {
-        reqData['stock_id'] = this.productData.stock_id;
-        reqData['auto_stock'] = true;
-      } else {
-        reqData['auto_stock'] = false;
-      }
 
       let data = new FormData();
       Object.entries(reqData).forEach((item: any) => {
@@ -207,13 +185,7 @@ export class ProductComponent {
   editProduct(current: any) {
     if (this.isAccess) {
       this.productData = current;
-
       this.pdTypeSelected = current.product_type;
-      this.switchValue = current.auto_stock;
-
-      if (this.productData?.stock?._id) {
-        this.productData['stock_id'] = this.productData?.stock?._id;
-      }
       this.isEdit = true;
       this.showModal();
     }
@@ -229,24 +201,15 @@ export class ProductComponent {
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
         return { title: 'หมี', color: 'orange' };
+      case 'set':
+        return { title: 'เซ็ต', color: 'green' };
       default:
-        return { title: 'สินค้า', color: 'purple' };
+        return { title: 'อื่นๆ', color: 'purple' };
     }
   }
 
-  getTagStockDetail(type: boolean) {
-    switch (type) {
-      case true:
-        return { title: 'เปิดใช้งาน', color: 'green' };
-      case false:
-        return { title: 'ปิดใช้งาน', color: 'volcano' };
-      default:
-        return { title: '-', color: 'purple' };
-    }
-  }
-
-  mapDate(date: string) {
-    return formatDateTime(date);
+  mapDate(date: string, option?: string) {
+    return formatDateTime(date, option);
   }
 
   getBase64 = (file: File): Promise<string | ArrayBuffer | null> =>
@@ -298,7 +261,7 @@ export class ProductComponent {
 
     Swal.fire({
       title: 'คำเตือน!',
-      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
+      text: 'คุณต้องการลบสินค้าชิ้นนี้หรือไม่ ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'ยืนยัน',
@@ -319,5 +282,9 @@ export class ProductComponent {
         );
       }
     });
+  }
+
+  formatFloat(num: number) {
+    return getDefaultValue(num);
   }
 }

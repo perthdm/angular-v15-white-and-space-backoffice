@@ -5,7 +5,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import Swal from 'sweetalert2';
 import { CART_ACTION, PAYMENT_TYPE } from 'src/utils/constatnt';
 import { getStorage } from 'src/utils/utils';
-import { StockService } from 'src/app/services/stock.service';
 
 interface Order {
   orderno: string;
@@ -20,7 +19,7 @@ interface Order {
   styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent {
-  @ViewChild('cartForceFocus') cartForceFocus!: ElementRef;
+  // @ViewChild('cartForceFocus') cartForceFocus!: ElementRef;
 
   scannerBarcodeBond: any;
   productList: any = [];
@@ -57,14 +56,11 @@ export class ShopComponent {
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
-    private stockService: StockService,
     private message: NzMessageService
-  ) {
-    this.scannerBarcodeBond = this.handleBarcodeInput.bind(this);
-  }
+  ) {}
 
   ngOnInit() {
-    window.addEventListener('keypress', this.scannerBarcodeBond);
+    // window.addEventListener('keypress', this.scannerBarcodeBond);
     this.fetchProductActive();
   }
 
@@ -73,13 +69,13 @@ export class ShopComponent {
     this.isShowModal = true;
   }
   ngAfterViewInit() {
-    this.cartForceFocus.nativeElement.focus();
-    this.cartForceFocus.nativeElement.hidden = true;
+    // this.cartForceFocus.nativeElement.focus();
+    // this.cartForceFocus.nativeElement.hidden = true;
   }
 
-  ngOnDestroy() {
-    window.removeEventListener('keypress', this.scannerBarcodeBond);
-  }
+  // ngOnDestroy() {
+  //   window.removeEventListener('keypress', this.scannerBarcodeBond);
+  // }
 
   throwErrorMessage(message: string) {
     this.message.create('error', `กรุณาลองอีกครั้ง ** ${message} **`);
@@ -88,37 +84,6 @@ export class ShopComponent {
     this.discountValue = 0;
     this.value = 0;
     this.lastPrice = this.totalPrice;
-  }
-
-  handleBarcodeInput(event: KeyboardEvent) {
-    const input = event.key;
-    console.log(input);
-
-    if (input === 'Enter') {
-      this.processBarcode(this.currentBarcode);
-
-      this.currentBarcode = '';
-    } else {
-      this.currentBarcode += input;
-    }
-  }
-
-  processBarcode(barcode: string) {
-    if (barcode) {
-      this.stockService.searchTagId(barcode).subscribe(
-        (res) => {
-          if (res) {
-            res['tagId'] = barcode;
-            this.updateCart(res, 'add');
-          }
-        },
-        (err) => {
-          this.throwErrorMessage(
-            `Please try again ${err.error.message}::${err.error.statusCode}`
-          );
-        }
-      );
-    }
   }
 
   fetchProductActive() {
@@ -131,6 +96,7 @@ export class ShopComponent {
           desert: 0,
           beverage: 0,
           bear: 0,
+          set:0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -158,8 +124,10 @@ export class ShopComponent {
         return { title: 'เครื่องดื่ม', color: 'geekblue' };
       case 'bear':
         return { title: 'หมี', color: 'orange' };
+      case 'set':
+        return { title: 'เซ็ต', color: 'green' };
       default:
-        return { title: 'สินค้า', color: 'purple' };
+        return { title: 'อื่นๆ', color: 'purple' };
     }
   }
 
@@ -170,20 +138,8 @@ export class ShopComponent {
 
     if (type === CART_ACTION.ADD) {
       if (existingItem) {
-        if (item.auto_stock) {
-          if (!existingItem.tagList.includes(item.tagId)) {
-            existingItem.amount++;
-            existingItem.totalPrice += item.price;
-            existingItem.tagList = [...existingItem.tagList, item.tagId];
-            this.totalPrice += item.price;
-          } else {
-            this.message.create('warning', 'สินค้าชิ้นนี้อยู่ในตระกร้าแล้ว');
-          }
-        } else {
-          existingItem.amount++;
-          existingItem.totalPrice += item.price;
-          this.totalPrice += item.price;
-        }
+        existingItem.amount++;
+        existingItem.totalPrice += item.price;
       } else {
         const newItem: any = {
           _id: item._id,
@@ -195,41 +151,32 @@ export class ShopComponent {
           image: item.image,
         };
 
-        if (item?.auto_stock) {
-          newItem['tagList'] = [item?.tagId];
-        }
         this.cart.push(newItem);
-        this.totalPrice += item.price;
       }
-      if (this.radioValue == 'price') {
-        this.lastPrice = this.totalPrice - this.discountValue;
-      } else {
-        this.lastPrice =
-          this.totalPrice - (this.totalPrice * this.discountValue) / 100;
-      }
+
+      this.totalPrice += item.price;
+      this.lastPrice =
+        this.radioValue == 'price'
+          ? this.totalPrice - this.discountValue
+          : this.totalPrice - (this.totalPrice * this.discountValue) / 100;
     } else if (type == CART_ACTION.DEL) {
       if (existingItem) {
         if (existingItem.amount >= 1) {
           existingItem.amount--;
           existingItem.totalPrice -= item.price;
-
-          if (existingItem.amount === 0) {
-            this.cart = this.cart.filter(
-              (current: any) => current._id !== item._id
-            );
-          }
-
-          if (item.auto_stock) {
-            existingItem.tagList.pop();
-          }
         }
+
+        if (existingItem.amount === 0) {
+          this.cart = this.cart.filter(
+            (current: any) => current._id !== item._id
+          );
+        }
+
         this.totalPrice -= item.price;
-        if (this.radioValue == 'price') {
-          this.lastPrice = this.totalPrice - this.discountValue;
-        } else {
-          this.lastPrice =
-            this.totalPrice - (this.totalPrice * this.discountValue) / 100;
-        }
+        this.lastPrice =
+          this.radioValue == 'price'
+            ? this.totalPrice - this.discountValue
+            : this.totalPrice - (this.totalPrice * this.discountValue) / 100;
       }
     }
   }

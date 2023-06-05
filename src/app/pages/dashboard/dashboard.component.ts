@@ -15,7 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent {
-  dataList: IProduct[] = [];
+  dataList: any[] = [];
   dateList: any = [];
   inputValue: any = '';
   emptyRef?: ElementRef<HTMLElement>;
@@ -30,7 +30,7 @@ export class DashboardComponent {
 
   // === PAGINATION === //
   page: number = 1;
-  pageLimit: number = 10;
+  pageLimit: number = 150;
   total: number = 0;
 
   constructor(
@@ -54,34 +54,45 @@ export class DashboardComponent {
         monthly_profit, // [MONTHLY] : PROFIT
         weekly_profit, // [WEEKLY] : PROFIT
         order_total, // [DAILY] : BILL COUNT
-        stock_min,
         cash_drawer, // [DAILY] : START WITH CASH
         cash_profit, // [DAILY] : CASH PROFIT
         report_weekly, // [WEEKLY] : GRAPHS
         goal, // GOAL,
         daily_percent, // COMPARE WITH YESTERDAY
+        product_ranking,
+        discount_cash,
+        discount,
+        discount_monthly,
       } = res;
       goal = goal > 0 ? goal : 100000;
 
       this.cardData = {
-        dailyProfit: daily_profit.toLocaleString(),
+        dailyProfit: (daily_profit - discount).toLocaleString(),
         weeklyProfit: weekly_profit,
-        monthlyProfit: monthly_profit.toLocaleString(),
+        monthlyProfit: (monthly_profit - discount_monthly).toLocaleString(),
         dailyBillCount: order_total.toLocaleString(),
         startWithCash: cash_drawer.toLocaleString(),
         cashTransfer: daily_profit - cash_profit,
-        currentCashDrawer: (cash_drawer + cash_profit).toLocaleString(),
+        currentCashDrawer: (
+          cash_drawer +
+          cash_profit -
+          discount_cash
+        ).toLocaleString(),
         targetGoal: goal.toLocaleString(),
-        goalProgress: ((monthly_profit * 100) / goal).toFixed(2),
+        goalProgress: (
+          ((monthly_profit - discount_monthly) * 100) /
+          goal
+        ).toFixed(2),
         compareWithYesterDay: daily_percent,
       };
 
-      this.dataList = stock_min.items;
+      this.dataList = product_ranking.items;
+
       let tempDate: any = [];
       let sumData: any = [];
       report_weekly.map((item: any) => {
         tempDate.push(formatDateTime(item.date, 'onlyDate'));
-        sumData.push(item.profit);
+        sumData.push(item.profit - item.discount);
       });
 
       this.RenderChart(tempDate, sumData);

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { formatDateTime, getStorage } from 'src/utils/utils';
+import { formatDateTime, getDefaultValue, getStorage } from 'src/utils/utils';
 import * as moment from 'moment';
 import { PAYMENT_TYPE } from 'src/utils/constatnt';
 import Swal from 'sweetalert2';
@@ -12,6 +12,7 @@ interface IBillList {
   totalProfit: number;
   totalBill: number;
   totalOrder: number;
+  totalDiscount: number;
 }
 
 interface IBill {
@@ -24,12 +25,12 @@ interface IBill {
   user_created: any;
   payment: string;
   amount: number;
+  discount: number;
 }
 
 interface IBillDetail {
   add_on: any;
   amount: number;
-  auto_stock: boolean;
   createdAt: string;
   description: string;
   name: string;
@@ -37,7 +38,6 @@ interface IBillDetail {
   product_id: string;
   product_type: ProductType;
   status: boolean;
-  stock: boolean;
 }
 
 enum ProductType {
@@ -93,16 +93,6 @@ export class BillingHistoryComponent {
 
     this.orderService.getAllBill(reqConfig).subscribe((res) => {
       let { items } = res;
-      if (items.length > 0) {
-        items.map((dt: IBillList) => {
-          let sum = 0;
-
-          dt.bills.map((bd: IBill) => {
-            sum += bd.price;
-          });
-          dt.totalProfit = sum;
-        });
-      }
       this.billList = items;
       this.isLoading = false;
     });

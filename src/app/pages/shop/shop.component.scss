@@ -6,15 +6,15 @@
   background: white;
   box-shadow: 1px 0px 3px 2px #fafafa;
 }
-.left-side-wrapper{
+.left-side-wrapper {
   padding: 40px 30px;
-  width:calc(100% - 450px);
+  width: calc(100% - 450px);
 }
-@media (max-width:850px){
-  .menu-right-wrapper{
+@media (max-width: 850px) {
+  .menu-right-wrapper {
     display: none !important;
   }
-  .left-side-wrapper{
+  .left-side-wrapper {
     width: 100% !important;
   }
 }
@@ -94,11 +94,11 @@
   float: right;
   border-radius: 12px;
 }
-nz-radio-group{
-  width: max-content;    
+nz-radio-group {
+  width: max-content;
 }
-@media(max-width:576px){
-  .radio-style{
+@media (max-width: 576px) {
+  .radio-style {
     display: none;
   }
 }
@@ -116,12 +116,15 @@ nz-radio-group{
     text-align: center;
   }
 
-  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before,
+  .ant-radio-button-wrapper-checked:not(
+      .ant-radio-button-wrapper-disabled
+    )::before,
   .ant-radio-button-wrapper:not(:first-child)::before {
     background-color: transparent;
   }
 
-  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) img {
+  .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)
+    img {
     filter: invert(100%) sepia(3%) saturate(0%) hue-rotate(164deg)
       brightness(103%) contrast(103%);
   }
@@ -140,21 +143,16 @@ nz-radio-group{
   }
   .product-name {
     font-size: 0.9rem;
-    font-family: 'Kanit';
-    margin-top: .5rem;
-    margin-bottom: .5 rem;
+    font-family: "Kanit";
+    margin-top: 0.5rem;
+    margin-bottom: 0.5 rem;
     padding: 0px 5px;
   }
   .price-tag {
     font-size: 1.2rem;
     padding: 0px 5px;
-    font-family: 'Kanit';
+    font-family: "Kanit";
   }
-}
-
-.disable-card-product {
-  background-color: #e3e3e3 !important;
-  box-shadow: 1px 1px 4px 1px#c0bebe !important;
 }
 
 // .menu-footer {
@@ -199,11 +197,11 @@ nz-radio-group{
   align-items: center;
   // width: 200px;
   height: 100%;
-  background-color: #566B77;
+  background-color: #566b77;
   padding: 10px;
 }
-.number-keypad{
-  background-color: #566B77;
+.number-keypad {
+  background-color: #566b77;
   padding: 20px 40px;
   font-size: 54px;
   font-weight: bold;
@@ -234,7 +232,7 @@ nz-radio-group{
   width: 80px;
   height: 80px;
   color: rgba(255, 255, 255, 0.8);
-  background-color: #849DB0;
+  background-color: #849db0;
   border-radius: 50%;
   cursor: pointer;
   margin: 5px;
@@ -254,14 +252,14 @@ nz-radio-group{
   cursor: pointer;
   margin: 5px;
   font-size: 20px;
-  box-shadow: 0px 2px 2px #FFD85B;
+  box-shadow: 0px 2px 2px #ffd85b;
   font-weight: bold;
 }
 
 .submit-btn:hover {
-  background-color: #FFD85B;
+  background-color: #ffd85b;
 }
-.large-btn{
+.large-btn {
   float: right;
   padding: 10px 20px;
   height: auto;
@@ -272,7 +270,7 @@ nz-radio-group{
   margin-top: 15px;
   box-shadow: 1px 1px 1px 0px #89aabd;
 }
-.large-btn:hover{
+.large-btn:hover {
   border: unset !important;
   color: white;
 }
@@ -298,11 +296,11 @@ nz-radio-group{
 // ::ng-deep.ant-modal-content {
 //   border-radius: 15px !important;
 // }
-.radio-style-discount .ant-radio-button-wrapper:first-child{
+.radio-style-discount .ant-radio-button-wrapper:first-child {
   border-top-left-radius: 10px !important;
   border-bottom-left-radius: 10px !important;
 }
-.radio-style-discount .ant-radio-button-wrapper:last-child{
+.radio-style-discount .ant-radio-button-wrapper:last-child {
   border-top-right-radius: 10px !important;
   border-bottom-right-radius: 10px !important;
 }

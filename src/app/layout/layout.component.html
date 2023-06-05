@@ -11,12 +11,13 @@
                         </a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/dashboard"><span nz-icon nzType="dashboard" nzTheme="fill"></span>
+                        <a routerLink="/dashboard">
+                            <span nz-icon nzType="dashboard" nzTheme="fill"></span>
                             <span class="menu-text">แดชบอร์ด</span></a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill"></span><span
-                                class="menu-text">รายงาน</span>
+                        <a routerLink="/report"> <span nz-icon nzType="pie-chart" nzTheme="fill">
+                            </span><span class="menu-text">รายงาน</span>
                         </a>
                     </li>
                     <li nz-menu-item nzMatchRouter>
@@ -29,33 +30,29 @@
                     <li nz-menu-item nzMatchRouter>
                         <a routerLink="/product">
                             <span nz-icon nzType="golden" nzTheme="fill"></span>
-                            <span class="menu-text">จัดการสินค้า</span>
+                            <span class="menu-text">สินค้า</span>
                         </a>
                     </li>
 
-
-                    <li nz-submenu nzTitle="คลังสินค้า" nzIcon="appstore-add">
-                        <ul>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/stock">สต็อกสินค้า</a>
-                            </li>
-                            <li nz-menu-item nzMatchRouter>
-                                <a routerLink="/check-stock">การเช็คสต็อก</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li nz-menu-item nzMatchRoute>
+                    <li nz-menu-item nzMatchRouter>
                         <a routerLink="/user">
                             <span nz-icon nzType="user" nzTheme="outline"></span>
                             <span class="menu-text">ผู้ใช้งาน</span>
                         </a>
                     </li>
 
+
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
                             <span class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter style="float: right;">
+                        <a routerLink="/profile">
+                            <span nz-icon nzType="contacts" nzTheme="outline"></span>
+                            <span class="menu-text">โปรไฟล์</span>
                         </a>
                     </li>
 
@@ -69,6 +66,8 @@
                             </li>
                         </ul>
                     </li>
+
+
                 </ul>
             </div>
 
@@ -96,17 +95,17 @@
                         </a>
                     </li>
 
-                    <li nz-menu-item nzMatchRouter>
-                        <a routerLink="/check-stock">
-                            <span nz-icon nzType="scan" nzTheme="outline"></span>
-                            <span class="menu-text">การเช็คสต็อก</span>
-                        </a>
-                    </li>
-
                     <li nz-menu-item nzMatchRouter (click)="logout()" style="float: right;">
                         <a>
                             <span nz-icon nzType="logout" nzTheme="outline"></span>
                             <span class="menu-text">ออกจากระบบ</span>
+                        </a>
+                    </li>
+
+                    <li nz-menu-item nzMatchRouter style="float: right;">
+                        <a routerLink="/profile">
+                            <span nz-icon nzType="contacts" nzTheme="outline"></span>
+                            <span class="menu-text">โปรไฟล์</span>
                         </a>
                     </li>
 

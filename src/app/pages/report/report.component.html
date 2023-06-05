@@ -37,7 +37,7 @@
           <!-- <td [nzAlign]="'center'">จักรพร เต่าบิน</td> -->
           <td></td>
           <td [nzAlign]="'center'">{{ data.totalBill }}</td>
-          <td [nzAlign]="'right'">{{ data.totalProfit.toLocaleString()}}</td>
+          <td [nzAlign]="'right'">{{ data.totalProfit.toLocaleString() }}</td>
           <td [nzAlign]="'center'">
             <a [routerLink]="['/billing-history', data.date]">
               <button nz-button nzType="primary" style="border-radius: 8px;">
@@ -49,7 +49,7 @@
         <tr *ngIf="dataList.length > 0" style="font-size: 16px; font-weight: 500; background-color: #fbfbfb">
           <td [nzAlign]="'center'">รวม</td>
           <td></td>
-          <td [nzAlign]="'center'">{{ summaryData.totalBill }}</td>
+          <td [nzAlign]="'center'">{{ summaryData?.totalBill?.toLocaleString() }}</td>
           <td [nzAlign]="'right'">
             {{ summaryData.totalProfit.toLocaleString() }}
           </td>

@@ -15,6 +15,8 @@ export class UserComponent {
   userData: any = {};
   gender: string = '';
   dob: Date | any = null;
+  userType: string = '';
+  userRole: string = 'staff';
 
   isLoading: boolean = true;
   isVisible: boolean = false;
@@ -47,7 +49,7 @@ export class UserComponent {
 
     this.userService.getAllUser(pageConfig).subscribe(
       (res) => {
-        let { total, page, last_page, items } = res;
+        let { total, items } = res;
         items.map((us: IUser) => {
           us.createdAt = formatDateTime(us.createdAt);
           us.updatedAt = formatDateTime(us.updatedAt);
@@ -73,6 +75,8 @@ export class UserComponent {
     this.userData = {};
     this.gender = '';
     this.dob = null;
+    this.userType = '';
+    this.userRole = 'staff';
   };
 
   handleSubmitData(): void {
@@ -81,6 +85,8 @@ export class UserComponent {
         ...this.userData,
         dob: this.dob,
         gender: this.gender,
+        type: this.userType,
+        role: this.userRole,
       };
 
       this.userService.addUser(reqData).subscribe(
@@ -104,14 +110,22 @@ export class UserComponent {
         salary: this.userData.salary,
         dob: this.dob,
         gender: this.gender,
+        type: this.userType,
+        role: this.userRole,
+        new_password: this.userData.password ? this.userData.password : null,
       };
 
       this.userService.updateUser(reqUpdateData).subscribe(
         (res) => {
           this.resetData();
           this.fetchUser();
+          this.message.create('success', `แก้ไขผู้ใช้งานสำเร็จ`);
         },
-        (err) => {}
+        (err) =>
+          this.message.create(
+            'error',
+            `Please try again ${err.error.message}::${err.error.statusCode}`
+          )
       );
     }
 
@@ -133,6 +147,8 @@ export class UserComponent {
     this.userData = usData;
     this.dob = usData.dob;
     this.gender = usData.gender;
+    this.userType = usData.type;
+    this.userRole = usData.role;
     this.isEdit = true;
     this.isVisible = true;
   }
@@ -159,7 +175,7 @@ export class UserComponent {
 
     Swal.fire({
       title: 'คำเตือน!',
-      text: 'หากลบแล้วจะไม่สามารถกู้ข้อมูลคืนได้ คุณต้องการผู้ใช้งานนี้หรือไม่ ?',
+      text: 'คุณต้องการผู้ใช้งานนี้หรือไม่ ?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'ยืนยัน',
