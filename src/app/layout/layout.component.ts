@@ -45,17 +45,16 @@ export class LayoutComponent implements OnInit {
 
   getLocation(): void {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position)
+      console.log(position);
       const distance = this.calculateDistance(
         position.coords.latitude,
         position.coords.longitude,
         this.targetLocation.latitude,
         this.targetLocation.longitude
       );
-      this.isWithinRange = distance <= 2;
+      this.isWithinRange = distance <= 1;
     });
   }
-
 
   fetchCheckInStatus() {
     this.usService.getCheckInStatus().subscribe((res) => {
