@@ -52,7 +52,7 @@ export class LayoutComponent implements OnInit {
         this.targetLocation.latitude,
         this.targetLocation.longitude
       );
-      this.isWithinRange = distance <= 2;
+      this.isWithinRange = distance <= 1;
     });
   }
 
