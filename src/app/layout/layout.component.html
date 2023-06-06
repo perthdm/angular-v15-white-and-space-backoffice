@@ -134,11 +134,11 @@
             <h4 style="margin-top: 20px; margin-bottom: 5px; font-size: 22px; ">กรุณา "เช็คอินเข้างาน" ก่อนใช้งาน</h4>
             <h5 style="margin-bottom: 20px; font-size: 16px; color:#5d5f61 ">(คุณยังไม่ได้เช็คอินเข้างานในวันนี้) </h5>
             <button nz-button nzType="primary"
-                style="height: 45px; font-size: 20px; border-radius: 10px; font-weight: bold;" (click)="handleCheckIn()"
-                [disabled]="!isWithinRange">
+                style="height: 45px; font-size: 20px; border-radius: 10px; font-weight: bold;"
+                (click)="handleCheckIn()">
                 Check-In
             </button>
         </div>
     </div>
-
+    <!-- [disabled]="!isWithinRange" -->
 </nz-layout>

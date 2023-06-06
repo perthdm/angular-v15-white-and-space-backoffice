@@ -15,7 +15,7 @@ export class LayoutComponent implements OnInit {
   isShowModalCheckIn: boolean = false;
   isFullAccess: boolean = false;
   userId: string = '';
-  isWithinRange: boolean = false;
+  // isWithinRange: boolean = false;
   constructor(
     private router: Router,
     private usService: UserService,
@@ -23,10 +23,10 @@ export class LayoutComponent implements OnInit {
   ) {}
 
   // White & Space location
-  targetLocation = {
-    latitude: 13.289338,
-    longitude: 100.931289,
-  };
+  // targetLocation = {
+  //   latitude: 13.289338,
+  //   longitude: 100.931289,
+  // };
 
   ngOnInit() {
     this.fetchCheckInStatus();
@@ -36,25 +36,25 @@ export class LayoutComponent implements OnInit {
       this.isFullAccess = true;
     }
 
-    this.getLocation();
-    // Set interval to refresh location every minute (60000 milliseconds)
-    setInterval(() => {
-      this.getLocation();
-    }, 10000);
+    // this.getLocation();
+    // // Set interval to refresh location every minute (60000 milliseconds)
+    // setInterval(() => {
+    //   this.getLocation();
+    // }, 10000);
   }
 
-  getLocation(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position);
-      const distance = this.calculateDistance(
-        position.coords.latitude,
-        position.coords.longitude,
-        this.targetLocation.latitude,
-        this.targetLocation.longitude
-      );
-      this.isWithinRange = distance <= 1;
-    });
-  }
+  // getLocation(): void {
+  //   navigator.geolocation.getCurrentPosition((position) => {
+  //     console.log(position);
+  //     const distance = this.calculateDistance(
+  //       position.coords.latitude,
+  //       position.coords.longitude,
+  //       this.targetLocation.latitude,
+  //       this.targetLocation.longitude
+  //     );
+  //     this.isWithinRange = distance <= 1;
+  //   });
+  // }
 
   fetchCheckInStatus() {
     this.usService.getCheckInStatus().subscribe((res) => {
@@ -99,28 +99,28 @@ export class LayoutComponent implements OnInit {
   }
 
   // Calculate distance using Haversine formula
-  calculateDistance(
-    lat1: number,
-    lon1: number,
-    lat2: number,
-    lon2: number
-  ): number {
-    const R = 6371; // Radius of the earth in km
-    const dLat = this.deg2rad(lat2 - lat1);
-    const dLon = this.deg2rad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(lat1)) *
-        Math.cos(this.deg2rad(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = R * c; // Distance in km
-    return d;
-  }
+  // calculateDistance(
+  //   lat1: number,
+  //   lon1: number,
+  //   lat2: number,
+  //   lon2: number
+  // ): number {
+  //   const R = 6371; // Radius of the earth in km
+  //   const dLat = this.deg2rad(lat2 - lat1);
+  //   const dLon = this.deg2rad(lon2 - lon1);
+  //   const a =
+  //     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+  //     Math.cos(this.deg2rad(lat1)) *
+  //       Math.cos(this.deg2rad(lat2)) *
+  //       Math.sin(dLon / 2) *
+  //       Math.sin(dLon / 2);
+  //   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  //   const d = R * c; // Distance in km
+  //   return d;
+  // }
 
-  // Converts numeric degrees to radians
-  deg2rad(deg: number): number {
-    return deg * (Math.PI / 180);
-  }
+  // // Converts numeric degrees to radians
+  // deg2rad(deg: number): number {
+  //   return deg * (Math.PI / 180);
+  // }
 }
