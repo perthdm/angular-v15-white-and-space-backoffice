@@ -121,11 +121,11 @@ export class BillingHistoryComponent {
   getPaymentsDetail(type: string) {
     switch (type) {
       case PAYMENT_TYPE.CASH:
-        return { title: 'Cash', color: '#04AA6D' };
+        return { title: 'Cash', color: '#eaab36' };
       case PAYMENT_TYPE.MOBILE_BANKING:
         return { title: 'Mobile Banking', color: '#1890ff' };
       default:
-        return { title: 'Unknown', color: 'default' };
+        return { title: 'EDC / ATM', color: '#04AA6D' };
     }
   }
 

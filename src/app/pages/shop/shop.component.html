@@ -72,7 +72,7 @@
             <div class="product-name">
               {{ item.name }}
             </div>
-            <div class="price-tag">
+            <div class="price-tag" style="color:#e59d13">
               ฿ {{ item?.price?.toLocaleString() }}
             </div>
           </div>
@@ -192,17 +192,24 @@
           <!-- <h2 class="text-bold kanit" style="margin-top: 25px">
             ช่องทางการจ่ายเงิน
           </h2> -->
-          <div nz-row [nzGutter]="30" style="margin-top: 10px">
-            <div nz-col [nzSpan]="12">
+          <div nz-row [nzGutter]="10" style="margin-top: 10px">
+            <div nz-col [nzSpan]="8">
               <button nz-button nzType="primary" [disabled]="cart.length == 0" class="payment-button"
                 style="background-color: #eaab36" (click)="handleConfirmOrder('cash')">
                 เงินสด
               </button>
             </div>
-            <div nz-col [nzSpan]="12">
+            <div nz-col [nzSpan]="8">
               <button nz-button nzType="primary" class="payment-button" [disabled]="cart.length == 0"
                 style="background-color: #29f" (click)="handleConfirmOrder('banking')">
                 โอน
+              </button>
+            </div>
+
+            <div nz-col [nzSpan]="8">
+              <button nz-button nzType="primary" class="payment-button" [disabled]="cart.length == 0"
+                style="background-color: #04AA6D" (click)="handleConfirmOrder('edc')">
+                EDC / ATM
               </button>
             </div>
           </div>

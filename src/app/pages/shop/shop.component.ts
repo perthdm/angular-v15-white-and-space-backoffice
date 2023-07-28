@@ -96,7 +96,7 @@ export class ShopComponent {
           desert: 0,
           beverage: 0,
           bear: 0,
-          set:0,
+          set: 0,
           etc: 0,
         };
         summary.map((i: any) => {
@@ -301,11 +301,11 @@ export class ShopComponent {
           //   },
           //   (err) => {}
           // );
-        } else if (paymentType === PAYMENT_TYPE.MOBILE_BANKING) {
+        } else {
           this.orderService
             .checkOutOrder(
               b,
-              'banking',
+              paymentType,
               this.value,
               this.radioValue,
               this.discountValue
