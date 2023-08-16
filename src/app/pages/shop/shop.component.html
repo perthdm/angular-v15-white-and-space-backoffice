@@ -55,14 +55,9 @@
                   item?.image
                 }}" width="100%" style="border-radius: 10px" alt="product-item" style="border: 1px solid #efefef" />
 
-              <!-- LOCAL IMAGE : HAVE IMAGE -->
-              <!-- <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
-                                width="100%" style="border-radius: 10px;" alt="product-item"
-                                style="border: 1px solid #efefef"> -->
-
               <!-- PUBLIC IMAGE : NO IMAGE -->
-              <img *ngIf="!item.image" src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png"
-                width="100%" style="border-radius: 10px" alt="product-item" style="border: 1px solid #efefef" />
+              <img *ngIf="!item.image" src="../../../assets/img/logo.jpg" width="100%" style="border-radius: 10px"
+                alt="product-item" style="border: 1px solid #efefef" />
 
               <nz-tag style="position: absolute; top: 8px; right: 0px"
                 [nzColor]="getTagDetail(item.product_type).color">
@@ -115,13 +110,9 @@
                       item?.image
                     }}" alt="cart-item-show" style="border: 1px solid #efefef" />
 
-                  <!-- LOCAL IMAGE : HAVE IMAGE -->
-                  <!-- <img *ngIf="item.image" src="http://127.0.0.1:3000/images/product/{{ item?.image }}"
-                                        alt="cart-item-show" style="border: 1px solid #efefef"> -->
-
                   <!-- PUBLIC IMAGE : NO IMAGE-->
-                  <img *ngIf="!item.image" src="http://assets.whiteandspace.com/images/product/1682976203222f2b8.png"
-                    alt="cart-item-none" style="border: 1px solid #efefef" />
+                  <img *ngIf="!item.image" src="../../../assets/img/logo.jpg" alt="cart-item-none"
+                    style="border: 1px solid #efefef" />
                 </div>
                 <div nz-col nzFlex="auto" class="text-start text-bold" style="align-self: center">
                   <div nz-row>
